@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/common.schema.json",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "Open Plant Floor common definitions",
   "description": "Definitions the Open Plant Floor schemas share: identifiers, the processes a machine performs, parameters with their units, quantities, the evidence grade a figure carries, and its source.",
   "definitions": {
@@ -132,6 +132,11 @@
         "asOf": {
           "type": "string",
           "format": "date"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Where the figure is published, when it is published online."
         }
       }
     }

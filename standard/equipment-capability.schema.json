@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "Equipment capability",
-  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against. One record per machine or cell; a shop's equipment is the set of its records.",
+  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against; its physical footprint, weight and utilities, so a shop can be laid out from its records; how its model was identified; and where each figure comes from. One record per machine or cell; a shop's equipment is the set of its records.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -28,6 +28,56 @@
     },
     "model": {
       "type": "string"
+    },
+    "identification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modelStated"
+      ],
+      "description": "How the machine's model is known. A model stated by the equipment's owner or read from its plate is certain; otherwise the record names the candidate models its description matches, each with a confidence.",
+      "properties": {
+        "modelStated": {
+          "type": "boolean",
+          "description": "True when the owner's record or the machine plate names the model."
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "model",
+              "confidence"
+            ],
+            "properties": {
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "confidence": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "basis": {
+                "type": "string",
+                "description": "Why the description matches this model."
+              }
+            }
+          }
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1900
+        }
+      }
     },
     "count": {
       "type": "integer",
@@ -100,6 +150,118 @@
       },
       "description": "Loading, unloading or handling the machine carries, for example an autoload tower or a robot."
     },
+    "physical": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The machine as it sits on the floor, for layout: the footprint it occupies (including any loader, tower or table the record names), its height and weight.",
+      "properties": {
+        "footprint": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "lengthMm",
+            "widthMm"
+          ],
+          "properties": {
+            "lengthMm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "widthMm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "includes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What the footprint takes in, for example the autoload tower, the unloading tables, the infeed and outfeed."
+            }
+          }
+        },
+        "heightMm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "weightKg": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "clearanceMm": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Service clearance the manufacturer states around the footprint."
+        }
+      }
+    },
+    "utilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the machine draws from the building.",
+      "properties": {
+        "electricalKva": {
+          "type": "number",
+          "minimum": 0
+        },
+        "voltageV": {
+          "type": "number",
+          "minimum": 0
+        },
+        "phases": {
+          "type": "integer",
+          "enum": [
+            1,
+            3
+          ]
+        },
+        "frequencyHz": {
+          "type": "number",
+          "enum": [
+            50,
+            60
+          ]
+        },
+        "compressedAir": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pressureBar": {
+              "type": "number",
+              "minimum": 0
+            },
+            "flowLpm": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "gases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "gas"
+            ],
+            "properties": {
+              "gas": {
+                "type": "string",
+                "description": "For example nitrogen, oxygen, argon, CO2 mix."
+              },
+              "pressureBar": {
+                "type": "number",
+                "minimum": 0
+              },
+              "flowLpm": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
     "evidence": {
       "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
     },
@@ -107,6 +269,36 @@
       "type": "array",
       "items": {
         "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "description": "Where each figure comes from: a JSON pointer into this record, its evidence grade and its source. A figure without a provenance entry takes the record's evidence and sources.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "evidence",
+          "source"
+        ],
+        "properties": {
+          "field": {
+            "type": "string",
+            "pattern": "^/",
+            "description": "JSON pointer to the figure, for example /physical/footprint/lengthMm."
+          },
+          "evidence": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+          },
+          "source": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model the figure was published for, when it is a candidate's figure."
+          }
+        }
       }
     },
     "notes": {
