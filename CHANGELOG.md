@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-_Nothing yet._
+- **`standard/equipment-capability` 0.2.0.** Adds `identification` (whether the model is stated, or the candidate models a description matches, each with a confidence), `physical` (footprint, height, weight, service clearance: what layout needs), `utilities` (electrical, compressed air, gases) and `provenance` (per-figure evidence grade and source).
+- **`standard/common` 0.2.0.** A source may carry the URL it is published at.
 
 ## 0.1.0 (2026-11-06)
 
