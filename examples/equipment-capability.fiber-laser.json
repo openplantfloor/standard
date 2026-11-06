@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:laser-01",
+  "name": "Fiber laser, 5 x 10 ft, 6 kW, with an 8-shelf autoload tower",
+  "powerKw": 6,
+  "status": "active",
+  "automation": [
+    "autoload tower, 8 shelves",
+    "two unloading tables"
+  ],
+  "workEnvelope": {
+    "lengthMm": 3048,
+    "widthMm": 1524
+  },
+  "processes": [
+    {
+      "process": "laser-cut",
+      "shapes": [
+        "sheet",
+        "plate"
+      ],
+      "materials": [
+        {
+          "material": "mild-steel",
+          "thicknessMaxMm": 25.4
+        },
+        {
+          "material": "aluminium",
+          "thicknessMaxMm": 19.05
+        },
+        {
+          "material": "stainless-steel",
+          "thicknessMaxMm": 19.05
+        },
+        {
+          "material": "brass"
+        },
+        {
+          "material": "copper"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "thickness",
+          "unit": "mm",
+          "min": 0,
+          "max": 25.4
+        },
+        {
+          "name": "sheet-length",
+          "unit": "mm",
+          "max": 3048
+        },
+        {
+          "name": "sheet-width",
+          "unit": "mm",
+          "max": 1524
+        }
+      ],
+      "outputs": [
+        {
+          "name": "flat-part",
+          "unit": "text",
+          "values": [
+            "blank",
+            "profile"
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence": "L2",
+  "sources": [
+    {
+      "kind": "equipment-owner",
+      "reference": "Shop equipment list"
+    }
+  ]
+}

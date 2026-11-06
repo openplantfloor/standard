@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/job-order.schema.json",
+  "jobOrderId": "flow-1:order-0001",
+  "flowRef": "flow-1",
+  "partRef": "bracket-a",
+  "quantity": {
+    "value": 40,
+    "unit": "part"
+  },
+  "dueAt": "2026-12-01T17:00:00Z",
+  "operations": [
+    {
+      "sequence": 1,
+      "process": "laser-cut",
+      "parameters": [
+        {
+          "name": "material",
+          "unit": "text",
+          "values": [
+            "mild-steel"
+          ]
+        },
+        {
+          "name": "thickness",
+          "unit": "mm",
+          "min": 3,
+          "max": 3
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "process": "press-brake",
+      "parameters": [
+        {
+          "name": "bend-length",
+          "unit": "mm",
+          "max": 300
+        }
+      ]
+    }
+  ]
+}

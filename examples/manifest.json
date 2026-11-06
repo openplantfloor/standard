@@ -1,0 +1,33 @@
+{
+  "description": "Each example, and the schema it validates with.",
+  "examples": [
+    {
+      "example": "examples/equipment-capability.fiber-laser.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.press-brake.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.robotic-weld-cell.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.tube-laser.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/job-order.bracket.json",
+      "schema": "standard/job-order.schema.json"
+    },
+    {
+      "example": "examples/job-response.bracket.json",
+      "schema": "standard/job-response.schema.json"
+    },
+    {
+      "example": "examples/process-timing.laser-cut-blank.json",
+      "schema": "standard/process-timing.schema.json"
+    }
+  ]
+}

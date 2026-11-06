@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:weld-cell-01",
+  "name": "Collaborative robot weld cell with a CMT power source",
+  "automation": [
+    "collaborative robot"
+  ],
+  "processes": [
+    {
+      "process": "weld-robotic",
+      "materials": [
+        {
+          "material": "mild-steel"
+        },
+        {
+          "material": "aluminium"
+        },
+        {
+          "material": "stainless-steel"
+        }
+      ]
+    }
+  ],
+  "evidence": "L2",
+  "sources": [
+    {
+      "kind": "equipment-owner",
+      "reference": "Shop equipment list"
+    }
+  ]
+}

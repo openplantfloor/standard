@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/common.schema.json",
+  "version": "0.1.0",
+  "title": "Open Plant Floor common definitions",
+  "description": "Definitions the Open Plant Floor schemas share: identifiers, the processes a machine performs, parameters with their units, quantities, the evidence grade a figure carries, and its source.",
+  "definitions": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*(:[a-z0-9][a-z0-9._-]*)*$",
+      "description": "A stable identifier within its issuer's namespace, lower case, colon-separated segments (for example shop-1:laser-01)."
+    },
+    "process": {
+      "type": "string",
+      "enum": [
+        "laser-cut",
+        "plasma-cut",
+        "waterjet-cut",
+        "tube-laser-cut",
+        "saw-cut",
+        "punch",
+        "press-brake",
+        "tube-bend",
+        "roll",
+        "weld-robotic",
+        "weld-manual",
+        "turn",
+        "mill",
+        "drill",
+        "grind",
+        "deburr",
+        "mark",
+        "measure",
+        "assemble",
+        "kit",
+        "pack",
+        "coat",
+        "other"
+      ],
+      "description": "What the operation does to the work, named by its process family."
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "unit"
+      ],
+      "description": "A named parameter with its unit and the range or values it takes. Work is matched to equipment by comparing a job's parameters with a machine's.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The parameter, for example thickness, length, outer-diameter, wall-thickness, bend-length, force, material."
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "description": "SI unit symbol (mm, kN, kW, kg, s), or 'text' for a categorical value such as a material."
+        },
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "The discrete values it takes, when not a range."
+        }
+      }
+    },
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "unit"
+      ],
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "description": "part, kit, lot, m, kg, or another counted unit."
+        }
+      }
+    },
+    "evidence": {
+      "type": "string",
+      "enum": [
+        "L0",
+        "L1",
+        "L2",
+        "L3"
+      ],
+      "description": "How the figure is known: L0 estimate, L1 published benchmark, L2 quote or listing, L3 contracted or measured."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "equipment-owner",
+            "manufacturer",
+            "measurement",
+            "simulation",
+            "estimate",
+            "other"
+          ]
+        },
+        "reference": {
+          "type": "string",
+          "description": "Where the figure can be checked: a document title, a measurement record, a manufacturer specification."
+        },
+        "asOf": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:tube-laser-01",
+  "name": "Tube laser, 24 ft in and out, 4 kW CO2",
+  "powerKw": 4,
+  "workEnvelope": {
+    "lengthMm": 7315,
+    "diameterMinMm": 19.05,
+    "diameterMaxMm": 152.4
+  },
+  "processes": [
+    {
+      "process": "tube-laser-cut",
+      "shapes": [
+        "round",
+        "square",
+        "rectangle",
+        "channel",
+        "I-beam",
+        "angle"
+      ],
+      "materials": [
+        {
+          "material": "mild-steel",
+          "thicknessMaxMm": 6.35
+        },
+        {
+          "material": "aluminium",
+          "thicknessMaxMm": 6.35
+        },
+        {
+          "material": "stainless-steel",
+          "thicknessMaxMm": 6.35
+        }
+      ],
+      "inputs": [
+        {
+          "name": "outer-dimension",
+          "unit": "mm",
+          "min": 19.05,
+          "max": 152.4
+        },
+        {
+          "name": "wall-thickness",
+          "unit": "mm",
+          "max": 6.35
+        },
+        {
+          "name": "stock-length",
+          "unit": "mm",
+          "max": 7315
+        }
+      ]
+    }
+  ],
+  "evidence": "L2",
+  "sources": [
+    {
+      "kind": "equipment-owner",
+      "reference": "Shop equipment list"
+    }
+  ]
+}

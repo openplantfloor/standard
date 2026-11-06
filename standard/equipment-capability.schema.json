@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "version": "0.1.0",
+  "title": "Equipment capability",
+  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against. One record per machine or cell; a shop's equipment is the set of its records.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "equipmentId",
+    "name",
+    "processes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json"
+    },
+    "equipmentId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manufacturer": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "How many identical units the record stands for."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "backup",
+        "for-sale",
+        "retired"
+      ],
+      "default": "active"
+    },
+    "processes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/capability"
+      }
+    },
+    "workEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The largest work the machine takes, in millimetres.",
+      "properties": {
+        "lengthMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "widthMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "heightMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "diameterMinMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "diameterMaxMm": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "powerKw": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Rated source or spindle power, kilowatts."
+    },
+    "forceKn": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Rated force (press brake tonnage), kilonewtons."
+    },
+    "axes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "automation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Loading, unloading or handling the machine carries, for example an autoload tower or a robot."
+    },
+    "evidence": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "process"
+      ],
+      "description": "One process the machine performs and the work it accepts for it.",
+      "properties": {
+        "process": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
+        },
+        "materials": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "material"
+            ],
+            "properties": {
+              "material": {
+                "type": "string",
+                "minLength": 1,
+                "description": "For example mild-steel, stainless-steel, aluminium, brass, copper."
+              },
+              "thicknessMinMm": {
+                "type": "number",
+                "minimum": 0
+              },
+              "thicknessMaxMm": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "shapes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Profiles accepted, for example sheet, plate, round, square, rectangle, channel, angle, I-beam."
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/parameter"
+          },
+          "description": "Parameters of the work the machine accepts."
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/parameter"
+          },
+          "description": "Parameters of the work it produces."
+        }
+      }
+    }
+  }
+}

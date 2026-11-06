@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/job-response.schema.json",
+  "jobResponseId": "flow-1:response-0001",
+  "jobOrderRef": "flow-1:order-0001",
+  "status": "completed",
+  "operations": [
+    {
+      "sequence": 1,
+      "equipmentRef": "shop-1:laser-01",
+      "made": {
+        "value": 40,
+        "unit": "part"
+      },
+      "scrapped": {
+        "value": 0,
+        "unit": "part"
+      },
+      "cycleSecondsActual": 28,
+      "setupSecondsActual": 240
+    },
+    {
+      "sequence": 2,
+      "equipmentRef": "shop-1:brake-01",
+      "made": {
+        "value": 40,
+        "unit": "part"
+      },
+      "scrapped": {
+        "value": 1,
+        "unit": "part"
+      },
+      "cycleSecondsActual": 42
+    }
+  ],
+  "completedAt": "2026-11-28T15:30:00Z"
+}

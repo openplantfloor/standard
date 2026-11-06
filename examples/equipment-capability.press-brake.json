@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:brake-01",
+  "name": "Press brake, 14 ft",
+  "workEnvelope": {
+    "lengthMm": 4267
+  },
+  "processes": [
+    {
+      "process": "press-brake",
+      "shapes": [
+        "sheet",
+        "plate"
+      ],
+      "materials": [
+        {
+          "material": "mild-steel"
+        },
+        {
+          "material": "stainless-steel"
+        },
+        {
+          "material": "aluminium"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "bend-length",
+          "unit": "mm",
+          "max": 4267
+        }
+      ]
+    }
+  ],
+  "evidence": "L1",
+  "sources": [
+    {
+      "kind": "equipment-owner",
+      "reference": "Shop equipment list"
+    }
+  ],
+  "notes": "Tonnage to be taken from the machine plate."
+}
