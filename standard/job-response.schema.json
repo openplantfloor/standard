@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/job-response.schema.json",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "title": "Job response",
-  "description": "What a plant floor returned for a job order: per operation, the equipment that did it, the quantity made and scrapped, and the time it took. Responses are the measured timing that raises a process timing's evidence grade.",
+  "description": "What a plant floor returned for a job order: per operation, the equipment that did it, the quantity made and scrapped, and the time it took. Responses are the measured timing that raises a process timing's evidence grade. From 0.3.0 each operation states the material it consumed and produced, by lot and mass, and the energy it used.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -72,6 +72,23 @@
           "setupSecondsActual": {
             "type": "number",
             "minimum": 0
+          },
+          "consumed": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/material"
+            },
+            "description": "Material that entered the operation, by lot, with its mass."
+          },
+          "produced": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/material"
+            },
+            "description": "Parts and material that left it, by lot, with their mass; consumed mass less produced mass is the operation's scrap."
+          },
+          "energy": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/energy"
           }
         }
       }

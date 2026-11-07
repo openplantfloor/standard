@@ -36,21 +36,22 @@
       "inputs": [
         {
           "name": "outer-dimension",
-          "unit": "mm",
           "min": 19.05,
-          "max": 152.4
+          "max": 152.4,
+          "uom": "MMT"
         },
         {
           "name": "wall-thickness",
-          "unit": "mm",
-          "max": 6.35
+          "max": 6.35,
+          "uom": "MMT"
         },
         {
           "name": "stock-length",
-          "unit": "mm",
-          "max": 7315
+          "max": 7315,
+          "uom": "MMT"
         }
-      ]
+      ],
+      "processGroup": "separating"
     }
   ],
   "evidence": "L2",
@@ -59,5 +60,10 @@
       "kind": "equipment-owner",
       "reference": "Shop equipment list"
     }
-  ]
+  ],
+  "automationLevel": {
+    "mechanical": 6,
+    "scale": "frohm-2008"
+  },
+  "isa95Level": "work-unit"
 }

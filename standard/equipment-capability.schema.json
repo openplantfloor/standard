@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "Equipment capability",
-  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against; its physical footprint, weight and utilities, so a shop can be laid out from its records; how its model was identified; and where each figure comes from. One record per machine or cell; a shop's equipment is the set of its records.",
+  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against; its physical footprint, weight and utilities, so a shop can be laid out from its records; how its model was identified; and where each figure comes from. One record per machine or cell; a shop's equipment is the set of its records. From 0.3.0 each process carries its DIN 8580 main group, and the machine its automation level, its place in the ISA-95 equipment hierarchy and the standards it maps to.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -149,6 +149,19 @@
         "type": "string"
       },
       "description": "Loading, unloading or handling the machine carries, for example an autoload tower or a robot."
+    },
+    "automationLevel": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/automationLevel"
+    },
+    "isa95Level": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/isa95Level"
+    },
+    "alignments": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/alignment"
+      },
+      "description": "The published standards the machine maps to (OPC UA companion specifications, MTConnect), named by identifier."
     },
     "physical": {
       "type": "object",
@@ -363,8 +376,16 @@
             "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/parameter"
           },
           "description": "Parameters of the work it produces."
+        },
+        "processGroup": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/processGroup"
         }
-      }
+      },
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/classifiedProcess"
+        }
+      ]
     }
   }
 }

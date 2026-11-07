@@ -4,27 +4,33 @@
   "equipmentRef": "shop-1:laser-01",
   "process": "laser-cut",
   "operation": "cut a 300 x 300 mm blank",
-  "unit": "part",
-  "unitsPerCycle": 1,
+  "output": {
+    "value": 1,
+    "uom": "H87"
+  },
   "cycleSeconds": {
     "low": 20,
     "base": 30,
     "high": 45
   },
+  "energyPerCycle": {
+    "value": 0.15,
+    "uom": "KWH",
+    "basis": "estimated"
+  },
   "setupSeconds": 300,
   "conditions": [
     {
       "name": "material",
-      "unit": "text",
       "values": [
         "mild-steel"
       ]
     },
     {
       "name": "thickness",
-      "unit": "mm",
       "min": 3,
-      "max": 3
+      "max": 3,
+      "uom": "MMT"
     }
   ],
   "evidence": "L0",
