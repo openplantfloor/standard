@@ -95,7 +95,11 @@
         "value": 1.2,
         "uom": "KWH",
         "basis": "metered",
-        "meterRef": "shop-1:brake-01:circuit"
+        "meterRef": "shop-1:brake-01:circuit",
+        "interval": {
+          "start": "2026-11-28T09:00:00Z",
+          "end": "2026-11-28T09:28:00Z"
+        }
       }
     }
   ],

@@ -87,5 +87,14 @@
       "kind": "equipment-owner",
       "reference": "Shop equipment list"
     }
+  ],
+  "meters": [
+    {
+      "meterId": "shop-1:laser-01:energy",
+      "protocol": "mtconnect",
+      "dataItem": "ElectricalEnergy",
+      "scope": "machine",
+      "endpoint": "http://shop-1.example/mtconnect/laser-01/current"
+    }
   ]
 }
