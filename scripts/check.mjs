@@ -109,6 +109,13 @@ if (common && !uncompiled.has('standard/common.schema.json')) {
     ['classifiedProcess', { process: 'laser-cut', processGroup: 'forming' }, false],
     ['automationLevel', { mechanical: 8, scale: 'frohm-2008' }, false],
   ];
+  const ec = ajv.getSchema(idOf('standard/equipment-capability.schema.json'));
+  const machine = (axes) => ({ $schema: idOf('standard/equipment-capability.schema.json'), equipmentId: 'shop-1:robot-01', name: 'Robot cell', processes: [{ process: 'weld-robotic', processGroup: 'joining' }], axes });
+  if (ec) {
+    if (!ec(machine({ machineAxes: 6, externalAxes: [{ kind: 'linear-track', travel: { value: 6000, uom: 'MMT' }, coordinated: true }] }))) fail('standard/equipment-capability.schema.json', 'refuses a 6-axis arm on a track');
+    if (!ec(machine({ machineAxes: 7 }))) fail('standard/equipment-capability.schema.json', 'refuses a 7-joint arm');
+    if (ec(machine(7))) fail('standard/equipment-capability.schema.json', 'accepts a bare axis count (0.3.0 form)');
+  }
   for (const [name, doc, ok] of must) {
     const v = def(name);
     if (v && v(doc) !== ok) fail('standard/common.schema.json', `${name} ${ok ? 'refuses' : 'accepts'} ${JSON.stringify(doc)}`);

@@ -9,6 +9,20 @@
     "mechanical": 6,
     "scale": "frohm-2008"
   },
+  "axes": {
+    "machineAxes": 6,
+    "externalAxes": [
+      {
+        "kind": "linear-track",
+        "count": 1,
+        "travel": {
+          "value": 6000,
+          "uom": "MMT"
+        },
+        "coordinated": true
+      }
+    ]
+  },
   "isa95Level": "work-unit",
   "alignments": [
     {

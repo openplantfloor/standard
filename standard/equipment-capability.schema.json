@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "title": "Equipment capability",
-  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against; its physical footprint, weight and utilities, so a shop can be laid out from its records; how its model was identified; and where each figure comes from. One record per machine or cell; a shop's equipment is the set of its records. From 0.3.0 each process carries its DIN 8580 main group, and the machine its automation level, its place in the ISA-95 equipment hierarchy and the standards it maps to.",
+  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against; its physical footprint, weight and utilities, so a shop can be laid out from its records; how its model was identified; and where each figure comes from. One record per machine or cell; a shop's equipment is the set of its records. From 0.3.0 each process carries its DIN 8580 main group, and the machine its automation level, its place in the ISA-95 equipment hierarchy and the standards it maps to. From 0.4.0 its axes say what they are: the machine's own, and each external axis with its kind and travel.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -140,8 +140,57 @@
       "description": "Rated force (press brake tonnage), kilonewtons."
     },
     "axes": {
-      "type": "integer",
-      "minimum": 1
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "machineAxes"
+      ],
+      "description": "What the machine's axes are: its own controlled axes, and each external axis it works with. A 6-axis arm on a linear track has 6 machine axes and one external axis; a 7-joint arm has 7 machine axes.",
+      "properties": {
+        "machineAxes": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The machine's own controlled axes: an arm's joints, a CNC machine's linear and rotary axes."
+        },
+        "externalAxes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "linear-track",
+                  "gantry",
+                  "rotary-positioner",
+                  "tilt-rotate-positioner",
+                  "turntable",
+                  "other"
+                ]
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "How many axes this external unit adds (a tilt-rotate positioner adds two)."
+              },
+              "travel": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity",
+                "description": "The axis's travel: a length (MMT, MTR) for a track or gantry, an angle (DD) for a positioner."
+              },
+              "coordinated": {
+                "type": "boolean",
+                "description": "True when the axis moves in coordinated motion with the machine, under one controller."
+              }
+            }
+          },
+          "description": "The axes outside the machine it works with: a track it rides, a gantry it hangs from, a positioner that turns the work."
+        }
+      }
     },
     "automation": {
       "type": "array",
