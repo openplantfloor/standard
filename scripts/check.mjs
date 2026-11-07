@@ -89,6 +89,32 @@ for (const { example, schema } of manifest) {
   if (v && !v(instance)) fail(example, `fails ${schema}: ${ajv.errorsText(v.errors)}`);
 }
 
+// 4b. Classification and units hold: every process but other has exactly one DIN 8580 group, and the
+// standard refuses what it is meant to refuse (a unit symbol in place of a UN/CEFACT code, a range with
+// no unit, a process given another group).
+const common = schemas['standard/common.schema.json'];
+if (common && !uncompiled.has('standard/common.schema.json')) {
+  const rules = common.definitions.classifiedProcess.allOf.map((r) => r.if.properties.process.const);
+  for (const p of common.definitions.process.enum) {
+    const n = rules.filter((r) => r === p).length;
+    if (p === 'other' ? n !== 0 : n !== 1) fail('standard/common.schema.json', `process ${p} has ${n} DIN 8580 group rule(s)`);
+  }
+  const def = (name) => ajv.getSchema(`${idOf('standard/common.schema.json')}#/definitions/${name}`);
+  const must = [
+    ['parameter', { name: 'thickness', max: 3, uom: 'MMT' }, true],
+    ['parameter', { name: 'thickness', max: 3, uom: 'mm' }, false],
+    ['parameter', { name: 'thickness', max: 3 }, false],
+    ['parameter', { name: 'material', values: ['mild-steel'] }, true],
+    ['classifiedProcess', { process: 'laser-cut', processGroup: 'separating' }, true],
+    ['classifiedProcess', { process: 'laser-cut', processGroup: 'forming' }, false],
+    ['automationLevel', { mechanical: 8, scale: 'frohm-2008' }, false],
+  ];
+  for (const [name, doc, ok] of must) {
+    const v = def(name);
+    if (v && v(doc) !== ok) fail('standard/common.schema.json', `${name} ${ok ? 'refuses' : 'accepts'} ${JSON.stringify(doc)}`);
+  }
+}
+
 // 5. Public text names the standard and the published standards it maps, nothing internal to any steward.
 const FORBIDDEN = [
   [/\bd-\d{4}-\d\d-\d\d-[a-z0-9-]+/, 'an internal deliverable or decision id'],

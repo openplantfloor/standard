@@ -26,10 +26,11 @@
       "inputs": [
         {
           "name": "bend-length",
-          "unit": "mm",
-          "max": 4267
+          "max": 4267,
+          "uom": "MMT"
         }
-      ]
+      ],
+      "processGroup": "forming"
     }
   ],
   "evidence": "L1",
@@ -39,5 +40,10 @@
       "reference": "Shop equipment list"
     }
   ],
-  "notes": "Tonnage to be taken from the machine plate."
+  "notes": "Tonnage to be taken from the machine plate.",
+  "automationLevel": {
+    "mechanical": 6,
+    "scale": "frohm-2008"
+  },
+  "isa95Level": "work-unit"
 }

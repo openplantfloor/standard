@@ -8,6 +8,18 @@
     "autoload tower, 8 shelves",
     "two unloading tables"
   ],
+  "automationLevel": {
+    "mechanical": 6,
+    "scale": "frohm-2008"
+  },
+  "isa95Level": "work-unit",
+  "alignments": [
+    {
+      "standard": "MTConnect",
+      "identifier": "MTConnect 2.7",
+      "type": "Controller"
+    }
+  ],
   "workEnvelope": {
     "lengthMm": 3048,
     "widthMm": 1524
@@ -42,31 +54,31 @@
       "inputs": [
         {
           "name": "thickness",
-          "unit": "mm",
           "min": 0,
-          "max": 25.4
+          "max": 25.4,
+          "uom": "MMT"
         },
         {
           "name": "sheet-length",
-          "unit": "mm",
-          "max": 3048
+          "max": 3048,
+          "uom": "MMT"
         },
         {
           "name": "sheet-width",
-          "unit": "mm",
-          "max": 1524
+          "max": 1524,
+          "uom": "MMT"
         }
       ],
       "outputs": [
         {
           "name": "flat-part",
-          "unit": "text",
           "values": [
             "blank",
             "profile"
           ]
         }
-      ]
+      ],
+      "processGroup": "separating"
     }
   ],
   "evidence": "L2",

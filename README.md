@@ -21,11 +21,11 @@ An open standard for the plant floor: what a machine can do, how long its work t
 
 ## How the records fit
 
-A shop describes its machines as equipment capability. Work arrives as a job order, whose operations carry the parameters of the work; an operation goes to a machine whose capability accepts those parameters. Process timing says how long the operation takes there, at a stated evidence grade. The job response records what was made and how long it took, and that measured time raises the timing's grade from an estimate to a measurement.
+A shop describes its machines as equipment capability. Work arrives as a job order, whose operations carry the parameters of the work; an operation goes to a machine whose capability accepts those parameters. Process timing says how long the operation takes there, at a stated evidence grade. The job response records what was made, the material each operation consumed and produced by lot and mass, the energy it used and how long it took; that measured time raises the timing's grade from an estimate to a measurement. Every unit is a UN/CEFACT Recommendation 20 code. Every process carries its DIN 8580 main group, and every machine its automation level, from a manual bench to a robot cell, and its place in the ISA-95 equipment hierarchy.
 
 ## What is not here
 
-A scheduler, a simulator or a manufacturing execution system. Any one party's way of planning, pricing or deciding. The standard names the published standards it relates to (ISA-95, MTConnect, OPC UA) by their identifiers; it does not reference or republish them.
+A scheduler, a simulator or a manufacturing execution system. Any one party's way of planning, pricing or deciding. The standard names the published standards it relates to (UN/CEFACT Recommendation 20, DIN 8580, ISA-95, MTConnect, OPC UA) by their identifiers; it does not reference or republish them.
 
 ## Using the standard
 

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/process-timing.schema.json",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "title": "Process timing",
   "description": "How long an operation takes on a machine: cycle time per unit at a low, base and high case, setup and changeover, with the evidence grade and source of each figure. Timing is what a takt plan and a simulation read; as measured figures replace estimates, the grade rises.",
   "type": "object",
@@ -11,7 +11,7 @@
     "timingId",
     "equipmentRef",
     "process",
-    "unit",
+    "output",
     "cycleSeconds",
     "evidence"
   ],
@@ -37,15 +37,9 @@
       "type": "string",
       "description": "The operation within the process, for example cut-to-length or bend-90."
     },
-    "unit": {
-      "type": "string",
-      "minLength": 1,
-      "description": "What one cycle produces: part, kit, lot, m."
-    },
-    "unitsPerCycle": {
-      "type": "number",
-      "exclusiveMinimum": 0,
-      "default": 1
+    "output": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity",
+      "description": "What one cycle produces, for example 1 H87 (one piece), 1 SET (one kit), 2.5 MTR."
     },
     "cycleSeconds": {
       "type": "object",
@@ -67,6 +61,9 @@
           "minimum": 0
         }
       }
+    },
+    "energyPerCycle": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/energy"
     },
     "setupSeconds": {
       "type": "number",

@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/common.schema.json",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "Open Plant Floor common definitions",
-  "description": "Definitions the Open Plant Floor schemas share: identifiers, the processes a machine performs, parameters with their units, quantities, the evidence grade a figure carries, and its source.",
+  "description": "Definitions the Open Plant Floor schemas share: identifiers, the processes a machine performs and their DIN 8580 main group, units of measure as UN/CEFACT Recommendation 20 codes, parameters, quantities and masses, energy, how far a machine is automated, the evidence grade a figure carries, and its source.",
   "definitions": {
     "identifier": {
       "type": "string",
@@ -37,26 +37,23 @@
         "coat",
         "other"
       ],
-      "description": "What the operation does to the work, named by its process family."
+      "description": "What the operation does to the work, named by its process family. mark is a material-removing mark (laser engraving or ablation); a printed or applied mark is coat."
     },
     "parameter": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "name",
-        "unit"
+        "name"
       ],
-      "description": "A named parameter with its unit and the range or values it takes. Work is matched to equipment by comparing a job's parameters with a machine's.",
+      "description": "A named parameter and the range or values it takes. A measured parameter carries its unit of measure; a categorical one (a material, a finish) carries values and no unit. Work is matched to equipment by comparing a job's parameters with a machine's.",
       "properties": {
         "name": {
           "type": "string",
           "minLength": 1,
           "description": "The parameter, for example thickness, length, outer-diameter, wall-thickness, bend-length, force, material."
         },
-        "unit": {
-          "type": "string",
-          "minLength": 1,
-          "description": "SI unit symbol (mm, kN, kW, kg, s), or 'text' for a categorical value such as a material."
+        "uom": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
         },
         "min": {
           "type": "number"
@@ -76,24 +73,46 @@
           "uniqueItems": true,
           "description": "The discrete values it takes, when not a range."
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "required": [
+                  "min"
+                ]
+              },
+              {
+                "required": [
+                  "max"
+                ]
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "uom"
+            ]
+          }
+        }
+      ]
     },
     "quantity": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "value",
-        "unit"
+        "uom"
       ],
+      "description": "An amount with its unit of measure: a count (H87 piece, SET set, C62 one), a length, a mass.",
       "properties": {
         "value": {
           "type": "number",
           "minimum": 0
         },
-        "unit": {
-          "type": "string",
-          "minLength": 1,
-          "description": "part, kit, lot, m, kg, or another counted unit."
+        "uom": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
         }
       }
     },
@@ -137,6 +156,602 @@
           "type": "string",
           "format": "uri",
           "description": "Where the figure is published, when it is published online."
+        }
+      }
+    },
+    "uom": {
+      "type": "string",
+      "pattern": "^[A-Z0-9]{2,3}$",
+      "description": "A unit of measure as a UN/CEFACT Recommendation 20 (revision 11e) common code, for example MMT millimetre, MTR metre, KGM kilogram, KWH kilowatt hour, KWT kilowatt, SEC second, H87 piece, C62 one, SET set. A value keeps the unit it was measured in. A symbol such as mm or kg is not a code."
+    },
+    "mass": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "uom"
+      ],
+      "description": "A mass: KGM kilogram or TNE tonne.",
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0
+        },
+        "uom": {
+          "type": "string",
+          "enum": [
+            "KGM",
+            "TNE"
+          ]
+        }
+      }
+    },
+    "energy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "uom",
+        "basis"
+      ],
+      "description": "Energy used, with how it is known: metered at the machine or circuit, or estimated from rated power and time.",
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0
+        },
+        "uom": {
+          "type": "string",
+          "enum": [
+            "KWH",
+            "MWH"
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "metered",
+            "estimated"
+          ]
+        },
+        "meterRef": {
+          "type": "string",
+          "description": "The meter or circuit the figure was read from, when metered."
+        }
+      }
+    },
+    "material": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quantity"
+      ],
+      "description": "Material that enters or leaves an operation: what it is, the lot it belongs to, how much, and its mass.",
+      "properties": {
+        "material": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The material or part, for example a grade and form (A36 plate 6 mm) or a part number."
+        },
+        "lot": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The lot, heat or batch the material is traced by."
+        },
+        "quantity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        "mass": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/mass"
+        }
+      }
+    },
+    "processGroup": {
+      "type": "string",
+      "enum": [
+        "primary-shaping",
+        "forming",
+        "separating",
+        "joining",
+        "coating",
+        "changing-material-properties",
+        "not-a-manufacturing-process"
+      ],
+      "description": "The main group of DIN 8580:2022-12 (Manufacturing processes: terms and definitions, division) a process belongs to; a process outside manufacturing, such as measuring, kitting or packing, is not-a-manufacturing-process."
+    },
+    "classifiedProcess": {
+      "type": "object",
+      "required": [
+        "process"
+      ],
+      "description": "A process with its DIN 8580 main group; the group is the one this standard assigns the process (other names its group itself).",
+      "properties": {
+        "process": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
+        },
+        "processGroup": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/processGroup"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "laser-cut"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "plasma-cut"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "waterjet-cut"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "tube-laser-cut"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "saw-cut"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "punch"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "press-brake"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "forming"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "tube-bend"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "forming"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "roll"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "forming"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "weld-robotic"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "joining"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "weld-manual"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "joining"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "turn"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "mill"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "drill"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "grind"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "deburr"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "mark"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "separating"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "measure"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "not-a-manufacturing-process"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "assemble"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "joining"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "kit"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "not-a-manufacturing-process"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "pack"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "not-a-manufacturing-process"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "coat"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "coating"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "automationLevel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mechanical",
+        "scale"
+      ],
+      "description": "How far a machine or cell is automated, on the reference scales of Frohm et al. (2008): mechanical (the physical work) from 1 totally manual, 2 static hand tool, 3 flexible hand tool, 4 automated hand tool, 5 static machine or workstation, 6 flexible machine or workstation (for example a CNC machine or a robot cell), to 7 totally automatic (resolves deviations on its own); and, when stated, cognitive (the information and control work) on the same seven steps. A manual bench, a cobot cell and a robot cell sit on one scale.",
+      "properties": {
+        "mechanical": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "cognitive": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7
+        },
+        "scale": {
+          "type": "string",
+          "enum": [
+            "frohm-2008"
+          ],
+          "description": "frohm-2008: the reference scales of Frohm, Lindstrom, Winroth and Stahre, Levels of Automation in Manufacturing, Ergonomia (2008)."
+        }
+      }
+    },
+    "isa95Level": {
+      "type": "string",
+      "enum": [
+        "work-center",
+        "work-unit"
+      ],
+      "description": "Where a machine or cell sits in the role-based equipment hierarchy of IEC 62264-1 (ISA-95): a work center (a production line, production unit or storage zone) or a work unit under one (a work cell, unit or storage unit)."
+    },
+    "alignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standard",
+        "identifier"
+      ],
+      "description": "A published standard a record maps to, named by identifier, never referenced.",
+      "properties": {
+        "standard": {
+          "type": "string",
+          "minLength": 1,
+          "description": "For example OPC UA, MTConnect, ISA-95."
+        },
+        "identifier": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The specification and version, for example OPC 40501-1 1.02.0, OPC 40010-1 1.01, MTConnect 2.7."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type or component the record maps to in that standard, for example the MTConnect component Controller."
         }
       }
     }

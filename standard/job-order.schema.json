@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/job-order.schema.json",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "title": "Job order",
   "description": "Work a flow asks of a plant floor: the operations in order, the quantity, the parameters of the work, and when it is due. A job order is matched to equipment by its parameters; the shop answers with a job response.",
   "type": "object",
@@ -69,8 +69,23 @@
               }
             ],
             "description": "Equipment named for the operation, when the order names one."
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/material"
+            },
+            "description": "The material the operation needs: what, from which lot when one is required, how much."
+          },
+          "processGroup": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/processGroup"
           }
-        }
+        },
+        "allOf": [
+          {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/classifiedProcess"
+          }
+        ]
       }
     }
   }
