@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/job-response.schema.json",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "title": "Job response",
-  "description": "What a plant floor returned for a job order: per operation, the equipment that did it, the quantity made and scrapped, and the time it took. Responses are the measured timing that raises a process timing's evidence grade. From 0.3.0 each operation states the material it consumed and produced, by lot and mass, and the energy it used.",
+  "description": "What a plant floor returned for a job order: per operation, the equipment that did it, the quantity made and scrapped, and the time it took. Responses are the measured timing that raises a process timing's evidence grade. From 0.3.0 each operation states the material it consumed and produced, by lot and mass, and the energy it used. From 0.4.0 an operation's energy may carry the interval it was used in.",
   "type": "object",
   "additionalProperties": false,
   "required": [

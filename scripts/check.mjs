@@ -116,10 +116,23 @@ if (common && !uncompiled.has('standard/common.schema.json')) {
     if (!ec(machine({ machineAxes: 7 }))) fail('standard/equipment-capability.schema.json', 'refuses a 7-joint arm');
     if (ec(machine(7))) fail('standard/equipment-capability.schema.json', 'accepts a bare axis count (0.3.0 form)');
   }
+  must.push(
+    ['meter', { meterId: 'shop-1:main', protocol: 'green-button', dataItem: 'UsagePoint', scope: 'facility' }, true],
+    ['meter', { meterId: 'shop-1:main', dataItem: 'UsagePoint', scope: 'facility' }, false],
+  );
   for (const [name, doc, ok] of must) {
     const v = def(name);
     if (v && v(doc) !== ok) fail('standard/common.schema.json', `${name} ${ok ? 'refuses' : 'accepts'} ${JSON.stringify(doc)}`);
   }
+}
+
+// 4c. An energy interval ends after it starts, in every example.
+for (const { example } of manifest) {
+  if (!existsSync(join(ROOT, example))) continue;
+  walk(load(example), (node) => {
+    const iv = node.interval;
+    if (iv && typeof iv.start === 'string' && typeof iv.end === 'string' && Date.parse(iv.end) <= Date.parse(iv.start)) fail(example, `an interval ends (${iv.end}) before it starts (${iv.start})`);
+  });
 }
 
 // 5. Public text names the standard and the published standards it maps, nothing internal to any steward.

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/common.schema.json",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "title": "Open Plant Floor common definitions",
   "description": "Definitions the Open Plant Floor schemas share: identifiers, the processes a machine performs and their DIN 8580 main group, units of measure as UN/CEFACT Recommendation 20 codes, parameters, quantities and masses, energy, how far a machine is automated, the evidence grade a figure carries, and its source.",
   "definitions": {
@@ -217,6 +217,25 @@
         "meterRef": {
           "type": "string",
           "description": "The meter or circuit the figure was read from, when metered."
+        },
+        "interval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "start",
+            "end"
+          ],
+          "description": "The time the energy was used in, so a metered reading can be cut to a job's execution window.",
+          "properties": {
+            "start": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "end": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
         }
       }
     },
@@ -752,6 +771,50 @@
         "type": {
           "type": "string",
           "description": "The type or component the record maps to in that standard, for example the MTConnect component Controller."
+        }
+      }
+    },
+    "meter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "meterId",
+        "protocol",
+        "scope"
+      ],
+      "description": "Where a machine's, cell's or facility's energy is read: the meter, the protocol it speaks and the data item read, named by identifier.",
+      "properties": {
+        "meterId": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+        },
+        "protocol": {
+          "type": "string",
+          "enum": [
+            "mtconnect",
+            "opc-ua-ecm",
+            "green-button",
+            "modbus",
+            "manual"
+          ],
+          "description": "mtconnect: an MTConnect agent; opc-ua-ecm: OPC 34100 Energy Consumption Management (attached to a machine by OPC 40001-4); green-button: NAESB ESPI (a utility's interval data); modbus: a meter read over Modbus; manual: read by hand."
+        },
+        "dataItem": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What the protocol reads, for example MTConnect ElectricalEnergy, OPC 34100 AcActiveEnergyTotalImportHp, a Green Button UsagePoint, a Modbus register."
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "machine",
+            "cell",
+            "facility"
+          ]
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri",
+          "description": "Where the reading is served, when it is served."
         }
       }
     }
