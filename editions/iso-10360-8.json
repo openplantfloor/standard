@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-10360-8.json",
+  "standard": {
+    "name": "Geometrical product specifications (GPS) -- Acceptance and reverification tests for coordinate measuring systems (CMS) -- Part 8: CMMs with optical distance sensors",
+    "identifier": "ISO 10360-8",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "date": "2013"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/54522.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "accuracy"
+      ]
+    },
+    {
+      "schema": "standard/extensions/measuring-machine.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/54522.html"
+    ]
+  },
+  "notes": "Confirmed 2024."
+}

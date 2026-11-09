@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/un-cefact-rec-20.json",
+  "standard": {
+    "name": "Codes for Units of Measure Used in International Trade",
+    "identifier": "UN/CEFACT Recommendation 20",
+    "publisher": "United Nations Centre for Trade Facilitation and Electronic Business (UN/CEFACT)",
+    "status": "current"
+  },
+  "access": {
+    "kind": "free-to-read"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "uom"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://docs.peppol.eu/poacc/upgrade-3/codelist/UNECERec20/"
+    ]
+  },
+  "notes": "Every unit of measure is a common code from this list, for example MMT, KGM, KWT, B47, RPM, E96, C16, AMP, P1."
+}

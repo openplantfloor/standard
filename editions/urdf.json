@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/urdf.json",
+  "standard": {
+    "name": "Unified Robot Description Format",
+    "identifier": "URDF",
+    "publisher": "ROS (Open Robotics)",
+    "status": "current"
+  },
+  "access": {
+    "kind": "open-licence",
+    "licence": "BSD-3-Clause"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "kinematicModel"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://github.com/ros/urdfdom"
+    ]
+  },
+  "notes": "Joint types, position limits, velocity and effort, and link inertia, in SI units."
+}

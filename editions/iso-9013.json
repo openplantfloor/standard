@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-9013.json",
+  "standard": {
+    "name": "Thermal cutting -- Classification of thermal cuts -- Geometrical product specification and quality tolerances",
+    "identifier": "ISO 9013",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2017"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/60321.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/laser-source.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/60321.html"
+    ]
+  },
+  "notes": "Amendment 1 (2024)."
+}

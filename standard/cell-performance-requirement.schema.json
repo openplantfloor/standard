@@ -1,0 +1,683 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/cell-performance-requirement.schema.json",
+  "title": "Cell Performance Requirement",
+  "version": "0.3.0",
+  "description": "What a robot cell must achieve, stated before it is chosen: the parts it handles and their mix, the pace it holds, the payload with tooling, the reach as the poses it must make, the ISO 9283 characteristics it must hold under stated conditions, its availability (after VDI 3423) and overall equipment effectiveness (after ISO 22400-2), its reliability, changeover and shifts, its safeguarding basis (ISO 10218-2), the interfaces it must offer, and the acceptance stages it passes, each with its criterion. A cell offered against it is an equipment-capability record with the cell extension. 0.1.1: a part's share is optional, stated once the mix is known. 0.2.0: an acceptance stage names the authority that accepts it (standard/authority).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "requirementId",
+    "name",
+    "maturity",
+    "partMix",
+    "pace"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/cell-performance-requirement.schema.json"
+    },
+    "requirementId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cellRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The cell's equipment record, once there is one."
+    },
+    "processes": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
+      }
+    },
+    "maturity": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/maturity"
+    },
+    "partMix": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "part"
+        ],
+        "properties": {
+          "part": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The part or part family."
+          },
+          "partRef": {
+            "type": "string",
+            "description": "The part's own record, when it has one."
+          },
+          "share": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Its share of the cell's output, once the mix is known; absent while it is not."
+          },
+          "mass": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "KGM",
+                      "TNE",
+                      "LBR"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "envelope": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "length": {
+                "allOf": [
+                  {
+                    "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+                  },
+                  {
+                    "properties": {
+                      "uom": {
+                        "enum": [
+                          "MMT",
+                          "CMT",
+                          "MTR",
+                          "INH",
+                          "FOT"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "width": {
+                "allOf": [
+                  {
+                    "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+                  },
+                  {
+                    "properties": {
+                      "uom": {
+                        "enum": [
+                          "MMT",
+                          "CMT",
+                          "MTR",
+                          "INH",
+                          "FOT"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "height": {
+                "allOf": [
+                  {
+                    "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+                  },
+                  {
+                    "properties": {
+                      "uom": {
+                        "enum": [
+                          "MMT",
+                          "CMT",
+                          "MTR",
+                          "INH",
+                          "FOT"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "material": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "pace": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "takt": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ],
+          "description": "The pace the cell must hold, per unit it delivers."
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "operation"
+            ],
+            "properties": {
+              "operation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "process": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
+              },
+              "cycle": {
+                "allOf": [
+                  {
+                    "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+                  },
+                  {
+                    "properties": {
+                      "uom": {
+                        "enum": [
+                          "SEC",
+                          "MIN",
+                          "HUR",
+                          "DAY"
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "description": "The cycle the operation must hold, as a value or a range."
+              },
+              "timingRef": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+                "description": "The process-timing record its cycle is read from."
+              },
+              "tendedEquipmentRef": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+                "description": "The machine it tends, for a tend operation."
+              }
+            }
+          }
+        }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The load at the flange: the heaviest part with its tooling, and where its centre of gravity sits, to be checked against the robot's load diagram.",
+      "properties": {
+        "part": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "KGM",
+                    "TNE",
+                    "LBR"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "tooling": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "KGM",
+                    "TNE",
+                    "LBR"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "total": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "KGM",
+                    "TNE",
+                    "LBR"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "centreOfGravity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/position"
+        }
+      }
+    },
+    "reach": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The poses the cell must make, as named positions in its frame.",
+      "properties": {
+        "positions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "position"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/position"
+              }
+            }
+          }
+        },
+        "envelope": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ],
+          "description": "The reach the poses call for, when stated as one figure."
+        }
+      }
+    },
+    "accuracy": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/accuracy"
+      },
+      "description": "The characteristics the cell must hold and the conditions they hold under."
+    },
+    "availability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction"
+        },
+        "basis": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+        }
+      }
+    },
+    "oee": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction"
+        },
+        "basis": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+        },
+        "kpiRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+          "description": "The kpi-definition it is measured by."
+        }
+      }
+    },
+    "reliability": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "meanTimeBetweenFailures": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "meanTimeToRepair": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "changeover": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "target": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "variantsPerShift": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "toolChange": {
+          "type": "boolean"
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "shiftsPerDay": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4
+        },
+        "shiftLength": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "unattended": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ],
+          "description": "How long it must run without a person."
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "standards": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+          }
+        },
+        "operatorInteraction": {
+          "type": "string",
+          "enum": [
+            "none",
+            "load-station",
+            "collaborative"
+          ]
+        },
+        "riskAssessmentMethod": {
+          "type": "string"
+        }
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "description": "The interfaces the cell must offer: to the line's PLC, to the manufacturing system for job orders and responses, to an energy meter.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "fieldbus",
+              "plc-motion",
+              "cnc",
+              "opc-ua",
+              "mes",
+              "energy-meter",
+              "safety-io",
+              "other"
+            ]
+          },
+          "alignment": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/alignment"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "acceptance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stage",
+          "criterion"
+        ],
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": [
+              "feasibility",
+              "simulation",
+              "factory-acceptance",
+              "site-acceptance",
+              "run-at-rate"
+            ]
+          },
+          "criterion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kpiRef": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          },
+          "threshold": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "comparator",
+              "value"
+            ],
+            "properties": {
+              "comparator": {
+                "type": "string",
+                "enum": [
+                  "<",
+                  "<=",
+                  ">=",
+                  ">"
+                ]
+              },
+              "value": {
+                "type": "number"
+              },
+              "uom": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+              },
+              "relativeTo": {
+                "type": "string",
+                "enum": [
+                  "absolute",
+                  "simulated",
+                  "required"
+                ],
+                "description": "absolute: the value itself; simulated or required: a multiple of the simulated or required figure."
+              }
+            }
+          },
+          "duration": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "SEC",
+                      "MIN",
+                      "HUR",
+                      "DAY"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "evidence": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "evidence",
+          "source"
+        ],
+        "properties": {
+          "field": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "evidence": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+          },
+          "source": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

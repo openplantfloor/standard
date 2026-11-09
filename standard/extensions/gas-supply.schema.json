@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/gas-supply.schema.json",
+  "title": "Gas Supply",
+  "version": "0.1.0",
+  "description": "An on-site gas generator as its specification states it: the gas, the technology, the purity and the flow delivered at that purity, and outlet pressure.",
+  "appliesTo": [
+    "supply-gas"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "gas": {
+      "type": "string",
+      "enum": [
+        "nitrogen",
+        "oxygen",
+        "other"
+      ]
+    },
+    "technology": {
+      "type": "string",
+      "enum": [
+        "pressure-swing-adsorption",
+        "membrane",
+        "other"
+      ]
+    },
+    "purity": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "P1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "flowAtPurity": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/rate"
+        },
+        {
+          "properties": {
+            "numerator": {
+              "enum": [
+                "MTQ",
+                "LTR"
+              ]
+            },
+            "denominator": {
+              "enum": [
+                "HUR",
+                "MIN"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "outletPressure": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "BAR"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

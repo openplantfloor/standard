@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/saw.schema.json",
+  "title": "Saw",
+  "version": "0.1.0",
+  "description": "A metal-cutting saw as its specification states it: type, cutting capacity per shape and angle, blade size and miter range. Safety of sawing machines for cold metal is ISO 16093.",
+  "appliesTo": [
+    "saw-cut"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "sawType": {
+      "type": "string",
+      "enum": [
+        "band-vertical",
+        "band-horizontal",
+        "circular-cold",
+        "abrasive",
+        "other"
+      ]
+    },
+    "capacity": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "shape",
+          "max"
+        ],
+        "properties": {
+          "shape": {
+            "type": "string",
+            "description": "For example round, square, rectangle, bundle."
+          },
+          "angle": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "DD",
+                      "C81"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "max": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "blade": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "width": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "diameter": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "miterRange": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "DD",
+                "C81"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

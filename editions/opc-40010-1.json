@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/opc-40010-1.json",
+  "standard": {
+    "name": "OPC UA for Robotics -- Part 1: Vertical Integration",
+    "identifier": "OPC 40010-1",
+    "publisher": "OPC Foundation",
+    "edition": {
+      "number": "1.02",
+      "date": "2025-09-09"
+    },
+    "status": "current",
+    "url": "https://reference.opcfoundation.org/Robotics/v102/docs/"
+  },
+  "access": {
+    "kind": "free-with-registration",
+    "licence": "OPC Foundation specification licence; NodeSet files MIT",
+    "machineReadable": "https://github.com/OPCFoundation/UA-Nodeset"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "structure"
+      ]
+    },
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "alignment"
+      ]
+    },
+    {
+      "schema": "standard/extensions/cell.schema.json",
+      "fields": [
+        "control"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://opcfoundation.org/developer-tools/documents/view/218",
+      "https://reference.opcfoundation.org/Robotics/v102/docs/",
+      "https://github.com/OPCFoundation/UA-Nodeset"
+    ]
+  },
+  "notes": "Its MotionDeviceCategory values (articulated, SCARA, cartesian, spherical, parallel, cylindrical) map to the robot extension's structure. It models identity and runtime state, not payload, reach or repeatability. Version 1.00 is deprecated; no 1.01 is published."
+}

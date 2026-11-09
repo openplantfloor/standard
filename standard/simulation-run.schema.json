@@ -1,0 +1,336 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/simulation-run.schema.json",
+  "title": "Simulation Run",
+  "version": "0.1.0",
+  "description": "One run of a simulation study, reported as the STRESS guidelines ask (Monks et al. 2019): the scenario and how it differs from the base case, the engine and version, the code and inputs it ran (by hash), the input distributions and assumptions, whether it terminates, its warm-up and run length, its replications and how they are combined, its random number streams, when and where it ran; and its results -- each a KPI value with its confidence interval, and per station its utilisation and its blocked and starved shares -- with any time series it wrote (IDTA 02008).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "runId",
+    "studyRef",
+    "engine",
+    "inputs",
+    "replications",
+    "executedAt",
+    "outputs"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/simulation-run.schema.json"
+    },
+    "runId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "studyRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The simulation-study it belongs to."
+    },
+    "scenario": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string"
+        },
+        "changesFromBase": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "engine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "code": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256"
+      ],
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "The hash of the inputs as run."
+        },
+        "refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          },
+          "description": "The process-timing, requirement and plan records it read."
+        }
+      }
+    },
+    "distributions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "input",
+          "distribution"
+        ],
+        "properties": {
+          "input": {
+            "type": "string"
+          },
+          "distribution": {
+            "type": "string",
+            "description": "For example triangular, lognormal, empirical."
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "uom": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+          }
+        }
+      }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "terminating": {
+      "type": "boolean"
+    },
+    "stoppingCondition": {
+      "type": "string"
+    },
+    "warmUp": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/duration"
+        },
+        "method": {
+          "type": "string"
+        }
+      }
+    },
+    "runLength": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/duration"
+    },
+    "replications": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "estimation": {
+      "type": "string",
+      "enum": [
+        "replications",
+        "batch-means",
+        "single-run"
+      ]
+    },
+    "random": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "generator": {
+          "type": "string"
+        },
+        "seed": {
+          "type": "integer"
+        },
+        "streams": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "executedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/duration"
+        },
+        "hardware": {
+          "type": "string"
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kpiRef",
+          "statistic",
+          "value"
+        ],
+        "properties": {
+          "kpiRef": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          },
+          "scopeRef": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          },
+          "statistic": {
+            "type": "string",
+            "enum": [
+              "mean",
+              "median",
+              "p05",
+              "p95",
+              "min",
+              "max",
+              "total"
+            ]
+          },
+          "value": {
+            "type": "number"
+          },
+          "uom": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+          },
+          "interval": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "level",
+              "low",
+              "high"
+            ],
+            "properties": {
+              "level": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction"
+              },
+              "low": {
+                "type": "number"
+              },
+              "high": {
+                "type": "number"
+              }
+            }
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "stations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stationRef"
+        ],
+        "properties": {
+          "stationRef": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          },
+          "utilisation": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction"
+          },
+          "blocked": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction"
+          },
+          "starved": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction"
+          },
+          "throughput": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/rate"
+          },
+          "meanQueue": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "timeSeries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "uri",
+          "sha256"
+        ],
+        "description": "A file the record depends on and does not embed.",
+        "properties": {
+          "uri": {
+            "type": "string",
+            "format": "uri"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "format": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The file's format and version, for example step-ap242, jt, 3d-pdf, csv."
+          }
+        }
+      }
+    },
+    "evidence": {
+      "const": "simulated"
+    }
+  }
+}

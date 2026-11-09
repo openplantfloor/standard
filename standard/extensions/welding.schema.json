@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/welding.schema.json",
+  "title": "Welding",
+  "version": "0.1.0",
+  "description": "Welding equipment as its specification states it: the welding processes by their ISO 4063 reference numbers (for example 135 MAG, 131 MIG, 141 TIG), and each power source's rated output at its duty cycle and current range under IEC 60974-1. A shop's welding quality level (ISO 3834) is a property of the shop, not the machine.",
+  "appliesTo": [
+    "weld-robotic",
+    "weld-manual"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "processNumbers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{2,3}$"
+      },
+      "uniqueItems": true,
+      "description": "ISO 4063 process reference numbers."
+    },
+    "powerSources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "manufacturer": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "ratedCurrent": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "AMP"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "dutyCycle": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "P1"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "currentRange": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "AMP"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "standard": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+          }
+        }
+      }
+    },
+    "wireDiameter": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

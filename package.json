@@ -1,0 +1,25 @@
+{
+  "name": "@openplantfloor/standard",
+  "version": "0.1.0",
+  "description": "Open Plant Floor: an open standard for the plant floor -- what equipment can do, how long work takes, and the jobs a shop runs. JSON Schemas served at https://schemas.openplantfloor.org/.",
+  "license": "Apache-2.0",
+  "homepage": "https://schemas.openplantfloor.org/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openplantfloor/standard.git"
+  },
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "site": "node scripts/build-site.mjs",
+    "served": "node scripts/check-served.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

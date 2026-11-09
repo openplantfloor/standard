@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/tube-bender.schema.json",
+  "title": "Tube Bender",
+  "version": "0.1.0",
+  "description": "A tube or pipe bender as its specification states it: capacity per material (outer diameter and wall), centreline radius range, maximum bend angle, stacks, bend direction and mandrel. Safety of bending machines is ANSI B11.15 in the United States.",
+  "appliesTo": [
+    "tube-bend"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "capacity": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "material",
+          "outerDiameterMax"
+        ],
+        "properties": {
+          "material": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outerDiameterMax": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "wallMax": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "centrelineRadius": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "maxBendAngle": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "DD",
+                "C81"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "stacks": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "bendDirection": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right",
+        "both"
+      ]
+    },
+    "mandrel": {
+      "type": "boolean"
+    },
+    "cnc": {
+      "type": "boolean"
+    }
+  }
+}

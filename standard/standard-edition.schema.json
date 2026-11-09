@@ -1,0 +1,157 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "title": "Standard Edition",
+  "version": "0.1.0",
+  "description": "A published standard the Open Plant Floor fields align to, as the standard names it: its publisher and identifier, the edition and its date, its status, how it can be read and under what licence, which fields of this standard use it, and when and where that was checked. Edition records are served at https://schemas.openplantfloor.org/editions/ and named from a field's standardRef or alignment.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "$id",
+    "standard",
+    "usedBy",
+    "verified"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json"
+    },
+    "$id": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://schemas\\.openplantfloor\\.org/editions/"
+    },
+    "standard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "identifier",
+        "publisher",
+        "status"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identifier": {
+          "type": "string",
+          "minLength": 1,
+          "description": "For example ISO 9283, OPC 40010-1, ECLASS."
+        },
+        "publisher": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edition": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "number": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string",
+              "description": "The publication date, or year, as the publisher states it."
+            }
+          },
+          "description": "The edition the fields align to; omitted where it could not be confirmed at the publisher."
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "current",
+            "under-revision",
+            "withdrawn",
+            "draft",
+            "unconfirmed"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The publisher's page for it."
+        }
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "purchase",
+            "free-to-read",
+            "free-with-registration",
+            "open-licence",
+            "membership"
+          ]
+        },
+        "licence": {
+          "type": "string",
+          "description": "An SPDX identifier or the licence's name, for open data or code."
+        },
+        "machineReadable": {
+          "type": "string",
+          "description": "Where a machine-readable form is published, for example a NodeSet repository."
+        }
+      }
+    },
+    "usedBy": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The schema path, for example standard/extensions/robot.schema.json."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The fields that align to it."
+          }
+        }
+      }
+    },
+    "verified": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "date",
+        "sources"
+      ],
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

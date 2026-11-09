@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/din-8580.json",
+  "standard": {
+    "name": "Fertigungsverfahren -- Begriffe, Einteilung (Manufacturing processes -- Terms and definitions, division)",
+    "identifier": "DIN 8580",
+    "publisher": "DIN",
+    "edition": {
+      "date": "2022-12"
+    },
+    "status": "current",
+    "url": "https://www.dinmedia.de/de/norm/din-8580/331759492"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "processGroup"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.dinmedia.de/de/norm/din-8580/331759492"
+    ]
+  }
+}

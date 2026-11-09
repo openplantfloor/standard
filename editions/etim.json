@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/etim.json",
+  "standard": {
+    "name": "ETIM classification model",
+    "identifier": "ETIM",
+    "publisher": "ETIM International",
+    "edition": {
+      "number": "10.0",
+      "date": "2024-12-05"
+    },
+    "status": "current",
+    "url": "https://www.etim-international.com"
+  },
+  "access": {
+    "kind": "open-licence",
+    "licence": "ODC-By-1.0"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "classification"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.etim-international.com/?p=754",
+      "https://www.etim-international.com/?p=1811"
+    ]
+  },
+  "notes": "Coverage of machine tools and robots not confirmed."
+}

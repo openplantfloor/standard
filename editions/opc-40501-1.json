@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/opc-40501-1.json",
+  "standard": {
+    "name": "OPC UA for Machine Tools -- Part 1: Monitoring and Job",
+    "identifier": "OPC 40501-1",
+    "publisher": "OPC Foundation",
+    "edition": {
+      "number": "1.02.0",
+      "date": "2024-11-01"
+    },
+    "status": "current",
+    "url": "https://reference.opcfoundation.org/"
+  },
+  "access": {
+    "kind": "free-with-registration",
+    "licence": "OPC Foundation specification licence; NodeSet files MIT",
+    "machineReadable": "https://github.com/OPCFoundation/UA-Nodeset"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/machining-center.schema.json",
+      "fields": []
+    },
+    {
+      "schema": "standard/extensions/turning-center.schema.json",
+      "fields": []
+    },
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "alignment"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://reference.opcfoundation.org/",
+      "https://github.com/OPCFoundation/UA-Nodeset"
+    ]
+  }
+}

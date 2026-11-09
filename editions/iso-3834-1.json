@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-3834-1.json",
+  "standard": {
+    "name": "Quality requirements for fusion welding of metallic materials -- Part 1: Criteria for the selection of the appropriate level of quality requirements",
+    "identifier": "ISO 3834-1",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2021"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/81650.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/welding.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/81650.html"
+    ]
+  },
+  "notes": "A shop's quality level, not a machine's; named for context."
+}

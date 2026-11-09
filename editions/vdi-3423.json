@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/vdi-3423.json",
+  "standard": {
+    "name": "Technical availability of machines and production lines -- Terms, definitions, determination of time periods and calculation",
+    "identifier": "VDI 3423",
+    "publisher": "Verein Deutscher Ingenieure (VDI)",
+    "edition": {
+      "date": "2011-08"
+    },
+    "status": "current",
+    "url": "https://vdi.de/richtlinien/details/vdi-3423-technical-availability-of-machines-and-production-lines-terms-definitions-determination-of-time-periods-and-calculation"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/cell-performance-requirement.schema.json",
+      "fields": [
+        "availability"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://vdi.de/richtlinien/details/vdi-3423-technical-availability-of-machines-and-production-lines-terms-definitions-determination-of-time-periods-and-calculation"
+    ]
+  },
+  "notes": "Availability of single machines and whole systems; written as a working basis between users and machine or plant suppliers. Replaces the 2002 edition."
+}

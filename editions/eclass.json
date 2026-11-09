@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/eclass.json",
+  "standard": {
+    "name": "ECLASS",
+    "identifier": "ECLASS",
+    "publisher": "ECLASS e.V.",
+    "edition": {
+      "number": "16.0",
+      "date": "2025-11"
+    },
+    "status": "current",
+    "url": "https://eclass.eu"
+  },
+  "access": {
+    "kind": "purchase",
+    "licence": "ECLASS Terms of Use 4.3; the ECLASS 16.0 Asset release is free"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "classification"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://eclass.eu/en/news/news/eclass-release-160-now-available",
+      "https://eclass.eu/fileadmin/Redaktion/pdf-Dateien/Sonstige_Dateien/ECLASS_terms-of-use_4-3.pdf"
+    ]
+  },
+  "notes": "Its terms allow ECLASS structural elements in standardization documents without a licence and ask that the version always be given. Classes used in the examples: 27-38-01-01 articulated robot, 36-61-04-02 laser cutting machine, 36-63-07-01 press brakes, 36-43-01-04 screw-type compressor (oil-flooded)."
+}

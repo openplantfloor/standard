@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/mesa-kpi-ml.json",
+  "standard": {
+    "name": "KPI Markup Language (KPI-ML)",
+    "identifier": "MESA KPI-ML",
+    "publisher": "MESA International",
+    "edition": {
+      "date": "2015-05"
+    },
+    "status": "current",
+    "url": "https://www.automation.com/article/mesa-releases-kpi-markup-language"
+  },
+  "access": {
+    "kind": "free-with-registration"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/kpi-definition.schema.json",
+      "fields": [
+        "alignments"
+      ]
+    },
+    {
+      "schema": "standard/kpi-value.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.automation.com/article/mesa-releases-kpi-markup-language"
+    ]
+  },
+  "notes": "XML schemas for KPI definitions, KPI instances and values, following the ISO 22400 data models."
+}

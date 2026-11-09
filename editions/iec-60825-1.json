@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iec-60825-1.json",
+  "standard": {
+    "name": "Safety of laser products -- Part 1: Equipment classification and requirements",
+    "identifier": "IEC 60825-1",
+    "publisher": "International Electrotechnical Commission (IEC)",
+    "edition": {
+      "number": "3",
+      "date": "2014"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/laser-source.schema.json",
+      "fields": [
+        "laserClass"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://standards.iteh.ai"
+    ]
+  },
+  "notes": "Interpretation sheets 1 and 2 (2017)."
+}

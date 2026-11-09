@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/simulation-study.schema.json",
+  "title": "Simulation Study",
+  "version": "0.1.0",
+  "description": "A simulation study of a cell, line or shop: what it is for and not for, what it covers, the model it runs (its format, file, owner and licence, after IDTA 02005 Provision of Simulation Models), and the verification and validation of each of its phase results, after the procedure model of VDI 3633 Part 1 (goal description, task specification, conceptual model, raw and prepared data, formal and executable model, simulation results). Its runs are simulation-run records.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "studyId",
+    "name",
+    "purpose",
+    "model"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/simulation-study.schema.json"
+    },
+    "studyId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "usedFor": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notUsedFor": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "equipmentRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          }
+        },
+        "requirementRefs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          }
+        },
+        "level": {
+          "type": "string",
+          "enum": [
+            "work-unit",
+            "work-center",
+            "area",
+            "site",
+            "enterprise",
+            "project"
+          ]
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "kind"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "discrete-event",
+            "robot-cell-kinematic",
+            "agent-based",
+            "continuous",
+            "other"
+          ]
+        },
+        "tool": {
+          "type": "string",
+          "description": "The simulation tool and its version."
+        },
+        "format": {
+          "type": "string",
+          "description": "The model's format, for example a tool's own project format, FMI 3.0, SSP 2.0."
+        },
+        "file": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "uri",
+            "sha256"
+          ],
+          "description": "A file the record depends on and does not embed.",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "format": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The file's format and version, for example step-ap242, jt, 3d-pdf, csv."
+            }
+          }
+        },
+        "owner": {
+          "type": "string",
+          "description": "Who owns the model."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Who built it."
+        },
+        "licence": {
+          "type": "string",
+          "description": "The licence it is shared under: free, perpetual, subscription or volume-based (IDTA 02005), or an SPDX identifier."
+        }
+      }
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "phaseResult",
+          "status"
+        ],
+        "properties": {
+          "phaseResult": {
+            "type": "string",
+            "enum": [
+              "goal-description",
+              "task-specification",
+              "conceptual-model",
+              "raw-data",
+              "formal-model",
+              "prepared-data",
+              "executable-model",
+              "simulation-results"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not-started",
+              "in-progress",
+              "accepted",
+              "rejected"
+            ]
+          },
+          "criteria": {
+            "type": "string"
+          },
+          "responsible": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "uri",
+              "sha256"
+            ],
+            "description": "A file the record depends on and does not embed.",
+            "properties": {
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "format": {
+                "type": "string",
+                "minLength": 1,
+                "description": "The file's format and version, for example step-ap242, jt, 3d-pdf, csv."
+              }
+            }
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "standards": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

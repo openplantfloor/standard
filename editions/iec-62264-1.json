@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iec-62264-1.json",
+  "standard": {
+    "name": "Enterprise-control system integration -- Part 1: Models and terminology",
+    "identifier": "IEC 62264-1",
+    "publisher": "International Electrotechnical Commission (IEC)",
+    "edition": {
+      "date": "2013"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "isa95Level"
+      ]
+    },
+    {
+      "schema": "standard/kpi-definition.schema.json",
+      "fields": [
+        "scopeLevel"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://webstore.iec.ch"
+    ]
+  },
+  "notes": "ANSI/ISA-95.00.01-2025 is the US update; IEC 62264-2 Edition 3.0 (2026) holds the equipment and physical asset objects."
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/process-timing.schema.json",
+  "timingId": "shop-1:timing:laser-01:blank-3mm",
+  "equipmentRef": "shop-1:laser-01",
+  "process": "laser-cut",
+  "operation": "cut a 300 x 300 mm blank",
+  "output": {
+    "value": 1,
+    "uom": "H87"
+  },
+  "cycleSeconds": {
+    "low": 20,
+    "base": 30,
+    "high": 45
+  },
+  "energyPerCycle": {
+    "value": 0.15,
+    "uom": "KWH",
+    "basis": "estimated"
+  },
+  "setupSeconds": 300,
+  "conditions": [
+    {
+      "name": "material",
+      "values": [
+        "mild-steel"
+      ]
+    },
+    {
+      "name": "thickness",
+      "min": 3,
+      "max": 3,
+      "uom": "MMT"
+    }
+  ],
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "Planning estimate pending measurement"
+    }
+  ]
+}

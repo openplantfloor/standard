@@ -1,0 +1,107 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/job-response.schema.json",
+  "jobResponseId": "flow-1:response-0001",
+  "jobOrderRef": "flow-1:order-0001",
+  "status": "completed",
+  "operations": [
+    {
+      "sequence": 1,
+      "equipmentRef": "shop-1:laser-01",
+      "made": {
+        "value": 40,
+        "uom": "H87"
+      },
+      "scrapped": {
+        "value": 0,
+        "uom": "H87"
+      },
+      "cycleSecondsActual": 28,
+      "setupSecondsActual": 240,
+      "consumed": [
+        {
+          "material": "A36 sheet 3 mm, 1220 x 2440 mm",
+          "lot": "heat-24-0117",
+          "quantity": {
+            "value": 2,
+            "uom": "H87"
+          },
+          "mass": {
+            "value": 140.2,
+            "uom": "KGM"
+          }
+        }
+      ],
+      "produced": [
+        {
+          "material": "bracket-a blank",
+          "lot": "flow-1:order-0001",
+          "quantity": {
+            "value": 40,
+            "uom": "H87"
+          },
+          "mass": {
+            "value": 84.8,
+            "uom": "KGM"
+          }
+        }
+      ],
+      "energy": {
+        "value": 6,
+        "uom": "KWH",
+        "basis": "estimated"
+      }
+    },
+    {
+      "sequence": 2,
+      "equipmentRef": "shop-1:brake-01",
+      "made": {
+        "value": 40,
+        "uom": "H87"
+      },
+      "scrapped": {
+        "value": 1,
+        "uom": "H87"
+      },
+      "cycleSecondsActual": 42,
+      "consumed": [
+        {
+          "material": "bracket-a blank",
+          "lot": "flow-1:order-0001",
+          "quantity": {
+            "value": 40,
+            "uom": "H87"
+          },
+          "mass": {
+            "value": 84.8,
+            "uom": "KGM"
+          }
+        }
+      ],
+      "produced": [
+        {
+          "material": "bracket-a",
+          "lot": "flow-1:order-0001",
+          "quantity": {
+            "value": 39,
+            "uom": "H87"
+          },
+          "mass": {
+            "value": 82.7,
+            "uom": "KGM"
+          }
+        }
+      ],
+      "energy": {
+        "value": 1.2,
+        "uom": "KWH",
+        "basis": "metered",
+        "meterRef": "shop-1:brake-01:circuit",
+        "interval": {
+          "start": "2026-11-28T09:00:00Z",
+          "end": "2026-11-28T09:28:00Z"
+        }
+      }
+    }
+  ],
+  "completedAt": "2026-11-28T15:30:00Z"
+}

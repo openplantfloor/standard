@@ -1,0 +1,238 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/press-brake.schema.json",
+  "title": "Press Brake",
+  "version": "0.1.0",
+  "description": "A press brake as its specification states it: press force, bending length, distance between housings, throat depth, stroke and open height, the back gauge's axes and travel, crowning, ram speeds and the tooling system. Safety of press brakes is ISO 6909 (replacing EN 12622).",
+  "appliesTo": [
+    "press-brake"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "pressForce": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "NEW",
+                "B47",
+                "TNE"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "B47 kilonewton; a specification in metric tons states TNE."
+    },
+    "bendingLength": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "distanceBetweenHousings": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "throatDepth": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "stroke": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "openHeight": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "backGaugeAxes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "travel": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "description": "Each back-gauge axis by its name (X, R, Z1, Z2 ...) and travel."
+    },
+    "crowning": {
+      "type": "string",
+      "enum": [
+        "none",
+        "manual",
+        "cnc-mechanical",
+        "cnc-hydraulic",
+        "other"
+      ]
+    },
+    "ramSpeeds": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "approach": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "C16"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "working": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "C16"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "return": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "C16"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "toolingSystem": {
+      "type": "string",
+      "description": "For example European (Promecam), American, Wila New Standard."
+    }
+  }
+}

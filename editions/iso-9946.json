@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-9946.json",
+  "standard": {
+    "name": "Manipulating industrial robots -- Presentation of characteristics",
+    "identifier": "ISO 9946",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "2",
+      "date": "1999"
+    },
+    "status": "unconfirmed"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://cdn.standards.iteh.ai/samples/28794/99120cbe13134de2b7bd1bdccfccdfdb/ISO-9946-1999.pdf"
+    ]
+  },
+  "notes": "The robot extension follows its clause 5 list of characteristics a robot specification presents. Edition from ISO's own sample; its current ISO status was not confirmed."
+}

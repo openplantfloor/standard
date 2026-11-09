@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/ansi-b11-12.json",
+  "standard": {
+    "name": "Safety requirements for roll-forming and roll-bending machines",
+    "identifier": "ANSI B11.12",
+    "publisher": "B11 Standards, Inc.",
+    "status": "unconfirmed"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/plate-roll.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.b11standards.org"
+    ]
+  },
+  "notes": "A reaffirmation of 2015 was seen; not confirmed."
+}

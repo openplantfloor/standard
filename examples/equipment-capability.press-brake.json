@@ -1,0 +1,106 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:brake-01",
+  "name": "Press brake, 14 ft",
+  "workEnvelope": {
+    "lengthMm": 4267
+  },
+  "ratedForce": {
+    "value": 2200,
+    "uom": "B47"
+  },
+  "processes": [
+    {
+      "process": "press-brake",
+      "shapes": [
+        "sheet",
+        "plate"
+      ],
+      "materials": [
+        {
+          "material": "mild-steel"
+        },
+        {
+          "material": "stainless-steel"
+        },
+        {
+          "material": "aluminium"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "bend-length",
+          "max": 4267,
+          "uom": "MMT"
+        }
+      ],
+      "processGroup": "forming"
+    }
+  ],
+  "classifications": [
+    {
+      "system": "eclass",
+      "systemVersion": "16.0",
+      "classId": "36-63-07-01",
+      "classIrdi": "0173-1#01-AKK108#020",
+      "className": "Press brakes"
+    }
+  ],
+  "extensions": {
+    "pressBrake": {
+      "pressForce": {
+        "value": 2200,
+        "uom": "B47"
+      },
+      "bendingLength": {
+        "value": 4267,
+        "uom": "MMT"
+      },
+      "throatDepth": {
+        "value": 410,
+        "uom": "MMT"
+      },
+      "stroke": {
+        "value": 265,
+        "uom": "MMT"
+      },
+      "backGaugeAxes": [
+        {
+          "name": "X",
+          "travel": {
+            "value": 800,
+            "uom": "MMT"
+          }
+        },
+        {
+          "name": "R",
+          "travel": {
+            "value": 250,
+            "uom": "MMT"
+          }
+        },
+        {
+          "name": "Z1"
+        },
+        {
+          "name": "Z2"
+        }
+      ],
+      "crowning": "cnc-hydraulic",
+      "toolingSystem": "European (Promecam)"
+    }
+  },
+  "evidence": "L1",
+  "sources": [
+    {
+      "kind": "equipment-owner",
+      "reference": "Shop equipment list"
+    }
+  ],
+  "notes": "Figures are illustrative of a 14 ft, 220 t class press brake; a shop states its own from the machine plate.",
+  "automationLevel": {
+    "mechanical": 6,
+    "scale": "frohm-2008"
+  },
+  "isa95Level": "work-unit"
+}

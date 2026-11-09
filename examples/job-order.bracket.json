@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/job-order.schema.json",
+  "jobOrderId": "flow-1:order-0001",
+  "flowRef": "flow-1",
+  "partRef": "bracket-a",
+  "quantity": {
+    "value": 40,
+    "uom": "H87"
+  },
+  "dueAt": "2026-12-01T17:00:00Z",
+  "operations": [
+    {
+      "sequence": 1,
+      "process": "laser-cut",
+      "parameters": [
+        {
+          "name": "material",
+          "values": [
+            "mild-steel"
+          ]
+        },
+        {
+          "name": "thickness",
+          "min": 3,
+          "max": 3,
+          "uom": "MMT"
+        }
+      ],
+      "processGroup": "separating",
+      "materials": [
+        {
+          "material": "A36 sheet 3 mm, 1220 x 2440 mm",
+          "quantity": {
+            "value": 2,
+            "uom": "H87"
+          },
+          "mass": {
+            "value": 140.2,
+            "uom": "KGM"
+          }
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "process": "press-brake",
+      "parameters": [
+        {
+          "name": "bend-length",
+          "max": 300,
+          "uom": "MMT"
+        }
+      ],
+      "processGroup": "forming"
+    }
+  ]
+}

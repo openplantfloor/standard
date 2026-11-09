@@ -1,0 +1,528 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/cell.schema.json",
+  "title": "Cell",
+  "version": "0.2.0",
+  "description": "A robot cell as one work unit (IEC 62264-1): its members by role, the end-of-arm tooling, fixtures and vision it uses, its safeguarding, its layout and its control. A member that is a machine of its own (the robot, a linear track, a tended saw or machining center) is a record of its own, named here by reference; a member not yet chosen is named by its class and a range, with its maturity. Safeguarding follows ISO 10218-2 (industrial robot applications and robot cells); the tool flange ISO 9409-1.",
+  "appliesTo": [
+    "weld-robotic",
+    "assemble",
+    "kit",
+    "pack",
+    "handle",
+    "tend",
+    "palletize",
+    "measure",
+    "mark",
+    "saw-cut",
+    "mill",
+    "drill",
+    "deburr",
+    "other"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "members"
+  ],
+  "definitions": {
+    "member": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "role"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "robot",
+            "external-axis",
+            "eoat",
+            "tool-changer",
+            "fixture",
+            "vision",
+            "safety-device",
+            "conveyor",
+            "station",
+            "tended-machine",
+            "amr",
+            "controller",
+            "plc",
+            "hmi",
+            "other"
+          ]
+        },
+        "equipmentRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+          "description": "The member's own equipment record."
+        },
+        "class": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The class or product family of a member with no record yet, for example six-axis articulated robot, 120 to 300 kg."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "maturity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/maturity"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "equipmentRef"
+          ]
+        },
+        {
+          "required": [
+            "class"
+          ]
+        }
+      ],
+      "description": "A tended machine is served by the cell, not owned by it: it keeps its own record and is named by equipmentRef."
+    },
+    "eoat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "eoatId": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "vacuum",
+            "parallel-gripper",
+            "angular-gripper",
+            "magnetic",
+            "tool-changer",
+            "fastening",
+            "spindle",
+            "welding-torch",
+            "other"
+          ]
+        },
+        "mass": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "KGM",
+                    "TNE",
+                    "LBR"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "centreOfGravity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/position"
+        },
+        "flange": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+            }
+          ],
+          "description": "The flange it mounts to, for example ISO 9409-1-125-6-M10."
+        },
+        "gripForce": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "NEW",
+                    "KNT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "partFamilies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "maturity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/maturity"
+        }
+      }
+    },
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "partFamilies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "locating": {
+          "type": "string",
+          "description": "The locating scheme, for example 3-2-1."
+        },
+        "changeover": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "maturity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/maturity"
+        }
+      }
+    },
+    "vision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purpose"
+      ],
+      "properties": {
+        "purpose": {
+          "type": "string",
+          "enum": [
+            "locate",
+            "inspect",
+            "measure",
+            "depalletize",
+            "identify",
+            "other"
+          ]
+        },
+        "dimension": {
+          "type": "string",
+          "enum": [
+            "2d",
+            "3d"
+          ]
+        },
+        "accuracy": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/accuracy"
+          }
+        },
+        "maturity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/maturity"
+        }
+      }
+    },
+    "zone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "maximum",
+            "restricted",
+            "operating",
+            "safeguarded",
+            "collaborative",
+            "load-station"
+          ],
+          "description": "The spaces ISO 10218-2 distinguishes around a robot: maximum, restricted and operating space; the safeguarded space; a collaborative workspace; a load station where a person loads or unloads."
+        },
+        "origin": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/position"
+        },
+        "extent": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/position"
+        }
+      }
+    },
+    "device": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "fence",
+            "interlocked-door",
+            "light-curtain",
+            "laser-scanner",
+            "pressure-mat",
+            "two-hand-control",
+            "enabling-device",
+            "safety-rated-soft-zone",
+            "other"
+          ]
+        },
+        "standard": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+        }
+      }
+    }
+  },
+  "properties": {
+    "members": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/member"
+      }
+    },
+    "eoat": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/eoat"
+      },
+      "description": "End-of-arm tooling."
+    },
+    "fixtures": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/fixture"
+      }
+    },
+    "vision": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/vision"
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "zones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/zone"
+          }
+        },
+        "devices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/device"
+          }
+        },
+        "standards": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+          }
+        },
+        "riskAssessment": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "method": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The method followed, for example a task-based risk assessment."
+            },
+            "document": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "uri",
+                "sha256"
+              ],
+              "description": "A file the record depends on and does not embed.",
+              "properties": {
+                "uri": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "format": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "The file's format and version, for example step-ap242, jt, 3d-pdf, csv."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "footprint": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "length": {
+              "allOf": [
+                {
+                  "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+                },
+                {
+                  "properties": {
+                    "uom": {
+                      "enum": [
+                        "MMT",
+                        "CMT",
+                        "MTR",
+                        "INH",
+                        "FOT"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "width": {
+              "allOf": [
+                {
+                  "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+                },
+                {
+                  "properties": {
+                    "uom": {
+                      "enum": [
+                        "MMT",
+                        "CMT",
+                        "MTR",
+                        "INH",
+                        "FOT"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "positions": {
+          "type": "array",
+          "description": "Where each member or station sits in the cell's frame.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "position"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "position": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/position"
+              },
+              "yaw": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/yaw",
+                "description": "Which way the member faces. 0.2.0."
+              }
+            }
+          }
+        },
+        "model": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "uri",
+            "sha256"
+          ],
+          "description": "The cell's layout or simulation model file.",
+          "properties": {
+            "uri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "format": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The file's format and version, for example step-ap242, jt, 3d-pdf, csv."
+            }
+          }
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "robotController": {
+          "type": "string",
+          "minLength": 1
+        },
+        "programming": {
+          "type": "string",
+          "enum": [
+            "robot-language",
+            "plc-programmed",
+            "cnc-linked",
+            "offline-generated",
+            "application-software",
+            "other"
+          ],
+          "description": "How the cell's motion is programmed: in the robot's own language, from a PLC through a motion library, from the machine tool's CNC, generated offline from part data, or by an application package (a palletizing configurator)."
+        },
+        "plc": {
+          "type": "string"
+        },
+        "alignments": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/alignment"
+          }
+        }
+      }
+    }
+  }
+}

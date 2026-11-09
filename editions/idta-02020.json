@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/idta-02020.json",
+  "standard": {
+    "name": "Capability Description",
+    "identifier": "IDTA 02020",
+    "publisher": "Industrial Digital Twin Association (IDTA)",
+    "edition": {
+      "number": "1.0.2"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "open-licence",
+    "licence": "CC-BY-4.0",
+    "machineReadable": "https://github.com/admin-shell-io/submodel-templates"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/equipment-capability.schema.json",
+      "fields": [
+        "processes",
+        "extensions"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://github.com/admin-shell-io/submodel-templates"
+    ]
+  },
+  "notes": "The published, machine-readable capability model a record's processes and extensions map to."
+}

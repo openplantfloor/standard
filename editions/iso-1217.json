@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-1217.json",
+  "standard": {
+    "name": "Displacement compressors -- Acceptance tests",
+    "identifier": "ISO 1217",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "4",
+      "date": "2009"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/66998.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/air-supply.schema.json",
+      "fields": [
+        "freeAirDelivery"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/66998.html"
+    ]
+  },
+  "notes": "Amendment 1 (2016). Annex C and Annex E give the free air delivery and specific energy basis."
+}

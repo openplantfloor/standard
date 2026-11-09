@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/kpi-definition.schema.json",
+  "kpiId": "example-shop:kpi:oee",
+  "name": "Overall equipment effectiveness",
+  "description": "Availability times effectiveness times quality ratio for a work unit.",
+  "standard": {
+    "identifier": "ISO 22400-2:2014",
+    "edition": "https://schemas.openplantfloor.org/editions/iso-22400-2.json"
+  },
+  "formula": "A x E x QR",
+  "elements": [
+    {
+      "symbol": "A",
+      "meaning": "availability: actual production time over planned busy time",
+      "uom": "C62"
+    },
+    {
+      "symbol": "E",
+      "meaning": "effectiveness: planned runtime per item times produced quantity over actual production time",
+      "uom": "C62"
+    },
+    {
+      "symbol": "QR",
+      "meaning": "quality ratio: good quantity over produced quantity",
+      "uom": "C62"
+    }
+  ],
+  "unit": "C62",
+  "range": {
+    "min": 0,
+    "max": 1
+  },
+  "trend": "higher-is-better",
+  "timing": "periodically",
+  "productionMethodology": "discrete",
+  "scopeLevel": "work-unit",
+  "alignments": [
+    {
+      "standard": "MESA KPI-ML",
+      "identifier": "KPI-ML V01",
+      "type": "KPIDefinition"
+    }
+  ]
+}

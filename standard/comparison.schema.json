@@ -1,0 +1,209 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/comparison.schema.json",
+  "title": "Comparison",
+  "version": "0.1.0",
+  "description": "A simulated figure set against what was measured -- at factory acceptance, site acceptance, in production, or a planning figure -- for one metric on one cell or line under stated conditions (the program revision, part mix and configuration on each side): the error (simulated minus reference), the ratio of reference to simulated, the uncertainty of each side, the rule the comparison is held to, and its verdict. It is the validation of a study's simulation results.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "comparisonId",
+    "metric",
+    "scopeRef",
+    "simulated",
+    "references"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/comparison.schema.json"
+    },
+    "comparisonId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kpiRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+        },
+        "uom": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+        }
+      }
+    },
+    "scopeRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "conditions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "programRevision": {
+          "type": "string"
+        },
+        "partMix": {
+          "type": "string"
+        },
+        "configuration": {
+          "type": "string"
+        }
+      }
+    },
+    "simulated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runRef",
+        "value"
+      ],
+      "properties": {
+        "runRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+        },
+        "value": {
+          "type": "number"
+        },
+        "uom": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+        },
+        "uncertainty": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "value"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "factory-acceptance",
+              "site-acceptance",
+              "production",
+              "planning"
+            ]
+          },
+          "sourceRefs": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+            }
+          },
+          "value": {
+            "type": "number"
+          },
+          "uom": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+          },
+          "n": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "uncertainty": {
+            "type": "number",
+            "minimum": 0
+          },
+          "interval": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "start": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "end": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      }
+    },
+    "error": {
+      "type": "number",
+      "description": "Simulated minus reference, in the metric's unit."
+    },
+    "ratio": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Reference over simulated."
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "comparator",
+        "threshold",
+        "basis"
+      ],
+      "properties": {
+        "comparator": {
+          "type": "string",
+          "enum": [
+            "<",
+            "<=",
+            ">=",
+            ">"
+          ]
+        },
+        "threshold": {
+          "type": "number"
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "simulated-point",
+            "simulated-interval-high",
+            "simulated-interval-low"
+          ],
+          "description": "What the reference is held against: the simulated figure, or the high or low end of its interval."
+        },
+        "consequence": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "kill",
+            "review"
+          ],
+          "description": "What a reference that meets the rule means."
+        }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "kill",
+        "review",
+        "inconclusive",
+        "pending"
+      ]
+    },
+    "decidedBy": {
+      "type": "string"
+    },
+    "decidedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

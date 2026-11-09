@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/ansi-b11-15.json",
+  "standard": {
+    "name": "Safety requirements for pipe, tube and shape bending machines",
+    "identifier": "ANSI B11.15",
+    "publisher": "B11 Standards, Inc.",
+    "status": "unconfirmed"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/tube-bender.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.b11standards.org"
+    ]
+  },
+  "notes": "Listed as 2001 (reaffirmed 2020); one publisher listing shows a 2022 edition as current. Not confirmed."
+}

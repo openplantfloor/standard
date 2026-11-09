@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/opc-40503-1.json",
+  "standard": {
+    "name": "OPC UA for Metal Forming -- Part 1: General",
+    "identifier": "OPC 40503-1",
+    "publisher": "OPC Foundation",
+    "edition": {
+      "number": "1.0.0",
+      "date": "2024-02-01"
+    },
+    "status": "current",
+    "url": "https://reference.opcfoundation.org/MetalForming/v100/docs/"
+  },
+  "access": {
+    "kind": "free-with-registration",
+    "licence": "OPC Foundation specification licence; NodeSet files MIT",
+    "machineReadable": "https://github.com/OPCFoundation/UA-Nodeset"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/press-brake.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://reference.opcfoundation.org/specs/OPC-40503-1/1",
+      "https://reference.opcfoundation.org/MetalForming/v100/docs/"
+    ]
+  },
+  "notes": "Process values and forming positions; no part specific to press brakes."
+}

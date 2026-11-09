@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-6909.json",
+  "standard": {
+    "name": "Machine tools -- Safety -- Press brakes",
+    "identifier": "ISO 6909",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "1",
+      "date": "2026-06-17"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/press-brake.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://genorma.com/en/standards/en-iso-6909-2026"
+    ]
+  },
+  "notes": "Published 2026-06-17 (EN ISO 6909 2026-08-13); replaces EN 12622:2009+A1:2013, withdrawn. Covers hydraulic and servo press brakes; excludes tube bending and roll bending."
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/opc-40210.json",
+  "standard": {
+    "name": "OPC UA for Geometrical Measuring Systems",
+    "identifier": "OPC 40210",
+    "publisher": "OPC Foundation",
+    "edition": {
+      "number": "1.0.1"
+    },
+    "status": "current",
+    "url": "https://reference.opcfoundation.org/"
+  },
+  "access": {
+    "kind": "free-with-registration",
+    "licence": "OPC Foundation specification licence; NodeSet files MIT",
+    "machineReadable": "https://github.com/OPCFoundation/UA-Nodeset"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/measuring-machine.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://reference.opcfoundation.org/",
+      "https://github.com/OPCFoundation/UA-Nodeset"
+    ]
+  },
+  "notes": "Measuring range, working range, resolution and sensor type; no maximum permissible error attribute."
+}

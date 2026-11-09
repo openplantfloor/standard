@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-9409-1.json",
+  "standard": {
+    "name": "Manipulating industrial robots -- Mechanical interfaces -- Part 1: Plates",
+    "identifier": "ISO 9409-1",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2004"
+    },
+    "status": "current",
+    "url": "https://committee.iso.org/standard/36578.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "toolFlange"
+      ]
+    },
+    {
+      "schema": "standard/extensions/cell.schema.json",
+      "fields": [
+        "eoat"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/36578.html"
+    ]
+  },
+  "notes": "Confirmed 2023-04-17."
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-ts-15066.json",
+  "standard": {
+    "name": "Robots and robotic devices -- Collaborative robots",
+    "identifier": "ISO/TS 15066",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "1",
+      "date": "2016"
+    },
+    "status": "under-revision",
+    "url": "https://committee.iso.org/standard/62996.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "collaborative",
+        "safety"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/62996.html"
+    ]
+  },
+  "notes": "ISO lists it as to be revised; a successor is under development."
+}

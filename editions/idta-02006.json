@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/idta-02006.json",
+  "standard": {
+    "name": "Digital Nameplate for Industrial Equipment",
+    "identifier": "IDTA 02006",
+    "publisher": "Industrial Digital Twin Association (IDTA)",
+    "edition": {
+      "number": "3.0.3"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "open-licence",
+    "licence": "CC-BY-4.0",
+    "machineReadable": "https://github.com/admin-shell-io/submodel-templates"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/equipment-capability.schema.json",
+      "fields": [
+        "identification"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://github.com/admin-shell-io/submodel-templates"
+    ]
+  }
+}

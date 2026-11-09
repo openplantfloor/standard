@@ -1,0 +1,79 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:air-01",
+  "name": "Rotary screw compressor, variable speed",
+  "processes": [
+    {
+      "process": "supply-compressed-air",
+      "processGroup": "not-a-manufacturing-process"
+    }
+  ],
+  "ratedPower": {
+    "value": 22,
+    "uom": "KWT"
+  },
+  "automationLevel": {
+    "mechanical": 5,
+    "scale": "frohm-2008"
+  },
+  "isa95Level": "work-unit",
+  "classifications": [
+    {
+      "system": "eclass",
+      "systemVersion": "16.0",
+      "classId": "36-43-01-04",
+      "classIrdi": "0173-1#01-AKL876#022",
+      "className": "Screw-type compressor (oil-flooded)"
+    }
+  ],
+  "alignments": [
+    {
+      "standard": "OPC UA",
+      "identifier": "OPC 40250-1 1.00.1",
+      "namespaceUri": "http://opcfoundation.org/UA/CAS/",
+      "edition": "https://schemas.openplantfloor.org/editions/opc-40250-1.json"
+    }
+  ],
+  "extensions": {
+    "airSupply": {
+      "compressorType": "rotary-screw-oil-injected",
+      "freeAirDelivery": {
+        "flow": {
+          "value": 3.6,
+          "numerator": "MTQ",
+          "denominator": "MIN"
+        },
+        "atPressure": {
+          "value": 7.5,
+          "uom": "BAR"
+        },
+        "standard": {
+          "identifier": "ISO 1217:2009",
+          "clause": "Annex E",
+          "edition": "https://schemas.openplantfloor.org/editions/iso-1217.json"
+        }
+      },
+      "maxPressure": {
+        "value": 13,
+        "uom": "BAR"
+      },
+      "motorPower": {
+        "value": 22,
+        "uom": "KWT"
+      },
+      "variableSpeed": true,
+      "airPurityClass": "1:4:2",
+      "receiverVolume": {
+        "value": 500,
+        "uom": "LTR"
+      }
+    }
+  },
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "other",
+      "reference": "Illustrative figures for the example"
+    }
+  ]
+}

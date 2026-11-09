@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/idta-02008.json",
+  "standard": {
+    "name": "Time Series Data",
+    "identifier": "IDTA 02008",
+    "publisher": "Industrial Digital Twin Association (IDTA)",
+    "edition": {
+      "number": "1.1",
+      "date": "2023-03"
+    },
+    "status": "current",
+    "url": "https://industrialdigitaltwin.org/wp-content/uploads/2023/03/IDTA-02008-1-1_Submodel_TimeSeriesData.pdf"
+  },
+  "access": {
+    "kind": "free-to-read"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/simulation-run.schema.json",
+      "fields": [
+        "timeSeries"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://industrialdigitaltwin.org/wp-content/uploads/2023/03/IDTA-02008-1-1_Submodel_TimeSeriesData.pdf"
+    ]
+  },
+  "notes": "Asset Administration Shell submodel for time series held internally, in an external file or linked."
+}

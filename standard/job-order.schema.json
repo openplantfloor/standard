@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/job-order.schema.json",
+  "version": "0.3.0",
+  "title": "Job order",
+  "description": "Work a flow asks of a plant floor: the operations in order, the quantity, the parameters of the work, and when it is due. A job order is matched to equipment by its parameters; the shop answers with a job response.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "jobOrderId",
+    "operations",
+    "quantity"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/job-order.schema.json"
+    },
+    "jobOrderId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "flowRef": {
+      "type": "string",
+      "description": "The flow or project the order belongs to."
+    },
+    "partRef": {
+      "type": "string",
+      "description": "The part or assembly the order makes."
+    },
+    "quantity": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+    },
+    "dueAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sequence",
+          "process"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "process": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
+          },
+          "operation": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/parameter"
+            },
+            "description": "The work's parameters, matched against equipment capability inputs."
+          },
+          "equipmentRef": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+              }
+            ],
+            "description": "Equipment named for the operation, when the order names one."
+          },
+          "materials": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/material"
+            },
+            "description": "The material the operation needs: what, from which lot when one is required, how much."
+          },
+          "processGroup": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/processGroup"
+          }
+        },
+        "allOf": [
+          {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/classifiedProcess"
+          }
+        ]
+      }
+    }
+  }
+}

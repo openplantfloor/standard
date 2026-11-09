@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-230-1.json",
+  "standard": {
+    "name": "Test code for machine tools -- Part 1: Geometric accuracy of machines operating under no-load or quasi-static conditions",
+    "identifier": "ISO 230-1",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2012"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/46449.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "accuracy"
+      ]
+    },
+    {
+      "schema": "standard/extensions/machining-center.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/46449.html"
+    ]
+  },
+  "notes": "Confirmed 2023."
+}

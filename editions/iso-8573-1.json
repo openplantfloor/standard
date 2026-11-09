@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-8573-1.json",
+  "standard": {
+    "name": "Compressed air -- Part 1: Contaminants and purity classes",
+    "identifier": "ISO 8573-1",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2010"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/46418.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/air-supply.schema.json",
+      "fields": [
+        "airPurityClass"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/46418.html"
+    ]
+  },
+  "notes": "Confirmed 2017; BSI lists it under review."
+}

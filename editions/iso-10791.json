@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-10791.json",
+  "standard": {
+    "name": "Test conditions for machining centres (series)",
+    "identifier": "ISO 10791",
+    "publisher": "International Organization for Standardization (ISO)",
+    "status": "current"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/machining-center.schema.json",
+      "fields": []
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://shop.standards.ie"
+    ]
+  },
+  "notes": "A series of parts with their own editions (for example part 1:2015, part 2:2023, part 7:2020, part 10:2022); catalogue listings disagree on parts 3, 4 and 9, so no single edition is stated."
+}

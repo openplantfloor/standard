@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iec-cdd.json",
+  "standard": {
+    "name": "IEC Common Data Dictionary",
+    "identifier": "IEC CDD (IEC 61360-4)",
+    "publisher": "International Electrotechnical Commission (IEC)",
+    "status": "current",
+    "url": "https://cdd.iec.ch"
+  },
+  "access": {
+    "kind": "free-to-read"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "classification"
+      ]
+    },
+    {
+      "schema": "standard/equipment-capability.schema.json",
+      "fields": [
+        "identification"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://cdd.iec.ch"
+    ]
+  },
+  "notes": "Free to browse; the IDTA Digital Nameplate names its identity properties by IEC CDD identifiers."
+}

@@ -1,0 +1,257 @@
+{
+  "description": "Each example, and the schema it validates with.",
+  "examples": [
+    {
+      "example": "examples/equipment-capability.press-brake.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.tube-laser.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/job-order.bracket.json",
+      "schema": "standard/job-order.schema.json"
+    },
+    {
+      "example": "examples/job-response.bracket.json",
+      "schema": "standard/job-response.schema.json"
+    },
+    {
+      "example": "examples/process-timing.laser-cut-blank.json",
+      "schema": "standard/process-timing.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.measuring-machine.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.air-compressor.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "editions/iso-8373.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-9283.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-9787.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-9946.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-9409-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-10218-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-10218-2.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-ts-15066.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iec-60529.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/opc-40010-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/urdf.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/sdformat.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/mjcf.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-230-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-230-2.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-10791.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-13041.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/opc-40501-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/opc-40001-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-9013.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-11553-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iec-60825-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/opc-40530.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-6909.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/opc-40503-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/ansi-b11-15.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/ansi-b11-12.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-16093.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-10360-8.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-10360-13.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/opc-40210.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-4063.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iec-60974-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-3834-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-1217.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iso-8573-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/opc-40250-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/din-8580.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iec-62264-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/un-cefact-rec-20.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/mtconnect.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/eclass.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/etim.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/iec-cdd.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/idta-02006.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/idta-02003.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/idta-02020.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "examples/kpi-definition.oee.json",
+      "schema": "standard/kpi-definition.schema.json"
+    },
+    {
+      "example": "examples/kpi-definition.cycle-per-unit.json",
+      "schema": "standard/kpi-definition.schema.json"
+    },
+    {
+      "example": "editions/iso-22400-2.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/vdi-3633-1.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/vdi-3423.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/idta-02005.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/idta-02008.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/stress-des.json",
+      "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "editions/mesa-kpi-ml.json",
+      "schema": "standard/standard-edition.schema.json"
+    }
+  ]
+}

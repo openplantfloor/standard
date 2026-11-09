@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/stress-des.json",
+  "standard": {
+    "name": "Strengthening the reporting of empirical simulation studies: Introducing the STRESS guidelines (STRESS-DES)",
+    "identifier": "STRESS-DES",
+    "publisher": "Journal of Simulation 13(1):55-67 (Monks, Currie, Onggo, Robinson, Kunc, Taylor)",
+    "edition": {
+      "number": "1.0",
+      "date": "2018"
+    },
+    "status": "current",
+    "url": "https://doi.org/10.1080/17477778.2018.1442155"
+  },
+  "access": {
+    "kind": "free-to-read"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/simulation-run.schema.json",
+      "fields": [
+        "scenario",
+        "engine",
+        "distributions",
+        "assumptions",
+        "terminating",
+        "warmUp",
+        "runLength",
+        "replications",
+        "estimation",
+        "random",
+        "runtime"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://api.crossref.org/works/10.1080/17477778.2018.1442155",
+      "https://pythonhealthdatascience.github.io/stars/pages/research/stress.html"
+    ]
+  },
+  "notes": "Reporting checklist for discrete-event simulation studies."
+}

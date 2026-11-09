@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-9787.json",
+  "standard": {
+    "name": "Robots and robotic devices -- Coordinate systems and motion nomenclatures",
+    "identifier": "ISO 9787",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2013"
+    },
+    "status": "current",
+    "url": "https://committee.iso.org/standard/59444.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "joints"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/59444.html"
+    ]
+  },
+  "notes": "Confirmed 2025-06-26."
+}

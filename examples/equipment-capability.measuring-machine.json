@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:cmm-01",
+  "name": "Optical 3D coordinate measuring system",
+  "processes": [
+    {
+      "process": "measure",
+      "processGroup": "not-a-manufacturing-process"
+    }
+  ],
+  "automationLevel": {
+    "mechanical": 5,
+    "scale": "frohm-2008"
+  },
+  "isa95Level": "work-unit",
+  "accuracy": [
+    {
+      "characteristic": "length-measurement-error",
+      "value": 4.5,
+      "uom": "4H",
+      "lengthDependent": {
+        "value": 1,
+        "uom": "4H",
+        "perLength": {
+          "value": 100,
+          "uom": "MMT"
+        }
+      },
+      "conditions": "18 to 22 degrees Celsius",
+      "standard": {
+        "identifier": "ISO 10360-13:2021",
+        "edition": "https://schemas.openplantfloor.org/editions/iso-10360-13.json"
+      }
+    }
+  ],
+  "extensions": {
+    "measuringMachine": {
+      "sensorType": "optical-laser-line",
+      "measuringVolume": {
+        "x": {
+          "value": 500,
+          "uom": "MMT"
+        },
+        "y": {
+          "value": 500,
+          "uom": "MMT"
+        },
+        "z": {
+          "value": 300,
+          "uom": "MMT"
+        }
+      },
+      "maxWorkpieceMass": {
+        "value": 20,
+        "uom": "KGM"
+      },
+      "temperatureRange": {
+        "min": 18,
+        "max": 22,
+        "uom": "CEL"
+      }
+    }
+  },
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "other",
+      "reference": "Illustrative figures for the example"
+    }
+  ]
+}

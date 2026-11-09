@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-22400-2.json",
+  "standard": {
+    "name": "Automation systems and integration -- Key performance indicators (KPIs) for manufacturing operations management -- Part 2: Definitions and descriptions",
+    "identifier": "ISO 22400-2",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "1",
+      "date": "2014"
+    },
+    "status": "under-revision",
+    "url": "https://committee.iso.org/standard/54497.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/kpi-definition.schema.json",
+      "fields": [
+        "standard",
+        "formula",
+        "elements",
+        "scopeLevel"
+      ]
+    },
+    {
+      "schema": "standard/cell-performance-requirement.schema.json",
+      "fields": [
+        "oee"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/54497.html",
+      "https://committee.iso.org/standard/87563.html"
+    ]
+  },
+  "notes": "Amendment 1:2017 adds energy KPIs. A revision is at ISO/DIS stage. KPIs are defined on IEC 62264 work units."
+}

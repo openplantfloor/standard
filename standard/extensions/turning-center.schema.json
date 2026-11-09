@@ -1,0 +1,206 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/turning-center.schema.json",
+  "title": "Turning Center",
+  "version": "0.1.0",
+  "description": "A lathe or turning centre as its specification states it: swing, maximum turning diameter and length, bar capacity, main and sub spindles, live tooling and Y-axis travel. Test conditions for NC turning machines are ISO 13041.",
+  "appliesTo": [
+    "turn",
+    "mill",
+    "drill"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "cnc": {
+      "type": "boolean"
+    },
+    "swing": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "maxTurningDiameter": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "maxTurningLength": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "barCapacity": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "mainSpindle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxSpeed": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "RPM"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "power": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "WTT",
+                    "KWT",
+                    "MAW"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "subSpindle": {
+      "type": "boolean"
+    },
+    "liveTooling": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "stations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "maxSpeed": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "RPM"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "power": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "WTT",
+                    "KWT",
+                    "MAW"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "yAxisTravel": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

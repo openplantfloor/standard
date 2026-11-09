@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/kpi-definition.schema.json",
+  "kpiId": "example-shop:kpi:cycle-per-unit",
+  "name": "Cycle per unit",
+  "description": "Actual production time over produced quantity: the cycle a cell holds per unit it delivers.",
+  "standard": {
+    "identifier": "ISO 22400-2:2014",
+    "edition": "https://schemas.openplantfloor.org/editions/iso-22400-2.json"
+  },
+  "formula": "APT / PQ",
+  "elements": [
+    {
+      "symbol": "APT",
+      "meaning": "actual production time",
+      "uom": "SEC"
+    },
+    {
+      "symbol": "PQ",
+      "meaning": "produced quantity",
+      "uom": "H87"
+    }
+  ],
+  "unit": "SEC",
+  "range": {
+    "min": 0
+  },
+  "trend": "lower-is-better",
+  "timing": "on-demand",
+  "productionMethodology": "discrete",
+  "scopeLevel": "work-unit"
+}

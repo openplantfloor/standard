@@ -1,0 +1,633 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "version": "0.8.0",
+  "title": "Equipment capability",
+  "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against; its physical footprint, weight and utilities, so a shop can be laid out from its records; how its model was identified; and where each figure comes from. One record per machine or cell; a shop's equipment is the set of its records. From 0.3.0 each process carries its DIN 8580 main group, and the machine its automation level, its place in the ISA-95 equipment hierarchy and the standards it maps to. From 0.4.0 its axes say what they are: the machine's own, and each external axis with its kind and travel. From 0.5.0 it names the meters its energy is read from. This is the baseline every machine shares; each equipment class states what it adds in its extension (standard/extensions/), so the baseline stays stable as classes are added.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "equipmentId",
+    "name",
+    "processes"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json"
+    },
+    "equipmentId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "manufacturer": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "identification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modelStated"
+      ],
+      "description": "How the machine's model is known. A model stated by the equipment's owner or read from its plate is certain; otherwise the record names the candidate models its description matches, each with a confidence. The identity fields follow OPC 40001-1 MachineIdentification and the IDTA 02006 Digital Nameplate.",
+      "properties": {
+        "modelStated": {
+          "type": "boolean",
+          "description": "True when the owner's record or the machine plate names the model."
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "model",
+              "confidence"
+            ],
+            "properties": {
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "confidence": {
+                "type": "string",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ]
+              },
+              "basis": {
+                "type": "string",
+                "description": "Why the description matches this model."
+              }
+            }
+          }
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1900
+        },
+        "productInstanceUri": {
+          "type": "string",
+          "format": "uri",
+          "description": "A globally unique URI for this machine instance (OPC 40001-1 ProductInstanceUri; IDTA 02006 URIOfTheProduct)."
+        },
+        "manufacturerUri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "productCode": {
+          "type": "string",
+          "description": "The manufacturer's product or order code."
+        },
+        "hardwareRevision": {
+          "type": "string"
+        },
+        "softwareRevision": {
+          "type": "string"
+        },
+        "countryOfOrigin": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$",
+          "description": "ISO 3166-1 alpha-2."
+        },
+        "monthOfConstruction": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "initialOperationDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "candidateClass": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The product family a machine not yet chosen belongs to, for example a manufacturer's robot series, when no single model is named."
+        }
+      }
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "How many identical units the record stands for."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "backup",
+        "for-sale",
+        "retired"
+      ],
+      "default": "active"
+    },
+    "processes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/capability"
+      }
+    },
+    "workEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The largest work the machine takes, in millimetres. A unit-suffixed property is kept for 0.x records; the standard adds no new one (a new figure is a quantity).",
+      "properties": {
+        "lengthMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "widthMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "heightMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "diameterMinMm": {
+          "type": "number",
+          "minimum": 0
+        },
+        "diameterMaxMm": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "powerKw": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Rated source or spindle power, kilowatts. Superseded by ratedPower; kept for 0.x records."
+    },
+    "forceKn": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Rated force (press brake tonnage), kilonewtons. Superseded by ratedForce; kept for 0.x records."
+    },
+    "ratedPower": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "WTT",
+                "KWT",
+                "MAW"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "The machine's rated source or spindle power."
+    },
+    "ratedForce": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "NEW",
+                "B47",
+                "TNE"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "The machine's rated force, for example a press brake's."
+    },
+    "axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "machineAxes"
+      ],
+      "description": "What the machine's axes are: its own controlled axes, and each external axis it works with. A 6-axis arm on a linear track has 6 machine axes and one external axis; a 7-joint arm has 7 machine axes.",
+      "properties": {
+        "machineAxes": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The machine's own controlled axes: an arm's joints, a CNC machine's linear and rotary axes."
+        },
+        "externalAxes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "linear-track",
+                  "gantry",
+                  "rotary-positioner",
+                  "tilt-rotate-positioner",
+                  "turntable",
+                  "other"
+                ]
+              },
+              "count": {
+                "type": "integer",
+                "minimum": 1,
+                "default": 1,
+                "description": "How many axes this external unit adds (a tilt-rotate positioner adds two)."
+              },
+              "travel": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity",
+                "description": "The axis's travel: a length (MMT, MTR) for a track or gantry, an angle (DD) for a positioner."
+              },
+              "coordinated": {
+                "type": "boolean",
+                "description": "True when the axis moves in coordinated motion with the machine, under one controller."
+              }
+            }
+          },
+          "description": "The axes outside the machine it works with: a track it rides, a gantry it hangs from, a positioner that turns the work."
+        }
+      }
+    },
+    "automation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Loading, unloading or handling the machine carries, for example an autoload tower or a robot."
+    },
+    "automationLevel": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/automationLevel"
+    },
+    "isa95Level": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/isa95Level"
+    },
+    "alignments": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/alignment"
+      },
+      "description": "The published standards the machine maps to (OPC UA companion specifications, MTConnect), named by identifier."
+    },
+    "classifications": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/classification"
+      },
+      "description": "The classes the machine belongs to in published classification systems (ECLASS, ETIM, IEC CDD, UNSPSC)."
+    },
+    "accuracy": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/accuracy"
+      },
+      "description": "Accuracy and repeatability, each with the standard it is tested under."
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the machine's class states beyond the baseline, each extension a schema of its own: a record carries the extensions its processes call for (a robot cell its robot and welding extensions). A cell (isa95Level work-unit) carries the cell extension: its members, tooling, fixtures, vision, safety, layout and control. A new equipment class is a new extension, not a change to the baseline.",
+      "properties": {
+        "robot": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/robot.schema.json"
+        },
+        "laserSource": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/laser-source.schema.json"
+        },
+        "pressBrake": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/press-brake.schema.json"
+        },
+        "tubeBender": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/tube-bender.schema.json"
+        },
+        "plateRoll": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/plate-roll.schema.json"
+        },
+        "machiningCenter": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/machining-center.schema.json"
+        },
+        "turningCenter": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/turning-center.schema.json"
+        },
+        "saw": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/saw.schema.json"
+        },
+        "measuringMachine": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/measuring-machine.schema.json"
+        },
+        "welding": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/welding.schema.json"
+        },
+        "airSupply": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/air-supply.schema.json"
+        },
+        "gasSupply": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/gas-supply.schema.json"
+        },
+        "cell": {
+          "$ref": "https://schemas.openplantfloor.org/standard/extensions/cell.schema.json"
+        }
+      }
+    },
+    "physical": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The machine as it sits on the floor, for layout: the footprint it occupies (including any loader, tower or table the record names), its height and weight. From 0.8.0 each figure is a quantity with its UN/CEFACT code; where a record carries both, they agree.",
+      "properties": {
+        "footprint": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "lengthMm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "widthMm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "includes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "What the footprint takes in, for example the autoload tower, the unloading tables, the infeed and outfeed."
+            },
+            "length": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/length",
+              "description": "The footprint's length along the machine's x axis. 0.8.0; lengthMm is kept for 0.x records."
+            },
+            "width": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/length",
+              "description": "The footprint's width. 0.8.0; widthMm is kept for 0.x records."
+            }
+          },
+          "anyOf": [
+            {
+              "required": [
+                "length",
+                "width"
+              ]
+            },
+            {
+              "required": [
+                "lengthMm",
+                "widthMm"
+              ]
+            }
+          ]
+        },
+        "heightMm": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "weightKg": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "clearanceMm": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Service clearance the manufacturer states around the footprint."
+        },
+        "height": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/length",
+          "description": "0.8.0; heightMm is kept for 0.x records."
+        },
+        "mass": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "KGM",
+                    "TNE",
+                    "LBR",
+                    "STN"
+                  ]
+                }
+              }
+            }
+          ],
+          "description": "0.8.0; weightKg is kept for 0.x records."
+        },
+        "clearance": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/length",
+          "description": "Service clearance the manufacturer states around the footprint. 0.8.0; clearanceMm is kept for 0.x records."
+        }
+      }
+    },
+    "utilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the machine draws from the building.",
+      "properties": {
+        "electricalKva": {
+          "type": "number",
+          "minimum": 0
+        },
+        "voltageV": {
+          "type": "number",
+          "minimum": 0
+        },
+        "phases": {
+          "type": "integer",
+          "enum": [
+            1,
+            3
+          ]
+        },
+        "frequencyHz": {
+          "type": "number",
+          "enum": [
+            50,
+            60
+          ]
+        },
+        "compressedAir": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pressureBar": {
+              "type": "number",
+              "minimum": 0
+            },
+            "flowLpm": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "gases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "gas"
+            ],
+            "properties": {
+              "gas": {
+                "type": "string",
+                "description": "For example nitrogen, oxygen, argon, CO2 mix."
+              },
+              "pressureBar": {
+                "type": "number",
+                "minimum": 0
+              },
+              "flowLpm": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    "meters": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/meter"
+      },
+      "description": "The meters the machine's energy is read from."
+    },
+    "evidence": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "description": "Where each figure comes from: a JSON pointer into this record, its evidence grade and its source. A figure without a provenance entry takes the record's evidence and sources.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "evidence",
+          "source"
+        ],
+        "properties": {
+          "field": {
+            "type": "string",
+            "pattern": "^/",
+            "description": "JSON pointer to the figure, for example /physical/footprint/lengthMm."
+          },
+          "evidence": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+          },
+          "source": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+          },
+          "model": {
+            "type": "string",
+            "description": "The model the figure was published for, when it is a candidate's figure."
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "maturity": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/maturity",
+      "description": "How far the machine or cell is defined; absent, it is installed."
+    }
+  },
+  "definitions": {
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "process"
+      ],
+      "description": "One process the machine performs and the work it accepts for it.",
+      "properties": {
+        "process": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
+        },
+        "materials": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "material"
+            ],
+            "properties": {
+              "material": {
+                "type": "string",
+                "minLength": 1,
+                "description": "For example mild-steel, stainless-steel, aluminium, brass, copper."
+              },
+              "thicknessMinMm": {
+                "type": "number",
+                "minimum": 0
+              },
+              "thicknessMaxMm": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "shapes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Profiles accepted, for example sheet, plate, round, square, rectangle, channel, angle, I-beam."
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/parameter"
+          },
+          "description": "Parameters of the work the machine accepts."
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/parameter"
+          },
+          "description": "Parameters of the work it produces."
+        },
+        "processGroup": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/processGroup"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/classifiedProcess"
+        }
+      ]
+    }
+  }
+}

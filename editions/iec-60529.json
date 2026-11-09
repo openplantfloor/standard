@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iec-60529.json",
+  "standard": {
+    "name": "Degrees of protection provided by enclosures (IP Code)",
+    "identifier": "IEC 60529",
+    "publisher": "International Electrotechnical Commission (IEC)",
+    "status": "unconfirmed"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "ipRating"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.document-center.com/standards/show/IEC-60529"
+    ]
+  },
+  "notes": "Third-party catalogues list edition 2.2 (1989, amendments 1999 and 2013); not confirmed at the IEC webstore."
+}

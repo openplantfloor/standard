@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/measuring-machine.schema.json",
+  "title": "Measuring Machine",
+  "version": "0.1.0",
+  "description": "A coordinate measuring machine or optical 3D measuring system as its specification states it: sensor type, measuring volume, maximum workpiece mass and rated temperature band. Its maximum permissible errors are stated in the baseline's accuracy under the ISO 10360 part that applies (ISO 10360-2 tactile, ISO 10360-8 optical distance sensors, ISO 10360-13 optical 3D systems).",
+  "appliesTo": [
+    "measure"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "sensorType": {
+      "type": "string",
+      "enum": [
+        "tactile",
+        "optical-laser-line",
+        "optical-structured-light",
+        "optical-probe",
+        "photogrammetry",
+        "other"
+      ]
+    },
+    "measuringVolume": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "y": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "z": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "maxWorkpieceMass": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "KGM",
+                "TNE",
+                "LBR"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "temperatureRange": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "CEL"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

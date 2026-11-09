@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/vdi-3633-1.json",
+  "standard": {
+    "name": "Simulation of systems in materials handling, logistics and production -- Fundamentals",
+    "identifier": "VDI 3633 Blatt 1",
+    "publisher": "Verein Deutscher Ingenieure (VDI)",
+    "edition": {
+      "date": "2014-12"
+    },
+    "status": "current",
+    "url": "https://vdi.de/richtlinien/details/vdi-3633-blatt-1-simulation-of-systems-in-materials-handling-logistics-and-production-fundamentals"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/simulation-study.schema.json",
+      "fields": [
+        "validation"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://vdi.de/richtlinien/details/vdi-3633-blatt-1-simulation-of-systems-in-materials-handling-logistics-and-production-fundamentals"
+    ]
+  },
+  "notes": "The procedure model of a simulation study and the phase results its verification and validation run across."
+}

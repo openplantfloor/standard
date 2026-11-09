@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/idta-02005.json",
+  "standard": {
+    "name": "Provision of Simulation Models",
+    "identifier": "IDTA 02005",
+    "publisher": "Industrial Digital Twin Association (IDTA)",
+    "edition": {
+      "number": "1.1",
+      "date": "2026-03"
+    },
+    "status": "current",
+    "url": "https://industrialdigitaltwin.org/en/wp-content/uploads/sites/2/2026/03/IDTA-02005_Template_ProvisionOfSimulationModel.pdf"
+  },
+  "access": {
+    "kind": "free-to-read"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/simulation-study.schema.json",
+      "fields": [
+        "purpose",
+        "usedFor",
+        "notUsedFor",
+        "model"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://industrialdigitaltwin.org/en/wp-content/uploads/sites/2/2026/03/IDTA-02005_Template_ProvisionOfSimulationModel.pdf"
+    ]
+  },
+  "notes": "Asset Administration Shell submodel describing a simulation model: purpose, scope, tool, files, licence model and quality."
+}

@@ -1,0 +1,209 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/machining-center.schema.json",
+  "title": "Machining Center",
+  "version": "0.1.0",
+  "description": "A milling machine or machining centre as its specification states it: axis travels, table size and load, spindle speed, power, torque and taper, tool capacity and rapid traverse. Geometric and positioning accuracy are tested under ISO 230-1 and ISO 230-2 (stated in the baseline's accuracy) and machining-centre test conditions under ISO 10791.",
+  "appliesTo": [
+    "mill",
+    "drill"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "orientation": {
+      "type": "string",
+      "enum": [
+        "vertical",
+        "horizontal",
+        "universal",
+        "other"
+      ]
+    },
+    "cnc": {
+      "type": "boolean"
+    },
+    "travels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "travel": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "table": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "width": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "MTR",
+                    "4H",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "maxLoad": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "KGM",
+                    "TNE",
+                    "LBR"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "spindle": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "maxSpeed": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "RPM"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "power": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "WTT",
+                    "KWT",
+                    "MAW"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "torque": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "NU",
+                    "B48"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "taper": {
+          "type": "string",
+          "description": "For example CAT40, BT40, HSK-A63."
+        }
+      }
+    },
+    "toolCapacity": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rapidTraverse": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "2X",
+                "C16"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

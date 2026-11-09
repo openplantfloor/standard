@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/opc-40001-1.json",
+  "standard": {
+    "name": "OPC UA for Machinery -- Part 1: Basic Building Blocks",
+    "identifier": "OPC 40001-1",
+    "publisher": "OPC Foundation",
+    "edition": {
+      "number": "1.04.2",
+      "date": "2026-11-02"
+    },
+    "status": "current",
+    "url": "https://reference.opcfoundation.org/Machinery/v104/docs/"
+  },
+  "access": {
+    "kind": "free-with-registration",
+    "licence": "OPC Foundation specification licence; NodeSet files MIT",
+    "machineReadable": "https://github.com/OPCFoundation/UA-Nodeset"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/equipment-capability.schema.json",
+      "fields": [
+        "identification"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://reference.opcfoundation.org/Machinery/v104/docs/8",
+      "https://github.com/OPCFoundation/UA-Nodeset"
+    ]
+  },
+  "notes": "Its MachineIdentification (ProductInstanceUri, Manufacturer, SerialNumber mandatory; Model, ProductCode, revisions, construction dates, AssetId, Location optional) is what the baseline's identification follows."
+}

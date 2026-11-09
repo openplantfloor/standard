@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/sdformat.json",
+  "standard": {
+    "name": "SDFormat",
+    "identifier": "SDFormat",
+    "publisher": "Open Robotics",
+    "edition": {
+      "number": "1.12"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "open-licence",
+    "licence": "Apache-2.0"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "kinematicModel"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "http://sdformat.org/spec"
+    ]
+  }
+}

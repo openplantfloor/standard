@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/kpi-value.schema.json",
+  "title": "KPI Value",
+  "version": "0.1.0",
+  "description": "One value of a KPI for one piece of equipment, line or project over one interval: measured, simulated or estimated, the records it comes from, and the element values it is computed from so it can be computed again. It maps to a MESA KPI-ML KPIValue.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "valueId",
+    "kpiRef",
+    "scopeRef",
+    "interval",
+    "value",
+    "source"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/kpi-value.schema.json"
+    },
+    "valueId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "kpiRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The kpi-definition."
+    },
+    "scopeRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The equipment, cell, line or project it is for."
+    },
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "value": {
+      "type": "number"
+    },
+    "uom": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "measured",
+        "simulated",
+        "estimated"
+      ]
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+      },
+      "description": "The job responses, simulation run or estimate it comes from."
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "symbol",
+          "value"
+        ],
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "type": "number"
+          },
+          "uom": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+    }
+  }
+}

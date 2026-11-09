@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-9283.json",
+  "standard": {
+    "name": "Manipulating industrial robots -- Performance criteria and related test methods",
+    "identifier": "ISO 9283",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "2",
+      "date": "1998"
+    },
+    "status": "current",
+    "url": "https://committee.iso.org/standard/22244.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "accuracy"
+      ]
+    },
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": []
+    },
+    {
+      "schema": "standard/cell-performance-requirement.schema.json",
+      "fields": [
+        "accuracy"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/22244.html",
+      "https://standards.nimonik.com/products/iso/9283/"
+    ]
+  },
+  "notes": "Confirmed 2021; a systematic review opened 2026-01-15. Defines pose accuracy and repeatability (AP, RP), path accuracy and repeatability (AT, RT) and the other performance characteristics."
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/idta-02003.json",
+  "standard": {
+    "name": "Generic Frame for Technical Data for Industrial Equipment in Manufacturing",
+    "identifier": "IDTA 02003",
+    "publisher": "Industrial Digital Twin Association (IDTA)",
+    "edition": {
+      "number": "2.0.4"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "open-licence",
+    "licence": "CC-BY-4.0",
+    "machineReadable": "https://github.com/admin-shell-io/submodel-templates"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "classification"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://github.com/admin-shell-io/submodel-templates"
+    ]
+  },
+  "notes": "Its ProductClassifications collection is what the classification fields follow."
+}

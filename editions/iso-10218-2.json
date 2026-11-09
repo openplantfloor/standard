@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-10218-2.json",
+  "standard": {
+    "name": "Robotics -- Safety requirements -- Part 2: Industrial robot applications and robot cells",
+    "identifier": "ISO 10218-2",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "2",
+      "date": "2025-02-05"
+    },
+    "status": "current",
+    "url": "https://committee.iso.org/standard/73934.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "safety",
+        "collaborative"
+      ]
+    },
+    {
+      "schema": "standard/extensions/cell.schema.json",
+      "fields": [
+        "safety"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/73934.html"
+    ]
+  },
+  "notes": "Replaces the 2011 edition."
+}

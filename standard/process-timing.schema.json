@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/process-timing.schema.json",
+  "version": "0.3.1",
+  "title": "Process timing",
+  "description": "How long an operation takes on a machine: cycle time per unit at a low, base and high case, setup and changeover, with the evidence grade and source of each figure. As measured figures replace estimates, the grade rises.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "timingId",
+    "equipmentRef",
+    "process",
+    "output",
+    "cycleSeconds",
+    "evidence"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/process-timing.schema.json"
+    },
+    "timingId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "equipmentRef": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+        }
+      ],
+      "description": "The equipment-capability record the timing is for."
+    },
+    "process": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
+    },
+    "operation": {
+      "type": "string",
+      "description": "The operation within the process, for example cut-to-length or bend-90."
+    },
+    "output": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity",
+      "description": "What one cycle produces, for example 1 H87 (one piece), 1 SET (one kit), 2.5 MTR."
+    },
+    "cycleSeconds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "base"
+      ],
+      "properties": {
+        "low": {
+          "type": "number",
+          "minimum": 0
+        },
+        "base": {
+          "type": "number",
+          "minimum": 0
+        },
+        "high": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "energyPerCycle": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/energy"
+    },
+    "setupSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "changeoverSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/parameter"
+      },
+      "description": "The work the figure holds for, for example material and thickness."
+    },
+    "evidence": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

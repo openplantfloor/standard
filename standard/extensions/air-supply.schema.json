@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/air-supply.schema.json",
+  "title": "Air Supply",
+  "version": "0.1.0",
+  "description": "A compressor as its specification states it: type, free air delivery at a working pressure tested under ISO 1217 (Annex C or E), maximum pressure, motor power, variable speed and the air purity class it delivers under ISO 8573-1. The OPC 40250-1 compressed air systems model carries the same figures.",
+  "appliesTo": [
+    "supply-compressed-air"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "compressorType": {
+      "type": "string",
+      "enum": [
+        "rotary-screw-oil-injected",
+        "rotary-screw-oil-free",
+        "reciprocating",
+        "scroll",
+        "centrifugal",
+        "other"
+      ]
+    },
+    "freeAirDelivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "flow",
+        "atPressure"
+      ],
+      "properties": {
+        "flow": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/rate"
+            },
+            {
+              "properties": {
+                "numerator": {
+                  "enum": [
+                    "MTQ",
+                    "LTR"
+                  ]
+                },
+                "denominator": {
+                  "enum": [
+                    "MIN",
+                    "SEC"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "atPressure": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "BAR"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "standard": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+        }
+      }
+    },
+    "maxPressure": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "BAR"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "motorPower": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "WTT",
+                "KWT",
+                "MAW"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "variableSpeed": {
+      "type": "boolean"
+    },
+    "airPurityClass": {
+      "type": "string",
+      "pattern": "^[0-9X]:[0-9X]:[0-9X]$",
+      "description": "ISO 8573-1 classes for particles, water and oil, for example 1:4:2."
+    },
+    "receiverVolume": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "LTR",
+                "MTQ"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

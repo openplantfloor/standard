@@ -1,0 +1,141 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/plate-roll.schema.json",
+  "title": "Plate Roll",
+  "version": "0.1.0",
+  "description": "A plate rolling machine as its specification states it: roll configuration, roll length, capacity per material (pre-bending and rolling thickness at a width), minimum rolled diameter and cone rolling. Safety of roll-bending machines is ANSI B11.12 in the United States.",
+  "appliesTo": [
+    "roll"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "configuration": {
+      "type": "string",
+      "enum": [
+        "three-roll",
+        "four-roll",
+        "other"
+      ]
+    },
+    "rollLength": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "capacity": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "material"
+        ],
+        "properties": {
+          "material": {
+            "type": "string",
+            "minLength": 1
+          },
+          "atWidth": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "preBendThicknessMax": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "rollingThicknessMax": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "minRolledDiameter": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "coneRolling": {
+      "type": "boolean"
+    }
+  }
+}

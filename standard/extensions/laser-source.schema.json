@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/laser-source.schema.json",
+  "title": "Laser Source",
+  "version": "0.1.0",
+  "description": "A laser machine's source and output as its specification states them: source type, wavelength, rated output power, laser class (IEC 60825-1), and the thickness it cuts per material and assist gas. Cut quality is graded under ISO 9013; safety of laser processing machines is ISO 11553-1.",
+  "appliesTo": [
+    "laser-cut",
+    "tube-laser-cut",
+    "mark"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "sourceType": {
+      "type": "string",
+      "enum": [
+        "fiber",
+        "co2",
+        "disk",
+        "diode",
+        "other"
+      ]
+    },
+    "wavelength": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "C45",
+                "4H"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "C45 nanometre, 4H micrometre."
+    },
+    "ratedOutputPower": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "WTT",
+                "KWT",
+                "MAW"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "laserClass": {
+      "type": "string",
+      "enum": [
+        "1",
+        "1M",
+        "1C",
+        "2",
+        "2M",
+        "3R",
+        "3B",
+        "4"
+      ],
+      "description": "The product's class under IEC 60825-1."
+    },
+    "cutCapacity": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "material",
+          "thicknessMax"
+        ],
+        "properties": {
+          "material": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assistGas": {
+            "type": "string",
+            "description": "For example oxygen, nitrogen, air."
+          },
+          "thicknessMax": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

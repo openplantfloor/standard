@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-4063.json",
+  "standard": {
+    "name": "Welding, brazing, soldering and cutting -- Nomenclature of processes and reference numbers",
+    "identifier": "ISO 4063",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "5",
+      "date": "2023"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/75108.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/welding.schema.json",
+      "fields": [
+        "processNumbers"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/75108.html"
+    ]
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/job-response.schema.json",
+  "version": "0.4.0",
+  "title": "Job response",
+  "description": "What a plant floor returned for a job order: per operation, the equipment that did it, the quantity made and scrapped, and the time it took. Responses are the measured timing that raises a process timing's evidence grade. From 0.3.0 each operation states the material it consumed and produced, by lot and mass, and the energy it used. From 0.4.0 an operation's energy may carry the interval it was used in.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "jobResponseId",
+    "jobOrderRef",
+    "status",
+    "operations"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/job-response.schema.json"
+    },
+    "jobResponseId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "jobOrderRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "in-progress",
+        "completed",
+        "partial",
+        "rejected"
+      ]
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sequence",
+          "equipmentRef"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "equipmentRef": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          },
+          "made": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+          },
+          "scrapped": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cycleSecondsActual": {
+            "type": "number",
+            "minimum": 0
+          },
+          "setupSecondsActual": {
+            "type": "number",
+            "minimum": 0
+          },
+          "consumed": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/material"
+            },
+            "description": "Material that entered the operation, by lot, with its mass."
+          },
+          "produced": {
+            "type": "array",
+            "items": {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/material"
+            },
+            "description": "Parts and material that left it, by lot, with their mass; consumed mass less produced mass is the operation's scrap."
+          },
+          "energy": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/energy"
+          }
+        }
+      }
+    },
+    "completedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

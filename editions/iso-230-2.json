@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-230-2.json",
+  "standard": {
+    "name": "Test code for machine tools -- Part 2: Determination of accuracy and repeatability of positioning of numerically controlled axes",
+    "identifier": "ISO 230-2",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "4",
+      "date": "2014"
+    },
+    "status": "current",
+    "url": "https://www.iso.org/standard/55295.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "accuracy"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://www.iso.org/standard/55295.html"
+    ]
+  },
+  "notes": "Amendment 1 (2016); confirmed 2025."
+}

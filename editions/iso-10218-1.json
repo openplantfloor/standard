@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-10218-1.json",
+  "standard": {
+    "name": "Robotics -- Safety requirements -- Part 1: Industrial robots",
+    "identifier": "ISO 10218-1",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2025-02-05"
+    },
+    "status": "current",
+    "url": "https://committee.iso.org/standard/73933.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "safety"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/73933.html"
+    ]
+  },
+  "notes": "Replaces the 2011 edition."
+}

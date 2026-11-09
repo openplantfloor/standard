@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iso-8373.json",
+  "standard": {
+    "name": "Robotics -- Vocabulary",
+    "identifier": "ISO 8373",
+    "publisher": "International Organization for Standardization (ISO)",
+    "edition": {
+      "number": "3",
+      "date": "2021"
+    },
+    "status": "under-revision",
+    "url": "https://committee.iso.org/standard/75539.html"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/robot.schema.json",
+      "fields": [
+        "structure",
+        "ratedPayload"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://committee.iso.org/standard/75539.html"
+    ]
+  },
+  "notes": "Edition 3 (2021-11-08); ISO lists it as to be revised, with a revision at DIS."
+}

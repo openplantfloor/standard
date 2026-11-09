@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/kpi-definition.schema.json",
+  "title": "KPI Definition",
+  "version": "0.1.0",
+  "description": "A key performance indicator as ISO 22400-2 defines one: its name and formula over named elements, its unit, the range it may take and which way is better, when it is computed, the production methodology and the level of the equipment hierarchy it applies to, and the standard it is taken from. It maps to a MESA KPI-ML KPIDefinition. A ratio is a fraction between 0 and 1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "kpiId",
+    "name",
+    "formula",
+    "unit",
+    "trend",
+    "scopeLevel"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/kpi-definition.schema.json"
+    },
+    "kpiId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "standard": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+    },
+    "formula": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The formula over the element symbols, for example A x E x QR."
+    },
+    "elements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "symbol",
+          "meaning"
+        ],
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "minLength": 1
+          },
+          "meaning": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uom": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+          },
+          "kpiRef": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+            "description": "When the element is itself a KPI."
+          }
+        }
+      }
+    },
+    "unit": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom",
+      "description": "C62 (one) for a ratio, stored as a fraction; a time unit for a duration."
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        }
+      }
+    },
+    "trend": {
+      "type": "string",
+      "enum": [
+        "higher-is-better",
+        "lower-is-better"
+      ]
+    },
+    "timing": {
+      "type": "string",
+      "enum": [
+        "real-time",
+        "periodically",
+        "on-demand"
+      ]
+    },
+    "productionMethodology": {
+      "type": "string",
+      "enum": [
+        "discrete",
+        "batch",
+        "continuous"
+      ]
+    },
+    "scopeLevel": {
+      "type": "string",
+      "enum": [
+        "work-unit",
+        "work-center",
+        "area",
+        "site",
+        "enterprise",
+        "project"
+      ],
+      "description": "The level it is computed for: a work unit or work center (IEC 62264-1), up to a site or enterprise, or a project."
+    },
+    "audience": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "alignments": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/alignment"
+      }
+    }
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/extensions/robot.schema.json",
+  "title": "Robot",
+  "version": "0.2.0",
+  "description": "An industrial robot as its specification states it, following the characteristics ISO 9946 asks a robot specification to present: mechanical structure (ISO 8373 and the IFR classes; the OPC 40010-1 MotionDeviceCategory values), rated payload, reach, each joint's range and speed, mounting, the tool flange (ISO 9409-1), the controller, the environment (IEC 60529 IP code) and safety (ISO 10218-1, ISO 10218-2, ISO/TS 15066). Accuracy (pose and path, ISO 9283) is stated in the baseline's accuracy. A kinematic model (URDF, SDFormat or MJCF) may be named with its licence. 0.2.0: a robot may handle, tend and palletize, and states its load diagram.",
+  "appliesTo": [
+    "weld-robotic",
+    "assemble",
+    "kit",
+    "pack",
+    "measure",
+    "mark",
+    "handle",
+    "tend",
+    "palletize",
+    "other"
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "structure": {
+      "type": "string",
+      "enum": [
+        "articulated",
+        "scara",
+        "cartesian",
+        "parallel",
+        "cylindrical",
+        "polar",
+        "other"
+      ],
+      "description": "The mechanical structure: articulated, SCARA, cartesian (gantry), parallel (delta), cylindrical, polar (spherical)."
+    },
+    "collaborative": {
+      "type": "boolean",
+      "description": "Designed for collaborative operation with people (ISO/TS 15066, ISO 10218-2)."
+    },
+    "ratedPayload": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "KGM",
+                "TNE",
+                "LBR"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "The rated load at the flange (ISO 8373)."
+    },
+    "maxReach": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "MMT",
+                "MTR",
+                "4H",
+                "INH",
+                "FOT"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "The furthest the wrist centre or flange reaches from the base axis, as the specification states it."
+    },
+    "joints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "motion"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "For example J1 or axis 1."
+          },
+          "motion": {
+            "type": "string",
+            "enum": [
+              "rotary",
+              "linear"
+            ]
+          },
+          "range": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "DD",
+                      "C81",
+                      "MMT",
+                      "MTR",
+                      "4H",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "maxSpeed": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "E96",
+                      "2A",
+                      "C16"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Maximum speed: E96 degree per second, 2A radian per second, C16 millimetre per second."
+          }
+        }
+      }
+    },
+    "maxTcpSpeed": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "C16"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "Maximum speed at the tool centre point, millimetres per second."
+    },
+    "mounting": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "floor",
+          "ceiling",
+          "wall",
+          "angled",
+          "other"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "toolFlange": {
+      "type": "string",
+      "description": "The mechanical interface designation, for example ISO 9409-1-50-4-M6."
+    },
+    "controller": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "manufacturer": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "softwareVersion": {
+          "type": "string"
+        }
+      }
+    },
+    "ipRating": {
+      "type": "string",
+      "pattern": "^IP[0-9X][0-9X][A-DH]?$",
+      "description": "IEC 60529 IP code, for example IP54."
+    },
+    "safety": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+      },
+      "description": "The safety standards the robot is declared to, by identifier and edition."
+    },
+    "kinematicModel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "url"
+      ],
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "urdf",
+            "sdformat",
+            "mjcf"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "licence": {
+          "type": "string",
+          "description": "An SPDX identifier."
+        },
+        "revision": {
+          "type": "string"
+        }
+      }
+    },
+    "loadDiagram": {
+      "type": "array",
+      "description": "Points of the robot's load diagram: the mass it carries at a distance of the load's centre of gravity from the flange, as the manufacturer publishes it (ISO 9946), so a load with tooling can be checked against it.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mass",
+          "axialOffset",
+          "radialOffset"
+        ],
+        "properties": {
+          "mass": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "KGM",
+                      "TNE",
+                      "LBR"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "axialOffset": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "CMT",
+                      "MTR",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Along the flange axis."
+          },
+          "radialOffset": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/measure"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "MMT",
+                      "CMT",
+                      "MTR",
+                      "INH",
+                      "FOT"
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "Perpendicular to the flange axis."
+          }
+        }
+      }
+    }
+  }
+}

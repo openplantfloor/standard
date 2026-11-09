@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/mtconnect.json",
+  "standard": {
+    "name": "MTConnect Standard",
+    "identifier": "MTConnect",
+    "publisher": "MTConnect Institute (AMT)",
+    "edition": {
+      "number": "2.7",
+      "date": "2026-02"
+    },
+    "status": "current",
+    "url": "https://www.mtconnect.org"
+  },
+  "access": {
+    "kind": "free-to-read",
+    "licence": "Schemas: Apache-2.0",
+    "machineReadable": "https://github.com/mtconnect/schema"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/common.schema.json",
+      "fields": [
+        "alignment"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://github.com/mtconnect/mtconnect_sysml_model/releases",
+      "https://github.com/mtconnect/schema"
+    ]
+  },
+  "notes": "Version 2.7 released 2026-02-27; the model site also lists 2.8, not yet released. No robot, laser, press brake, bender or welder component type."
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/standard-edition.schema.json",
+  "$id": "https://schemas.openplantfloor.org/editions/iec-60974-1.json",
+  "standard": {
+    "name": "Arc welding equipment -- Part 1: Welding power sources",
+    "identifier": "IEC 60974-1",
+    "publisher": "International Electrotechnical Commission (IEC)",
+    "edition": {
+      "number": "6.0",
+      "date": "2021"
+    },
+    "status": "current"
+  },
+  "access": {
+    "kind": "purchase"
+  },
+  "usedBy": [
+    {
+      "schema": "standard/extensions/welding.schema.json",
+      "fields": [
+        "powerSources"
+      ]
+    }
+  ],
+  "verified": {
+    "date": "2026-11-07",
+    "sources": [
+      "https://shop.standards.ie"
+    ]
+  },
+  "notes": "Rated output and duty cycle. A seventh edition is in preparation."
+}
