@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.0
+
+Additions only; every 0.11.0 record validates unchanged.
+
+- `standard/line-flow` 0.1.0: how a production line flows. Its stations in order, each a machine or cell with the process timing it runs, how many work in parallel, what each passes on and how many of those go into one unit of the line; the buffer after each station; the machines it shares with another line; what it takes from another line for each unit (for example 40 parts a kit); the rule that releases work into it; and each station's mean time between failures and to repair, on operating or calendar time, after VDI 3423. One record is one layout; an alternative layout is another record. The check refuses stations out of sequence (a gap or a repeat), a buffer of no capacity, a shared machine no station runs, a feed from a line no line flow describes, and a repair time without a time between failures.
+- Examples: a cut line and a kitting line fed 40 parts a kit from it.
+
 ## 0.11.0
 
 Additions only; every 0.10.1 record validates unchanged.

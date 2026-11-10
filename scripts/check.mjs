@@ -323,6 +323,45 @@ for (const rel of [...files, ...manifest.map((e) => e.example)]) {
   if (pl && placement && pl({ ...placement, placed: [] })) fail('standard/placement.schema.json', 'accepts a placement naming no equipment');
 }
 
+// 4j. A line flow holds together: its stations run 1, 2, 3 ... with no gap and no repeat, a shared machine is one a
+// station runs, a feed comes from a line some line flow describes and enters a station the flow has, and a repair
+// time comes with a time between failures; a buffer holds at least one unit. Each rule is proven on a seeded defect.
+{
+  const of = (schema) => manifest.filter((e) => e.schema === schema && existsSync(join(ROOT, e.example))).map((e) => ({ rel: e.example, doc: load(e.example) }));
+  const flows = of('standard/line-flow.schema.json');
+  const lines = new Set(flows.map(({ doc }) => doc.lineRef));
+  const flowProblems = (doc) => {
+    const out = [];
+    const seqs = (doc.stations || []).map((s) => s.sequence);
+    const sorted = [...seqs].sort((a, b) => a - b);
+    if (sorted.some((n, i) => n !== i + 1)) out.push(`stations run ${seqs.join(', ')}, not 1 to ${seqs.length} with no gap or repeat`);
+    const run = new Set((doc.stations || []).map((s) => s.equipmentRef));
+    for (const m of doc.sharedMachines || []) if (!run.has(m.equipmentRef)) out.push(`shares ${m.equipmentRef}, which no station runs`);
+    for (const f of doc.feeds || []) {
+      if (!lines.has(f.fromLineRef)) out.push(`takes from ${f.fromLineRef}, a line no line flow describes`);
+      if (f.intoStation !== undefined && !seqs.includes(f.intoStation)) out.push(`feeds station ${f.intoStation}, which the flow does not have`);
+    }
+    for (const s of doc.stations || []) {
+      const r = s.reliability || {};
+      if (r.meanTimeToRepair && !r.meanTimeBetweenFailures) out.push(`station ${s.sequence} states a repair time without a time between failures`);
+    }
+    return out;
+  };
+  for (const { rel, doc } of flows) for (const p of flowProblems(doc)) fail(rel, p);
+  const flow = flows.find(({ doc }) => (doc.sharedMachines || []).length && (doc.stations || []).some((s) => s.reliability))?.doc;
+  const fed = flows.find(({ doc }) => (doc.feeds || []).length)?.doc;
+  const seeded = [
+    ['a sequence with a gap', flow && flowProblems({ ...flow, stations: flow.stations.map((s, i) => ({ ...s, sequence: i === 0 ? 1 : s.sequence + 1 })) })],
+    ['a sequence with a repeat', flow && flowProblems({ ...flow, stations: flow.stations.map((s) => ({ ...s, sequence: 1 })) })],
+    ['a shared machine no station runs', flow && flowProblems({ ...flow, sharedMachines: [{ equipmentRef: 'shop-1:nowhere', sharedWith: ['shop-1:line-2'] }] })],
+    ['a feed from a line that is not named', fed && flowProblems({ ...fed, feeds: [{ ...fed.feeds[0], fromLineRef: 'shop-1:nowhere' }] })],
+    ['a repair time without a time between failures', flow && flowProblems({ ...flow, stations: flow.stations.map((s) => (s.reliability ? { ...s, reliability: { basis: s.reliability.basis, meanTimeToRepair: s.reliability.meanTimeToRepair } } : s)) })],
+  ];
+  for (const [what, problems] of seeded) if (problems && !problems.length) fail('scripts/check.mjs', `accepts ${what}`);
+  const lf = ajv.getSchema(idOf('standard/line-flow.schema.json'));
+  if (lf && flow && lf({ ...flow, stations: [{ ...flow.stations[0], bufferAfter: 0 }] })) fail('standard/line-flow.schema.json', 'accepts a buffer of no capacity');
+}
+
 // 5. Public text names the standard and the published standards it maps, nothing internal to any steward.
 const FORBIDDEN = [
   [/\bd-\d{4}-\d\d-\d\d-[a-z0-9-]+/, 'an internal deliverable or decision id'],
