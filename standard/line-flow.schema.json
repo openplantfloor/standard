@@ -1,0 +1,274 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/line-flow.schema.json",
+  "title": "Line Flow",
+  "version": "0.1.0",
+  "description": "How a production line flows: its stations in order -- each a machine or cell and the process timing it runs, with how many work in parallel and what each passes on -- the buffer after each station, the machines it shares with another line, what it takes from another line for each unit it makes, the rule that releases work into it, and each station's breakdown and repair after VDI 3423. It is what a simulation of the line reads to model blocking, starving and failures. A line flow is one possible layout of a line; an alternative layout is another line-flow record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "flowId",
+    "lineRef",
+    "stations"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/line-flow.schema.json"
+    },
+    "flowId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lineRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The equipment record of the line, at the work-center level."
+    },
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "description",
+        "quantity"
+      ],
+      "description": "What one unit of the line's output is.",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quantity": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        }
+      }
+    },
+    "stations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/station"
+      },
+      "description": "In order: sequence runs 1, 2, 3 ... with no gap and no repeat."
+    },
+    "sharedMachines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/sharedMachine"
+      }
+    },
+    "feeds": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/feed"
+      },
+      "description": "What the line takes from another line for each unit it makes."
+    },
+    "release": {
+      "$ref": "#/definitions/release"
+    },
+    "evidence": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence",
+        "equipmentRef"
+      ],
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "equipmentRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+          "description": "The machine or cell at this station."
+        },
+        "timingRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+          "description": "The process-timing record of the operation it runs."
+        },
+        "parallel": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "How many identical machines work this station side by side."
+        },
+        "passes": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity",
+          "description": "What one cycle passes to the next station."
+        },
+        "perUnit": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity",
+          "description": "How many of what this station passes on go into one unit of the line: for example two rod drops a trapeze. Absent: one. With the timing's cycle and the parallel count it sets the station's time per unit, so the slowest station sets the line's pace."
+        },
+        "bufferAfter": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many units the buffer after this station holds. Absent: the next station takes each unit directly."
+        },
+        "reliability": {
+          "$ref": "#/definitions/reliability"
+        }
+      }
+    },
+    "reliability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "basis"
+      ],
+      "description": "Breakdown and repair after VDI 3423: the mean time between failures and the mean time to repair, counted on operating or calendar time.",
+      "properties": {
+        "meanTimeBetweenFailures": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "meanTimeToRepair": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "SEC",
+                    "MIN",
+                    "HUR",
+                    "DAY"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "operating-time",
+            "calendar-time"
+          ]
+        },
+        "standard": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/standardRef"
+        },
+        "evidence": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/evidence"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/source"
+          }
+        }
+      }
+    },
+    "sharedMachine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "equipmentRef",
+        "sharedWith"
+      ],
+      "properties": {
+        "equipmentRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+          "description": "A machine one of this line's stations runs."
+        },
+        "sharedWith": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+          },
+          "description": "The other lines that also use it."
+        },
+        "share": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction",
+          "description": "The share of the machine's time this line has."
+        }
+      }
+    },
+    "feed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fromLineRef",
+        "perUnit"
+      ],
+      "properties": {
+        "fromLineRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+          "description": "The line that supplies it."
+        },
+        "perUnit": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity",
+          "description": "How much this line takes for each unit it makes: for example 40 parts a kit."
+        },
+        "intoStation": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The sequence of the station that consumes it."
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule"
+      ],
+      "properties": {
+        "rule": {
+          "type": "string",
+          "enum": [
+            "push",
+            "pull",
+            "conwip",
+            "schedule"
+          ],
+          "description": "push, released as material is available; pull, released when the next stage signals (kanban); conwip, a fixed amount of work in process; schedule, released at planned times."
+        },
+        "workInProcessLimit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "For conwip or pull: the most units in the line at once."
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

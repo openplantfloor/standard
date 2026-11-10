@@ -260,6 +260,14 @@
     {
       "example": "examples/placement.two-station-line.json",
       "schema": "standard/placement.schema.json"
+    },
+    {
+      "example": "examples/line-flow.cut-line.json",
+      "schema": "standard/line-flow.schema.json"
+    },
+    {
+      "example": "examples/line-flow.kitting-line.json",
+      "schema": "standard/line-flow.schema.json"
     }
   ]
 }

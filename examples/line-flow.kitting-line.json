@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/line-flow.schema.json",
+  "flowId": "shop-1:flow:line-2:layout-a",
+  "name": "Line 2, kitting, one layout",
+  "lineRef": "shop-1:line-2",
+  "unit": {
+    "description": "one kit of parts for an install zone",
+    "quantity": {
+      "value": 1,
+      "uom": "SET"
+    }
+  },
+  "stations": [
+    {
+      "sequence": 1,
+      "equipmentRef": "shop-1:kit-cell-01",
+      "passes": {
+        "value": 1,
+        "uom": "SET"
+      },
+      "bufferAfter": 4
+    },
+    {
+      "sequence": 2,
+      "equipmentRef": "shop-1:pack-01",
+      "passes": {
+        "value": 1,
+        "uom": "SET"
+      }
+    }
+  ],
+  "feeds": [
+    {
+      "fromLineRef": "shop-1:line-1",
+      "perUnit": {
+        "value": 40,
+        "uom": "H87"
+      },
+      "intoStation": 1
+    }
+  ],
+  "release": {
+    "rule": "schedule"
+  },
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "an illustrative layout"
+    }
+  ]
+}

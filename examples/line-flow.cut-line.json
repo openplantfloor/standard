@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/line-flow.schema.json",
+  "flowId": "shop-1:flow:line-1:layout-a",
+  "name": "Line 1, one layout",
+  "lineRef": "shop-1:line-1",
+  "unit": {
+    "description": "one cut and marked part",
+    "quantity": {
+      "value": 1,
+      "uom": "H87"
+    }
+  },
+  "stations": [
+    {
+      "sequence": 1,
+      "equipmentRef": "shop-1:saw-01",
+      "timingRef": "shop-1:timing:saw-01:cut",
+      "passes": {
+        "value": 1,
+        "uom": "H87"
+      },
+      "bufferAfter": 20,
+      "reliability": {
+        "meanTimeBetweenFailures": {
+          "value": 120,
+          "uom": "HUR"
+        },
+        "meanTimeToRepair": {
+          "value": 2,
+          "uom": "HUR"
+        },
+        "basis": "operating-time",
+        "standard": {
+          "identifier": "VDI 3423:2011-08",
+          "edition": "https://schemas.openplantfloor.org/editions/vdi-3423.json"
+        },
+        "evidence": "L0",
+        "sources": [
+          {
+            "kind": "estimate",
+            "reference": "illustrative figures"
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 2,
+      "equipmentRef": "shop-1:laser-01",
+      "timingRef": "shop-1:timing:laser-01:blank-3mm",
+      "passes": {
+        "value": 1,
+        "uom": "H87"
+      },
+      "bufferAfter": 40
+    },
+    {
+      "sequence": 3,
+      "equipmentRef": "shop-1:marker-01",
+      "passes": {
+        "value": 1,
+        "uom": "H87"
+      }
+    }
+  ],
+  "sharedMachines": [
+    {
+      "equipmentRef": "shop-1:saw-01",
+      "sharedWith": [
+        "shop-1:line-2"
+      ],
+      "share": 0.7
+    }
+  ],
+  "release": {
+    "rule": "pull",
+    "workInProcessLimit": 60
+  },
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "an illustrative layout"
+    }
+  ]
+}
