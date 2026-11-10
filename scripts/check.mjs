@@ -281,6 +281,48 @@ for (const rel of [...files, ...manifest.map((e) => e.example)]) {
     fail('standard/equipment-capability.schema.json', 'accepts a footprint with no length or width');
 }
 
+// 4i. A trace's intervals hold: each ends after it starts, a station's intervals are in order and do not overlap, and
+// none ends after the horizon. A placement places each piece of equipment once. Each rule is proven on a seeded defect.
+{
+  const of = (schema) => manifest.filter((e) => e.schema === schema && existsSync(join(ROOT, e.example))).map((e) => ({ rel: e.example, doc: load(e.example) }));
+  const traceProblems = (doc) => {
+    const out = [];
+    for (const st of doc.stations || []) {
+      let last = -Infinity;
+      for (const iv of st.intervals || []) {
+        if (iv.end <= iv.start) out.push(`${st.stationRef} has an interval that ends (${iv.end}) before it starts (${iv.start})`);
+        if (iv.start < last) out.push(`${st.stationRef} has an interval starting at ${iv.start}, before the previous one ends (${last})`);
+        if (doc.horizon !== undefined && iv.end > doc.horizon) out.push(`${st.stationRef} has an interval ending at ${iv.end}, after the horizon ${doc.horizon}`);
+        last = Math.max(last, iv.end);
+      }
+    }
+    return out;
+  };
+  const placementProblems = (doc) => {
+    const seen = new Set();
+    const out = [];
+    for (const p of doc.placed || []) {
+      if (seen.has(p.equipmentRef)) out.push(`places ${p.equipmentRef} more than once`);
+      seen.add(p.equipmentRef);
+    }
+    return out;
+  };
+  for (const { rel, doc } of of('standard/simulation-run-trace.schema.json')) for (const p of traceProblems(doc)) fail(rel, p);
+  for (const { rel, doc } of of('standard/placement.schema.json')) for (const p of placementProblems(doc)) fail(rel, p);
+  const trace = of('standard/simulation-run-trace.schema.json')[0]?.doc;
+  const placement = of('standard/placement.schema.json')[0]?.doc;
+  const st0 = trace?.stations[0];
+  const seeded = [
+    ['an interval that ends before it starts', st0 && traceProblems({ ...trace, stations: [{ ...st0, intervals: [{ state: 'busy', start: 30, end: 10 }] }] })],
+    ['overlapping intervals on one station', st0 && traceProblems({ ...trace, stations: [{ ...st0, intervals: [{ state: 'busy', start: 0, end: 30 }, { state: 'blocked', start: 20, end: 40 }] }] })],
+    ['an interval after the horizon', st0 && traceProblems({ ...trace, horizon: 10, stations: [{ ...st0, intervals: [{ state: 'busy', start: 0, end: 30 }] }] })],
+    ['equipment placed twice', placement && placementProblems({ ...placement, placed: [placement.placed[0], placement.placed[0]] })],
+  ];
+  for (const [what, problems] of seeded) if (problems && !problems.length) fail('scripts/check.mjs', `accepts ${what}`);
+  const pl = ajv.getSchema(idOf('standard/placement.schema.json'));
+  if (pl && placement && pl({ ...placement, placed: [] })) fail('standard/placement.schema.json', 'accepts a placement naming no equipment');
+}
+
 // 5. Public text names the standard and the published standards it maps, nothing internal to any steward.
 const FORBIDDEN = [
   [/\bd-\d{4}-\d\d-\d\d-[a-z0-9-]+/, 'an internal deliverable or decision id'],

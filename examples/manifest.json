@@ -252,6 +252,14 @@
     {
       "example": "editions/mesa-kpi-ml.json",
       "schema": "standard/standard-edition.schema.json"
+    },
+    {
+      "example": "examples/simulation-run-trace.two-station-line.json",
+      "schema": "standard/simulation-run-trace.schema.json"
+    },
+    {
+      "example": "examples/placement.two-station-line.json",
+      "schema": "standard/placement.schema.json"
     }
   ]
 }

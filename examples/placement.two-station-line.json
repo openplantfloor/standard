@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/placement.schema.json",
+  "placementId": "shop-1:placement:line-1",
+  "name": "Line 1, one layout",
+  "frame": {
+    "kind": "floor",
+    "scopeRef": "shop-1",
+    "origin": "the south-west column, x along the south wall",
+    "extent": {
+      "length": {
+        "value": 30,
+        "uom": "MTR"
+      },
+      "width": {
+        "value": 12,
+        "uom": "MTR"
+      }
+    }
+  },
+  "placed": [
+    {
+      "equipmentRef": "shop-1:saw-01",
+      "position": {
+        "x": {
+          "value": 4,
+          "uom": "MTR"
+        },
+        "y": {
+          "value": 3,
+          "uom": "MTR"
+        },
+        "z": {
+          "value": 0,
+          "uom": "MTR"
+        }
+      },
+      "yaw": {
+        "value": 0,
+        "uom": "DD"
+      }
+    },
+    {
+      "equipmentRef": "shop-1:laser-01",
+      "position": {
+        "x": {
+          "value": 14,
+          "uom": "MTR"
+        },
+        "y": {
+          "value": 3,
+          "uom": "MTR"
+        },
+        "z": {
+          "value": 0,
+          "uom": "MTR"
+        }
+      },
+      "yaw": {
+        "value": 90,
+        "uom": "DD"
+      }
+    }
+  ],
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "an illustrative layout"
+    }
+  ]
+}

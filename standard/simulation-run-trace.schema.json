@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/simulation-run-trace.schema.json",
+  "title": "Simulation Run Trace",
+  "version": "0.1.0",
+  "description": "The event trace of one replication of a simulation run: for each station, every interval it spent busy, blocked, starved, down or in setup, as a start and an end in seconds from the start of the run. It is what a layout view or an animation replays and what a station's shares in the run's results are summed from. A run states its results; its trace states how they arose.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "traceId",
+    "runRef",
+    "replication",
+    "uom",
+    "stations"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/simulation-run-trace.schema.json"
+    },
+    "traceId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "runRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The simulation-run this trace is one replication of."
+    },
+    "replication": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Which of the run's replications, counting from 1."
+    },
+    "uom": {
+      "type": "string",
+      "const": "SEC",
+      "description": "The unit of every start, end, warm-up end and horizon: seconds (UN/CEFACT SEC) from the start of the run, warm-up included."
+    },
+    "horizon": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "description": "When the trace ends. No interval ends after it."
+    },
+    "warmUpEnd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "When the warm-up the run's results exclude ends."
+    },
+    "stations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/station"
+      }
+    }
+  },
+  "definitions": {
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stationRef",
+        "intervals"
+      ],
+      "properties": {
+        "stationRef": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+          "description": "The equipment record of the station."
+        },
+        "intervals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/interval"
+          },
+          "description": "In order of start. A station is in one state at a time, so intervals do not overlap; a time no interval covers is idle."
+        }
+      }
+    },
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "busy",
+            "blocked",
+            "starved",
+            "down",
+            "setup"
+          ],
+          "description": "busy, working a unit; blocked, holding a finished unit the next buffer cannot take; starved, waiting for a unit; down, failed or under repair; setup, changing over (after VDI 3633 and ISO 22400-2)."
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0
+        },
+        "end": {
+          "type": "number",
+          "minimum": 0
+        },
+        "unitRef": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The unit or lot worked, where the run tracks one."
+        }
+      }
+    }
+  }
+}
