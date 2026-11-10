@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/simulation-run-trace.schema.json",
+  "traceId": "shop-1:trace:line-1:base:r1",
+  "runRef": "shop-1:run:line-1:base",
+  "replication": 1,
+  "uom": "SEC",
+  "horizon": 600,
+  "warmUpEnd": 120,
+  "stations": [
+    {
+      "stationRef": "shop-1:saw-01",
+      "intervals": [
+        {
+          "state": "busy",
+          "start": 0,
+          "end": 20,
+          "unitRef": "part-1"
+        },
+        {
+          "state": "busy",
+          "start": 20,
+          "end": 40,
+          "unitRef": "part-2"
+        },
+        {
+          "state": "blocked",
+          "start": 40,
+          "end": 55
+        },
+        {
+          "state": "busy",
+          "start": 55,
+          "end": 75,
+          "unitRef": "part-3"
+        },
+        {
+          "state": "down",
+          "start": 75,
+          "end": 255
+        },
+        {
+          "state": "busy",
+          "start": 255,
+          "end": 275,
+          "unitRef": "part-4"
+        }
+      ]
+    },
+    {
+      "stationRef": "shop-1:laser-01",
+      "intervals": [
+        {
+          "state": "starved",
+          "start": 0,
+          "end": 20
+        },
+        {
+          "state": "busy",
+          "start": 20,
+          "end": 55,
+          "unitRef": "part-1"
+        },
+        {
+          "state": "busy",
+          "start": 55,
+          "end": 90,
+          "unitRef": "part-2"
+        },
+        {
+          "state": "busy",
+          "start": 90,
+          "end": 125,
+          "unitRef": "part-3"
+        },
+        {
+          "state": "starved",
+          "start": 125,
+          "end": 275
+        }
+      ]
+    }
+  ]
+}

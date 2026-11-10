@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.11.0
+
+Additions only; every 0.10.1 record validates unchanged.
+
+- `standard/simulation-run-trace` 0.1.0: the event trace of one replication of a simulation run -- per station, each busy, blocked, starved, down and setup interval as a start and an end in seconds (SEC) from the run's start, with the warm-up's end and the horizon. The check refuses an interval that ends before it starts, a station's intervals out of order or overlapping, and an interval after the horizon.
+- `standard/placement` 0.1.0: a floor or cell frame, its origin and extent as lengths, and each piece of equipment's position (the common position) and yaw in it. The check refuses a placement naming no equipment and a machine placed twice.
+- Examples: a two-station line's trace and its placement.
+
 ## 0.10.1
 
 First publication from this repository. The standard's schemas and their versions:
