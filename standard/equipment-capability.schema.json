@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "title": "Equipment capability",
   "description": "A machine or cell on a plant floor and what it can do: the processes it performs, the materials and size envelope it takes, its force or power, and the parameters a job is matched against; its physical footprint, weight and utilities, so a shop can be laid out from its records; how its model was identified; and where each figure comes from. One record per machine or cell; a shop's equipment is the set of its records. From 0.3.0 each process carries its DIN 8580 main group, and the machine its automation level, its place in the ISA-95 equipment hierarchy and the standards it maps to. From 0.4.0 its axes say what they are: the machine's own, and each external axis with its kind and travel. From 0.5.0 it names the meters its energy is read from. This is the baseline every machine shares; each equipment class states what it adds in its extension (standard/extensions/), so the baseline stays stable as classes are added.",
   "type": "object",
@@ -18,6 +18,16 @@
     },
     "equipmentId": {
       "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "A shared definition's version. A definition is a record naming no serial number and no definitionRef: what a kind of machine is, shared by every shop that runs one. A definition at a version never changes; a change is a new version. Added in 0.9.0."
+    },
+    "definitionRef": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*(:[a-z0-9][a-z0-9._-]*)*@\\d+\\.\\d+\\.\\d+$",
+      "description": "What this machine or unit is an instance of, at a version (<id>@<version>): a shared definition (an equipment record), or the configuration a built unit is fitted to. A refit points it at another configuration. Added in 0.9.0."
     },
     "name": {
       "type": "string",

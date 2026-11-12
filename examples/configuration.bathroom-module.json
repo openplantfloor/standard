@@ -1,0 +1,116 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/configuration.schema.json",
+  "configurationId": "shop-2:cfg:bathroom-module",
+  "version": "1.0.0",
+  "name": "A bathroom module and its utility interfaces",
+  "interfaces": [
+    {
+      "id": "primary_electrical_feed",
+      "class": "electrical",
+      "direction": "ingress",
+      "rating": {
+        "voltage": {
+          "value": 240,
+          "uom": "VLT"
+        },
+        "phases": 1,
+        "current": {
+          "value": 100,
+          "uom": "AMP"
+        }
+      },
+      "connector": {
+        "signature": "electrical_lug_M"
+      }
+    },
+    {
+      "id": "cold_water_supply",
+      "class": "cold_water",
+      "direction": "ingress",
+      "rating": {
+        "pressureMin": {
+          "value": 45,
+          "uom": "PS"
+        },
+        "pressureMax": {
+          "value": 60,
+          "uom": "PS"
+        }
+      },
+      "connector": {
+        "signature": "pex_barb",
+        "spec": "1 inch PEX B",
+        "standard": "ASTM F876"
+      }
+    },
+    {
+      "id": "sanitary_drain",
+      "class": "sanitary",
+      "direction": "egress",
+      "rating": {
+        "size": {
+          "value": 4,
+          "uom": "INH"
+        }
+      },
+      "connector": {
+        "signature": "pvc_rubber_boot",
+        "standard": "ASTM D2665"
+      }
+    },
+    {
+      "id": "plumbing_vent",
+      "class": "vent",
+      "direction": "egress",
+      "rating": {
+        "size": {
+          "value": 3,
+          "uom": "INH"
+        }
+      }
+    },
+    {
+      "id": "bath_fan_exhaust",
+      "class": "hvac_exhaust",
+      "direction": "egress",
+      "rating": {
+        "size": {
+          "value": 4,
+          "uom": "INH"
+        },
+        "flow": {
+          "value": 50,
+          "numerator": "FTQ",
+          "denominator": "MIN"
+        }
+      }
+    },
+    {
+      "id": "data_ethernet",
+      "class": "data",
+      "direction": "bidirectional",
+      "required": false,
+      "protocols": [
+        "TIA-568"
+      ]
+    }
+  ],
+  "mass": {
+    "value": 8400,
+    "uom": "LBR"
+  },
+  "envelope": {
+    "length": {
+      "value": 96,
+      "uom": "INH"
+    },
+    "width": {
+      "value": 60,
+      "uom": "INH"
+    },
+    "height": {
+      "value": 96,
+      "uom": "INH"
+    }
+  }
+}

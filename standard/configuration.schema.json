@@ -1,0 +1,807 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.openplantfloor.org/standard/configuration.schema.json",
+  "title": "Configuration",
+  "version": "0.1.0",
+  "description": "A versioned configuration of a shop or of a built unit -- a production pod, a volumetric module such as a bathroom pod. A base states what the unit is: its interfaces (what crosses its boundary: power, water, drainage, air and its filtration, gas, extraction, data and controls, fire suppression, structure and lifting), its mass, mass limit, envelope, centre of gravity and lift points, and its materials. A refit names its base at a version and what is fitted into it: equipment by shared definition at a version, its layout and its line flows. A shop is a configuration of the same shape: the equipment it fits and the workflows it runs. A built unit is an equipment record whose definitionRef names a configuration at a version, made by a job order on a shop's workflow. Interfaces follow the port and utility model of the Center for Offsite Construction's Configure-to-Order Interface Standard (CIS), each figure a UN/CEFACT Recommendation 20 quantity or rate. A configuration at a version never changes; a change is a new version.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "configurationId",
+    "version",
+    "name"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://schemas.openplantfloor.org/standard/configuration.schema.json"
+    },
+    "configurationId": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseRef": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*(:[a-z0-9][a-z0-9._-]*)*@\\d+\\.\\d+\\.\\d+$",
+      "description": "The base this refit is fitted into, <configurationId>@<version>. Absent: this is a base."
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/interface"
+      },
+      "description": "A base: what crosses the unit's boundary. What a refit fits draws on its base's."
+    },
+    "mass": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "KGM",
+                "TNE",
+                "LBR",
+                "STN"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "The configuration's own mass, without what is fitted."
+    },
+    "massLimit": {
+      "allOf": [
+        {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        {
+          "properties": {
+            "uom": {
+              "enum": [
+                "KGM",
+                "TNE",
+                "LBR",
+                "STN"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "A base: the most the unit may weigh fitted, to lift, ship and place."
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "length",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "length": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "width": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "height": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "description": "Outside dimensions."
+    },
+    "centreOfGravity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "properties": {
+        "x": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "y": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "z": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "description": "From the envelope's origin, fitted."
+    },
+    "liftPoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "position",
+          "capacity"
+        ],
+        "properties": {
+          "position": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "z"
+            ],
+            "properties": {
+              "x": {
+                "allOf": [
+                  {
+                    "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+                  },
+                  {
+                    "properties": {
+                      "uom": {
+                        "enum": [
+                          "MMT",
+                          "CMT",
+                          "MTR",
+                          "INH",
+                          "FOT"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "y": {
+                "allOf": [
+                  {
+                    "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+                  },
+                  {
+                    "properties": {
+                      "uom": {
+                        "enum": [
+                          "MMT",
+                          "CMT",
+                          "MTR",
+                          "INH",
+                          "FOT"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "z": {
+                "allOf": [
+                  {
+                    "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+                  },
+                  {
+                    "properties": {
+                      "uom": {
+                        "enum": [
+                          "MMT",
+                          "CMT",
+                          "MTR",
+                          "INH",
+                          "FOT"
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "capacity": {
+            "allOf": [
+              {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+              },
+              {
+                "properties": {
+                  "uom": {
+                    "enum": [
+                      "KGM",
+                      "TNE",
+                      "LBR",
+                      "STN"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "materials": {
+      "type": "array",
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/material"
+      }
+    },
+    "fitted": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "definitionRef"
+        ],
+        "properties": {
+          "definitionRef": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*(:[a-z0-9][a-z0-9._-]*)*@\\d+\\.\\d+\\.\\d+$",
+            "description": "The shared equipment definition at the version fitted."
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          }
+        }
+      },
+      "description": "The equipment fitted, by shared definition."
+    },
+    "layoutRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The placement record laying the fitted equipment out."
+    },
+    "lineFlowRefs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+      },
+      "description": "The line flows it runs: a unit's one; a shop's workflows."
+    }
+  },
+  "definitions": {
+    "interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "class",
+        "direction"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+        },
+        "class": {
+          "type": "string",
+          "enum": [
+            "electrical",
+            "cold_water",
+            "hot_water",
+            "sanitary",
+            "vent",
+            "condensate",
+            "gas",
+            "process_gas",
+            "compressed_air",
+            "hvac_supply",
+            "hvac_return",
+            "hvac_exhaust",
+            "extraction",
+            "fire_suppression",
+            "data",
+            "controls",
+            "structural",
+            "lifting"
+          ],
+          "description": "What crosses the boundary. cold_water, hot_water, sanitary, vent, gas, electrical, data, hvac_supply, hvac_return, hvac_exhaust and fire_suppression are the CIS utility types; condensate is named by CfOC-ICC-1220; process_gas, compressed_air, extraction, controls, structural and lifting serve production units."
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "ingress",
+            "egress",
+            "bidirectional"
+          ]
+        },
+        "required": {
+          "type": "boolean",
+          "default": true
+        },
+        "rating": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "The class's rating, each figure a quantity or a rate: voltage, current, frequency, apparentPower and phases (electrical); pressureMin, pressureMax, temperatureMax and flow (water, air, gas); size (drain, vent, duct); capacity (lifting, structural); gas (the gas).",
+          "patternProperties": {
+            "^[a-z][A-Za-z]*$": {
+              "oneOf": [
+                {
+                  "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "value",
+                    "numerator",
+                    "denominator"
+                  ],
+                  "description": "A rate: value numerator per denominator, each a UN/CEFACT Recommendation 20 code (LTR per MIN, MTQ per HUR, FTQ per MIN).",
+                  "properties": {
+                    "value": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "numerator": {
+                      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+                    },
+                    "denominator": {
+                      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/uom"
+                    }
+                  }
+                },
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "string",
+                  "minLength": 1
+                }
+              ]
+            }
+          }
+        },
+        "filtration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "standard",
+            "class"
+          ],
+          "properties": {
+            "standard": {
+              "type": "string",
+              "minLength": 1,
+              "description": "For example ISO 8573-1 (compressed-air purity) or ISO 16890 (ventilation filters)."
+            },
+            "class": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Data and controls: for example TIA-568, OPC UA, EtherNet/IP, IO-Link."
+        },
+        "connector": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "signature": {
+              "type": "string",
+              "minLength": 1,
+              "description": "The CIS connection signature: same-to-same, or gendered _M/_F."
+            },
+            "spec": {
+              "type": "string",
+              "minLength": 1
+            },
+            "standard": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "position": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "side",
+            "x",
+            "y"
+          ],
+          "properties": {
+            "side": {
+              "type": "string",
+              "minLength": 1
+            },
+            "x": {
+              "allOf": [
+                {
+                  "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+                },
+                {
+                  "properties": {
+                    "uom": {
+                      "enum": [
+                        "MMT",
+                        "CMT",
+                        "MTR",
+                        "INH",
+                        "FOT"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "y": {
+              "allOf": [
+                {
+                  "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+                },
+                {
+                  "properties": {
+                    "uom": {
+                      "enum": [
+                        "MMT",
+                        "CMT",
+                        "MTR",
+                        "INH",
+                        "FOT"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "tolerance": {
+          "allOf": [
+            {
+              "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+            },
+            {
+              "properties": {
+                "uom": {
+                  "enum": [
+                    "MMT",
+                    "CMT",
+                    "MTR",
+                    "INH",
+                    "FOT"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "codeStandards": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "electrical"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "voltage",
+                  "phases"
+                ]
+              }
+            },
+            "required": [
+              "rating"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "cold_water",
+                  "hot_water"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "pressureMin",
+                  "pressureMax"
+                ]
+              }
+            },
+            "required": [
+              "rating"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "hot_water"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "temperatureMax"
+                ]
+              }
+            },
+            "required": [
+              "rating"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "sanitary",
+                  "vent",
+                  "condensate"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "size"
+                ]
+              }
+            },
+            "required": [
+              "rating"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "compressed_air"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "pressureMin",
+                  "flow"
+                ]
+              }
+            },
+            "required": [
+              "rating",
+              "filtration"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "extraction"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "flow"
+                ]
+              }
+            },
+            "required": [
+              "rating",
+              "filtration"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "gas",
+                  "process_gas"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "gas"
+                ]
+              }
+            },
+            "required": [
+              "rating"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "lifting"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rating": {
+                "required": [
+                  "capacity"
+                ]
+              }
+            },
+            "required": [
+              "rating"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "class": {
+                "enum": [
+                  "data",
+                  "controls"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "protocols"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

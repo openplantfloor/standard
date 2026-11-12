@@ -325,11 +325,13 @@ for (const rel of [...files, ...manifest.map((e) => e.example)]) {
 
 // 4j. A line flow holds together: its stations run 1, 2, 3 ... with no gap and no repeat, a shared machine is one a
 // station runs, a feed comes from a line some line flow describes and enters a station the flow has, and a repair
-// time comes with a time between failures; a buffer holds at least one unit. Each rule is proven on a seeded defect.
+// time comes with a time between failures; a buffer holds at least one unit; a line laid out to a pattern names a
+// line flow that is described, not itself, and has the pattern's stations. Each rule is proven on a seeded defect.
 {
   const of = (schema) => manifest.filter((e) => e.schema === schema && existsSync(join(ROOT, e.example))).map((e) => ({ rel: e.example, doc: load(e.example) }));
   const flows = of('standard/line-flow.schema.json');
   const lines = new Set(flows.map(({ doc }) => doc.lineRef));
+  const byFlow = new Map(flows.map(({ doc }) => [doc.flowId, doc]));
   const flowProblems = (doc) => {
     const out = [];
     const seqs = (doc.stations || []).map((s) => s.sequence);
@@ -341,6 +343,11 @@ for (const rel of [...files, ...manifest.map((e) => e.example)]) {
       if (!lines.has(f.fromLineRef)) out.push(`takes from ${f.fromLineRef}, a line no line flow describes`);
       if (f.intoStation !== undefined && !seqs.includes(f.intoStation)) out.push(`feeds station ${f.intoStation}, which the flow does not have`);
     }
+    if (doc.patternRef !== undefined) {
+      const pattern = doc.patternRef === doc.flowId ? undefined : byFlow.get(doc.patternRef);
+      if (!pattern) out.push(`is laid out to ${doc.patternRef}, a line flow not described or the line itself`);
+      else if ((pattern.stations || []).length !== seqs.length) out.push(`has ${seqs.length} stations; its pattern ${doc.patternRef} has ${(pattern.stations || []).length}`);
+    }
     for (const s of doc.stations || []) {
       const r = s.reliability || {};
       if (r.meanTimeToRepair && !r.meanTimeBetweenFailures) out.push(`station ${s.sequence} states a repair time without a time between failures`);
@@ -350,16 +357,85 @@ for (const rel of [...files, ...manifest.map((e) => e.example)]) {
   for (const { rel, doc } of flows) for (const p of flowProblems(doc)) fail(rel, p);
   const flow = flows.find(({ doc }) => (doc.sharedMachines || []).length && (doc.stations || []).some((s) => s.reliability))?.doc;
   const fed = flows.find(({ doc }) => (doc.feeds || []).length)?.doc;
+  const patterned = flows.find(({ doc }) => doc.patternRef)?.doc;
   const seeded = [
     ['a sequence with a gap', flow && flowProblems({ ...flow, stations: flow.stations.map((s, i) => ({ ...s, sequence: i === 0 ? 1 : s.sequence + 1 })) })],
     ['a sequence with a repeat', flow && flowProblems({ ...flow, stations: flow.stations.map((s) => ({ ...s, sequence: 1 })) })],
     ['a shared machine no station runs', flow && flowProblems({ ...flow, sharedMachines: [{ equipmentRef: 'shop-1:nowhere', sharedWith: ['shop-1:line-2'] }] })],
     ['a feed from a line that is not named', fed && flowProblems({ ...fed, feeds: [{ ...fed.feeds[0], fromLineRef: 'shop-1:nowhere' }] })],
     ['a repair time without a time between failures', flow && flowProblems({ ...flow, stations: flow.stations.map((s) => (s.reliability ? { ...s, reliability: { basis: s.reliability.basis, meanTimeToRepair: s.reliability.meanTimeToRepair } } : s)) })],
+    ['a pattern no line flow describes', patterned && flowProblems({ ...patterned, patternRef: 'shop-1:flow:nowhere' })],
+    ['a line with fewer stations than its pattern', patterned && flowProblems({ ...patterned, stations: patterned.stations.slice(0, -1) })],
   ];
   for (const [what, problems] of seeded) if (problems && !problems.length) fail('scripts/check.mjs', `accepts ${what}`);
   const lf = ajv.getSchema(idOf('standard/line-flow.schema.json'));
   if (lf && flow && lf({ ...flow, stations: [{ ...flow.stations[0], bufferAfter: 0 }] })) fail('standard/line-flow.schema.json', 'accepts a buffer of no capacity');
+}
+
+// 4k. Configurations and the units built to them hold together: a configuration at a version is one record; a refit's base
+// is a base on record; what a configuration fits is a shared definition (an equipment record naming no serial and no
+// definitionRef) at the version named; a refit draws no more power or compressed air than its base's interfaces supply
+// and weighs, fitted, no more than its base's mass limit; a unit's definitionRef names a definition or a configuration
+// at a version; a configuration's layout and line flows are described. Each rule is proven on a seeded defect.
+{
+  const of = (schema) => manifest.filter((e) => e.schema === schema && existsSync(join(ROOT, e.example))).map((e) => load(e.example));
+  const KG = { KGM: 1, TNE: 1000, LBR: 0.45359237, STN: 907.18474 };
+  const kg = (q) => (q ? q.value * KG[q.uom] : 0);
+  const configProblems = (cfgs, equipment, flowIds, placementIds) => {
+    const out = []; const cfg = new Map(); const defs = new Map();
+    const isDef = (e) => !e.definitionRef && !e.identification?.serialNumber;
+    for (const e of equipment) if (isDef(e) && e.version) {
+      const k = `${e.equipmentId}@${e.version}`;
+      if (defs.has(k) && JSON.stringify(defs.get(k)) !== JSON.stringify(e)) out.push(`${k}: two different definitions at one version`);
+      defs.set(k, e);
+    }
+    for (const c of cfgs) {
+      const k = `${c.configurationId}@${c.version}`;
+      if (cfg.has(k) && JSON.stringify(cfg.get(k)) !== JSON.stringify(c)) out.push(`${k}: two different configurations at one version`);
+      cfg.set(k, c);
+    }
+    for (const [k, c] of cfg) {
+      for (const f of c.fitted || []) if (!defs.has(f.definitionRef)) out.push(`${k}: fits ${f.definitionRef}, not a shared definition at that version`);
+      for (const f of c.lineFlowRefs || []) if (!flowIds.has(f)) out.push(`${k}: runs ${f}, a line flow not described`);
+      if (c.layoutRef && !placementIds.has(c.layoutRef)) out.push(`${k}: laid out by ${c.layoutRef}, a placement not described`);
+      if (!c.baseRef) continue;
+      const base = cfg.get(c.baseRef);
+      if (!base || base.baseRef) { out.push(`${k}: its base ${c.baseRef} is not a base on record`); continue; }
+      const supply = (cls) => (base.interfaces || []).find((i) => i.class === cls)?.rating;
+      const kva = supply('electrical')?.apparentPower?.value ?? 0;
+      const air = supply('compressed_air')?.flow; const airLpm = air && air.numerator === 'LTR' && air.denominator === 'MIN' ? air.value : 0;
+      let drawKva = 0, drawAir = 0, mass = kg(base.mass) + kg(c.mass);
+      for (const f of c.fitted || []) {
+        const d = defs.get(f.definitionRef); if (!d) continue; const n = f.count || 1;
+        drawKva += (d.utilities?.electricalKva || 0) * n; drawAir += (d.utilities?.compressedAir?.flowLpm || 0) * n; mass += kg(d.physical?.mass) * n;
+      }
+      if (drawKva > kva) out.push(`${k}: draws ${drawKva} kVA; its base supplies ${kva}`);
+      if (drawAir > airLpm) out.push(`${k}: draws ${drawAir} L/min of compressed air; its base supplies ${airLpm}`);
+      if (base.massLimit && mass > kg(base.massLimit)) out.push(`${k}: weighs ${Math.round(mass)} kg fitted; its base carries ${kg(base.massLimit)}`);
+    }
+    for (const e of equipment) if (e.definitionRef && !(defs.has(e.definitionRef) || cfg.has(e.definitionRef))) out.push(`${e.equipmentId}: an instance of ${e.definitionRef}, neither a definition nor a configuration at a version`);
+    return out;
+  };
+  const cfgs = of('standard/configuration.schema.json'), equipment = of('standard/equipment-capability.schema.json');
+  const flowIds = new Set(of('standard/line-flow.schema.json').map((f) => f.flowId)), placementIds = new Set(of('standard/placement.schema.json').map((p) => p.placementId));
+  for (const p of configProblems(cfgs, equipment, flowIds, placementIds)) fail('examples', p);
+  const refit = cfgs.find((c) => c.baseRef && (c.fitted || []).length), unit = equipment.find((e) => e.definitionRef);
+  const def = equipment.find((e) => e.version && !e.definitionRef);
+  const seededC = [
+    ['a refit drawing more power than its base supplies', refit && configProblems([...cfgs, { ...refit, version: '9.0.0', fitted: [{ definitionRef: refit.fitted[0].definitionRef, count: 50 }] }], equipment, flowIds, placementIds)],
+    ['a refit drawing more compressed air than its base supplies', refit && configProblems([...cfgs, { ...refit, version: '9.0.1', fitted: refit.fitted.map((f) => ({ ...f, count: 20 })) }], equipment, flowIds, placementIds)],
+    ['a refit on a base not on record', refit && configProblems([...cfgs, { ...refit, version: '9.0.2', baseRef: 'shop-1:cfg:nowhere@1.0.0' }], equipment, flowIds, placementIds)],
+    ['a fitted machine that is not a shared definition at the version named', refit && configProblems([...cfgs, { ...refit, version: '9.0.3', fitted: [{ definitionRef: refit.fitted[0].definitionRef.replace(/@.*/, '@9.9.9') }] }], equipment, flowIds, placementIds)],
+    ['two different configurations at one version', refit && configProblems([...cfgs, { ...refit, name: 'changed' }], equipment, flowIds, placementIds)],
+    ['a definition changed in place at the same version', def && configProblems(cfgs, [...equipment, { ...def, name: 'changed' }], flowIds, placementIds)],
+    ['a unit naming a configuration not on record', unit && configProblems(cfgs, [...equipment, { ...unit, equipmentId: 'shop-1:cell:x', definitionRef: 'shop-1:cfg:nowhere@1.0.0' }], flowIds, placementIds)],
+    ['a configuration running a line flow not described', refit && configProblems([...cfgs, { ...refit, version: '9.0.4', lineFlowRefs: ['shop-1:flow:nowhere'] }], equipment, flowIds, placementIds)],
+  ];
+  for (const [what, problems] of seededC) if (!problems || !problems.length) fail('scripts/check.mjs', `accepts ${what}`);
+  const cs = ajv.getSchema(idOf('standard/configuration.schema.json'));
+  const base = cfgs.find((c) => (c.interfaces || []).some((i) => i.class === 'compressed_air'));
+  if (cs && base && cs({ ...base, interfaces: base.interfaces.map((i) => (i.class === 'compressed_air' ? { ...i, filtration: undefined } : i)).map((i) => JSON.parse(JSON.stringify(i))) })) fail('standard/configuration.schema.json', 'accepts compressed air with no filtration class');
+  if (cs && base && cs({ ...base, interfaces: base.interfaces.map((i) => (i.class === 'electrical' ? { ...i, rating: { phases: 3 } } : i)) })) fail('standard/configuration.schema.json', 'accepts a power interface with no voltage');
 }
 
 // 5. Public text names the standard and the published standards it maps, nothing internal to any steward.

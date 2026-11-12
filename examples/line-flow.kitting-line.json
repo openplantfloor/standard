@@ -3,6 +3,7 @@
   "flowId": "shop-1:flow:line-2:layout-a",
   "name": "Line 2, kitting, one layout",
   "lineRef": "shop-1:line-2",
+  "patternRef": "shop-1:flow:kit-cell-pattern",
   "unit": {
     "description": "one kit of parts for an install zone",
     "quantity": {

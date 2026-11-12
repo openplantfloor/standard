@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:def:band-saw",
+  "version": "1.0.0",
+  "name": "Band saw, a shared definition",
+  "processes": [
+    {
+      "process": "saw-cut"
+    }
+  ],
+  "utilities": {
+    "electricalKva": 4,
+    "voltageV": 480,
+    "phases": 3
+  },
+  "physical": {
+    "mass": {
+      "value": 600,
+      "uom": "KGM"
+    }
+  }
+}

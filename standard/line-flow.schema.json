@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/line-flow.schema.json",
   "title": "Line Flow",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "How a production line flows: its stations in order -- each a machine or cell and the process timing it runs, with how many work in parallel and what each passes on -- the buffer after each station, the machines it shares with another line, what it takes from another line for each unit it makes, the rule that releases work into it, and each station's breakdown and repair after VDI 3423. It is what a simulation of the line reads to model blocking, starving and failures. A line flow is one possible layout of a line; an alternative layout is another line-flow record.",
   "type": "object",
   "additionalProperties": false,
@@ -26,6 +26,10 @@
     "lineRef": {
       "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
       "description": "The equipment record of the line, at the work-center level."
+    },
+    "patternRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The line flow whose layout this line follows, when lines of one kind are laid out to one pattern: the line has the pattern's stations, sequence for sequence, and each station may run its own equipment and timing. Added in 0.2.0."
     },
     "unit": {
       "type": "object",
