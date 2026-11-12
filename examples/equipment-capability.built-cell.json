@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:cell:0001",
+  "definitionRef": "shop-1:cfg:kit-cell@1.0.0",
+  "name": "Cell 0001, built to the kitting refit",
+  "processes": [
+    {
+      "process": "kit"
+    }
+  ],
+  "identification": {
+    "serialNumber": "0001",
+    "modelStated": true
+  }
+}

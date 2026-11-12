@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/line-flow.schema.json",
+  "flowId": "shop-1:flow:kit-cell-pattern",
+  "name": "Kit cell, the pattern every kit cell is laid out to",
+  "lineRef": "shop-1:kit-cell-pattern",
+  "unit": {
+    "description": "one kit of parts",
+    "quantity": {
+      "value": 1,
+      "uom": "SET"
+    }
+  },
+  "stations": [
+    {
+      "sequence": 1,
+      "equipmentRef": "shop-1:kit-cell-01",
+      "passes": {
+        "value": 1,
+        "uom": "SET"
+      },
+      "bufferAfter": 4
+    },
+    {
+      "sequence": 2,
+      "equipmentRef": "shop-1:pack-01",
+      "passes": {
+        "value": 1,
+        "uom": "SET"
+      }
+    }
+  ],
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "an illustrative layout pattern"
+    }
+  ]
+}

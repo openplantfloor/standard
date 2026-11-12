@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/configuration.schema.json",
+  "configurationId": "shop-1:cfg:kit-cell",
+  "version": "1.0.0",
+  "name": "A kitting refit of the cell base",
+  "baseRef": "shop-1:cfg:cell-base@1.0.0",
+  "fitted": [
+    {
+      "definitionRef": "shop-1:def:band-saw@1.0.0"
+    },
+    {
+      "definitionRef": "shop-1:def:robot-6axis@1.0.0",
+      "count": 2
+    }
+  ],
+  "mass": {
+    "value": 200,
+    "uom": "KGM"
+  },
+  "layoutRef": "shop-1:placement:line-1",
+  "lineFlowRefs": [
+    "shop-1:flow:line-2:layout-a"
+  ]
+}

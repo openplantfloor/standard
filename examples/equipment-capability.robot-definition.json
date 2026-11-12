@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/equipment-capability.schema.json",
+  "equipmentId": "shop-1:def:robot-6axis",
+  "version": "1.0.0",
+  "name": "Six-axis robot, a shared definition",
+  "processes": [
+    {
+      "process": "handle"
+    }
+  ],
+  "utilities": {
+    "electricalKva": 8,
+    "voltageV": 480,
+    "phases": 3,
+    "compressedAir": {
+      "pressureBar": 6,
+      "flowLpm": 50
+    }
+  },
+  "physical": {
+    "mass": {
+      "value": 1200,
+      "uom": "KGM"
+    }
+  }
+}

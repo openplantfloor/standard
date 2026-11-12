@@ -1,0 +1,175 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/configuration.schema.json",
+  "configurationId": "shop-1:cfg:cell-base",
+  "version": "1.0.0",
+  "name": "A transportable cell base",
+  "interfaces": [
+    {
+      "id": "power",
+      "class": "electrical",
+      "direction": "ingress",
+      "rating": {
+        "voltage": {
+          "value": 480,
+          "uom": "VLT"
+        },
+        "phases": 3,
+        "frequency": {
+          "value": 60,
+          "uom": "HTZ"
+        },
+        "current": {
+          "value": 40,
+          "uom": "AMP"
+        },
+        "apparentPower": {
+          "value": 30,
+          "uom": "KVA"
+        }
+      }
+    },
+    {
+      "id": "air",
+      "class": "compressed_air",
+      "direction": "ingress",
+      "rating": {
+        "pressureMin": {
+          "value": 6,
+          "uom": "BAR"
+        },
+        "flow": {
+          "value": 400,
+          "numerator": "LTR",
+          "denominator": "MIN"
+        }
+      },
+      "filtration": {
+        "standard": "ISO 8573-1",
+        "class": "1.4.1"
+      }
+    },
+    {
+      "id": "fume",
+      "class": "extraction",
+      "direction": "egress",
+      "rating": {
+        "flow": {
+          "value": 1500,
+          "numerator": "MTQ",
+          "denominator": "HUR"
+        }
+      },
+      "filtration": {
+        "standard": "ISO 16890",
+        "class": "ePM1 80%"
+      }
+    },
+    {
+      "id": "site-link",
+      "class": "data",
+      "direction": "bidirectional",
+      "protocols": [
+        "TIA-568",
+        "OPC UA"
+      ]
+    },
+    {
+      "id": "lift",
+      "class": "lifting",
+      "direction": "ingress",
+      "rating": {
+        "capacity": {
+          "value": 12000,
+          "uom": "KGM"
+        }
+      }
+    }
+  ],
+  "mass": {
+    "value": 5000,
+    "uom": "KGM"
+  },
+  "massLimit": {
+    "value": 12000,
+    "uom": "KGM"
+  },
+  "envelope": {
+    "length": {
+      "value": 12192,
+      "uom": "MMT"
+    },
+    "width": {
+      "value": 2438,
+      "uom": "MMT"
+    },
+    "height": {
+      "value": 2896,
+      "uom": "MMT"
+    }
+  },
+  "centreOfGravity": {
+    "x": {
+      "value": 6096,
+      "uom": "MMT"
+    },
+    "y": {
+      "value": 1219,
+      "uom": "MMT"
+    },
+    "z": {
+      "value": 1100,
+      "uom": "MMT"
+    }
+  },
+  "liftPoints": [
+    {
+      "position": {
+        "x": {
+          "value": 0,
+          "uom": "MMT"
+        },
+        "y": {
+          "value": 0,
+          "uom": "MMT"
+        },
+        "z": {
+          "value": 2896,
+          "uom": "MMT"
+        }
+      },
+      "capacity": {
+        "value": 6000,
+        "uom": "KGM"
+      }
+    },
+    {
+      "position": {
+        "x": {
+          "value": 12192,
+          "uom": "MMT"
+        },
+        "y": {
+          "value": 2438,
+          "uom": "MMT"
+        },
+        "z": {
+          "value": 2896,
+          "uom": "MMT"
+        }
+      },
+      "capacity": {
+        "value": 6000,
+        "uom": "KGM"
+      }
+    }
+  ],
+  "materials": [
+    {
+      "material": "steel frame, insulated panel walls",
+      "quantity": {
+        "value": 1,
+        "uom": "SET"
+      }
+    }
+  ]
+}

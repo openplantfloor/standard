@@ -268,6 +268,34 @@
     {
       "example": "examples/line-flow.kitting-line.json",
       "schema": "standard/line-flow.schema.json"
+    },
+    {
+      "example": "examples/line-flow.kit-cell-pattern.json",
+      "schema": "standard/line-flow.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.saw-definition.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.robot-definition.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/configuration.cell-base.json",
+      "schema": "standard/configuration.schema.json"
+    },
+    {
+      "example": "examples/configuration.cell-refit.json",
+      "schema": "standard/configuration.schema.json"
+    },
+    {
+      "example": "examples/equipment-capability.built-cell.json",
+      "schema": "standard/equipment-capability.schema.json"
+    },
+    {
+      "example": "examples/configuration.bathroom-module.json",
+      "schema": "standard/configuration.schema.json"
     }
   ]
 }

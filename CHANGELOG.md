@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.13.0
+
+Additions only; every 0.12.0 record validates unchanged.
+
+- `standard/configuration` 0.1.0: a versioned configuration of a shop or of a built unit, such as a production cell, a pod or a volumetric module. A base states its interfaces, mass, mass limit, envelope, centre of gravity, lift points and materials. The interfaces cover what crosses its boundary: power, water, drainage and vent, air and its filtration, gas, extraction, data and controls, fire suppression, structure and lifting. A refit names its base at a version, the equipment it fits by shared definition at a version, its layout and its line flows. A shop is a configuration of the same shape. Interfaces follow the port and utility model of the Center for Offsite Construction's Configure-to-Order Interface Standard (CIS), with every figure a UN/CEFACT Recommendation 20 quantity or rate. The check refuses:
+  - a refit drawing more power or compressed air than its base supplies;
+  - a refit heavier, fitted, than its base's mass limit;
+  - a base not on record;
+  - a fitted machine that is not a shared definition at the version named;
+  - two different configurations, or two different definitions, at one version;
+  - a unit naming a configuration not on record;
+  - a layout or line flow not described;
+  - compressed air or extraction with no filtration class, and power with no voltage.
+- `standard/equipment-capability` 0.9.0 adds two fields:
+  - `version`: a shared definition, what a kind of machine is, at a version that never changes.
+  - `definitionRef`: what a machine or a built unit is an instance of, at a version. A refit points a unit at another configuration.
+- `standard/line-flow` 0.2.0 adds `patternRef`: the line flow a line follows when lines of one kind share one layout. The line has the pattern's stations, sequence for sequence, and each station may run its own equipment and timing. The check refuses:
+  - a pattern no line flow describes, or the line itself;
+  - a station count that differs from the pattern's.
+- Examples:
+  - two shared definitions;
+  - a cell base and a kitting refit of it;
+  - a cell built to the refit;
+  - a bathroom module with its utility interfaces;
+  - a kit-cell pattern and the kitting line laid out to it.
+
 ## 0.12.0
 
 Additions only; every 0.11.0 record validates unchanged.
