@@ -296,6 +296,26 @@
     {
       "example": "examples/configuration.bathroom-module.json",
       "schema": "standard/configuration.schema.json"
+    },
+    {
+      "example": "examples/line-flow.bend-line.json",
+      "schema": "standard/line-flow.schema.json"
+    },
+    {
+      "example": "examples/process-timing.bender-01-offset-1in.json",
+      "schema": "standard/process-timing.schema.json"
+    },
+    {
+      "example": "examples/process-timing.bender-01-saddle-3-bend-1in.json",
+      "schema": "standard/process-timing.schema.json"
+    },
+    {
+      "example": "examples/simulation-run.bend-line.json",
+      "schema": "standard/simulation-run.schema.json"
+    },
+    {
+      "example": "examples/simulation-study.bend-line.json",
+      "schema": "standard/simulation-study.schema.json"
     }
   ]
 }

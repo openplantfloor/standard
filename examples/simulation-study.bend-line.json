@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/simulation-study.schema.json",
+  "studyId": "shop-1:study:bend-line",
+  "name": "Bend line capacity by part",
+  "purpose": "The bend line's pace for its part mix and for each part of it, to size the line to its demand.",
+  "model": {
+    "name": "bend line, layout a",
+    "kind": "discrete-event",
+    "tool": "SimPy 4.1.1"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/line-flow.schema.json",
+  "flowId": "shop-1:flow:bend-line:layout-a",
+  "name": "Bend line, one layout",
+  "lineRef": "shop-1:bend-line",
+  "unit": {
+    "description": "one cut and bent conduit piece",
+    "quantity": {
+      "value": 1,
+      "uom": "H87"
+    },
+    "partMix": [
+      {
+        "partRef": "shop-1:part:offset-1in",
+        "share": 0.6
+      },
+      {
+        "partRef": "shop-1:part:saddle-3-bend-1in",
+        "share": 0.4
+      }
+    ]
+  },
+  "stations": [
+    {
+      "sequence": 1,
+      "equipmentRef": "shop-1:saw-01",
+      "timingRef": "shop-1:timing:saw-01:cut",
+      "passes": {
+        "value": 1,
+        "uom": "H87"
+      },
+      "bufferAfter": 10
+    },
+    {
+      "sequence": 2,
+      "equipmentRef": "shop-1:bender-01",
+      "timingRef": "shop-1:timing:bender-01:offset-1in",
+      "passes": {
+        "value": 1,
+        "uom": "H87"
+      },
+      "bufferAfter": 10
+    },
+    {
+      "sequence": 3,
+      "equipmentRef": "shop-1:marker-01",
+      "passes": {
+        "value": 1,
+        "uom": "H87"
+      }
+    }
+  ],
+  "release": {
+    "rule": "pull",
+    "workInProcessLimit": 20
+  },
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "an illustrative layout"
+    }
+  ]
+}

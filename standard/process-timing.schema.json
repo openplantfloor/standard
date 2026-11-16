@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/process-timing.schema.json",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "title": "Process timing",
   "description": "How long an operation takes on a machine: cycle time per unit at a low, base and high case, setup and changeover, with the evidence grade and source of each figure. As measured figures replace estimates, the grade rises.",
   "type": "object",
@@ -29,6 +29,10 @@
         }
       ],
       "description": "The equipment-capability record the timing is for."
+    },
+    "partRef": {
+      "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+      "description": "The part or part family the cycle holds for, one of the part mix of a line flow that runs this equipment (line-flow unit.partMix); absent when the cycle holds for every part the station works."
     },
     "process": {
       "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/process"
