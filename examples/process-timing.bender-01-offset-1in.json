@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/process-timing.schema.json",
+  "timingId": "shop-1:timing:bender-01:offset-1in",
+  "equipmentRef": "shop-1:bender-01",
+  "partRef": "shop-1:part:offset-1in",
+  "process": "tube-bend",
+  "operation": "bend a 1 in offset: two bends",
+  "output": {
+    "value": 1,
+    "uom": "H87"
+  },
+  "cycleSeconds": {
+    "low": 32,
+    "base": 40,
+    "high": 52
+  },
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "illustrative figures"
+    }
+  ]
+}

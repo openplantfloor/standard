@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/simulation-run.schema.json",
+  "runId": "shop-1:run:bend-line:layout-a:base",
+  "studyRef": "shop-1:study:bend-line",
+  "scenario": {
+    "name": "base",
+    "description": "The bend line at its part mix, each bend from its part's timing."
+  },
+  "engine": {
+    "name": "SimPy",
+    "version": "4.1.1"
+  },
+  "inputs": {
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "refs": [
+      "shop-1:flow:bend-line:layout-a",
+      "shop-1:timing:bender-01:offset-1in",
+      "shop-1:timing:bender-01:saddle-3-bend-1in"
+    ]
+  },
+  "replications": 10,
+  "executedAt": "2026-11-16T00:00:00Z",
+  "outputs": [
+    {
+      "kpiRef": "example-shop:kpi:cycle-per-unit",
+      "scopeRef": "shop-1:bend-line",
+      "statistic": "mean",
+      "value": 50.2,
+      "uom": "SEC"
+    },
+    {
+      "kpiRef": "example-shop:kpi:cycle-per-unit",
+      "scopeRef": "shop-1:part:offset-1in",
+      "statistic": "mean",
+      "value": 41,
+      "uom": "SEC"
+    },
+    {
+      "kpiRef": "example-shop:kpi:cycle-per-unit",
+      "scopeRef": "shop-1:part:saddle-3-bend-1in",
+      "statistic": "mean",
+      "value": 66.1,
+      "uom": "SEC"
+    }
+  ]
+}

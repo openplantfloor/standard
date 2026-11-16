@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.14.0
+
+Additions only; every 0.13.0 record validates unchanged.
+
+- `standard/line-flow` 0.3.0 adds `unit.partMix`: the parts a line makes, each by reference to its part or assembly record (`partRef`), with its share of the output once the mix is known (`share`) -- the shape a cell performance requirement's `partMix` uses for a cell.
+- `standard/process-timing` 0.4.0 adds `partRef`: the part or part family a cycle holds for, so a station has a cycle per part.
+- `standard/simulation-run` 0.1.1, description only: a part's capacity is an output whose existing `scopeRef` names the part.
+- The check refuses:
+  - a part named twice in one mix;
+  - part mix shares summing over 1;
+  - a timing for a part that no line flow running its equipment has in its mix;
+  - a run reading a line flow with a part mix that scopes an output to anything but that line, its flow, one of its stations' equipment or a part of the mix.
+- Examples: a bend line making two conduit parts in a mix, a bend timing for each part, its study, and a run reporting the line's and each part's cycle.
+
 ## 0.13.0
 
 Additions only; every 0.12.0 record validates unchanged.

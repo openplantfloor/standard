@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/simulation-run.schema.json",
   "title": "Simulation Run",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "One run of a simulation study, reported as the STRESS guidelines ask (Monks et al. 2019): the scenario and how it differs from the base case, the engine and version, the code and inputs it ran (by hash), the input distributions and assumptions, whether it terminates, its warm-up and run length, its replications and how they are combined, its random number streams, when and where it ran; and its results -- each a KPI value with its confidence interval, and per station its utilisation and its blocked and starved shares -- with any time series it wrote (IDTA 02008).",
   "type": "object",
   "additionalProperties": false,
@@ -224,7 +224,8 @@
             "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
           },
           "scopeRef": {
-            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier"
+            "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+            "description": "What the figure is for: the line, its line flow, one of its stations' equipment, or a part of the line's part mix (line-flow unit.partMix) -- a part's capacity is an output scoped to the part. Absent, the figure is for the run as a whole."
           },
           "statistic": {
             "type": "string",

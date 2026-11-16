@@ -372,6 +372,68 @@ for (const rel of [...files, ...manifest.map((e) => e.example)]) {
   if (lf && flow && lf({ ...flow, stations: [{ ...flow.stations[0], bufferAfter: 0 }] })) fail('standard/line-flow.schema.json', 'accepts a buffer of no capacity');
 }
 
+// 4l. A line's part mix holds together: a part appears once in a mix and the shares sum to no more than 1; a process
+// timing that names a part is run by a station of a line flow whose mix has that part; and a simulation run reading a
+// line flow with a part mix scopes each output to that line, its flow, one of its stations' equipment or a part of the
+// mix. Each rule is proven on a seeded defect.
+{
+  const of = (schema) => manifest.filter((e) => e.schema === schema && existsSync(join(ROOT, e.example))).map((e) => ({ rel: e.example, doc: load(e.example) }));
+  const flows = of('standard/line-flow.schema.json');
+  const timings = of('standard/process-timing.schema.json');
+  const runs = of('standard/simulation-run.schema.json');
+  const mixOf = (flow) => (flow.unit && flow.unit.partMix) || [];
+  const mixProblems = (flow) => {
+    const out = [];
+    const seen = new Set();
+    for (const p of mixOf(flow)) {
+      if (seen.has(p.partRef)) out.push(`names ${p.partRef} twice in its part mix`);
+      seen.add(p.partRef);
+    }
+    const total = mixOf(flow).reduce((sum, p) => sum + (p.share || 0), 0);
+    if (total > 1 + 1e-9) out.push(`has part mix shares summing to ${total}, over 1`);
+    return out;
+  };
+  const timingProblems = (timing, flowDocs) => {
+    if (timing.partRef === undefined) return [];
+    const runsIt = flowDocs.filter((f) => (f.stations || []).some((s) => s.equipmentRef === timing.equipmentRef));
+    return runsIt.some((f) => mixOf(f).some((p) => p.partRef === timing.partRef))
+      ? []
+      : [`times ${timing.partRef}, which no line flow running ${timing.equipmentRef} has in its part mix`];
+  };
+  const runProblems = (run, flowDocs) => {
+    const read = new Set((run.inputs && run.inputs.refs) || []);
+    const mixed = flowDocs.filter((f) => read.has(f.flowId) && mixOf(f).length);
+    if (!mixed.length) return [];
+    const allowed = new Set();
+    for (const f of mixed) {
+      allowed.add(f.lineRef);
+      allowed.add(f.flowId);
+      for (const st of f.stations || []) allowed.add(st.equipmentRef);
+      for (const p of mixOf(f)) allowed.add(p.partRef);
+    }
+    return (run.outputs || [])
+      .filter((o) => o.scopeRef !== undefined && !allowed.has(o.scopeRef))
+      .map((o) => `scopes an output to ${o.scopeRef}, neither the line it reads, its flow, a station's equipment nor a part of its mix`);
+  };
+  const flowDocs = flows.map(({ doc }) => doc);
+  for (const { rel, doc } of flows) for (const p of mixProblems(doc)) fail(rel, p);
+  for (const { rel, doc } of timings) for (const p of timingProblems(doc, flowDocs)) fail(rel, p);
+  for (const { rel, doc } of runs) for (const p of runProblems(doc, flowDocs)) fail(rel, p);
+  const mixed = flowDocs.find((f) => mixOf(f).length > 1);
+  const perPart = timings.find(({ doc }) => doc.partRef !== undefined)?.doc;
+  const run = runs.find(({ doc }) => runProblems(doc, flowDocs).length === 0 && (doc.outputs || []).some((o) => mixed && mixOf(mixed).some((p) => p.partRef === o.scopeRef)))?.doc;
+  const seeded = [
+    ['part mix shares summing over 1', mixed && mixProblems({ ...mixed, unit: { ...mixed.unit, partMix: mixOf(mixed).map((p) => ({ ...p, share: 0.9 })) } })],
+    ['a part named twice in one mix', mixed && mixProblems({ ...mixed, unit: { ...mixed.unit, partMix: [...mixOf(mixed), { partRef: mixOf(mixed)[0].partRef }] } })],
+    ['a timing for a part no line flow running its equipment makes', perPart && timingProblems({ ...perPart, partRef: 'shop-1:part:nowhere' }, flowDocs)],
+    ['a run output scoped to a part outside the mix', run && runProblems({ ...run, outputs: [...run.outputs, { ...run.outputs[0], scopeRef: 'shop-1:part:nowhere' }] }, flowDocs)],
+  ];
+  for (const [what, problems] of seeded) {
+    if (!problems) fail('scripts/check.mjs', `has no example to prove it refuses ${what}`);
+    else if (!problems.length) fail('scripts/check.mjs', `accepts ${what}`);
+  }
+}
+
 // 4k. Configurations and the units built to them hold together: a configuration at a version is one record; a refit's base
 // is a base on record; what a configuration fits is a shared definition (an equipment record naming no serial and no
 // definitionRef) at the version named; a refit draws no more power or compressed air than its base's interfaces supply

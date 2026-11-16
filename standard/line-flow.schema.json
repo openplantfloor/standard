@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/line-flow.schema.json",
   "title": "Line Flow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "How a production line flows: its stations in order -- each a machine or cell and the process timing it runs, with how many work in parallel and what each passes on -- the buffer after each station, the machines it shares with another line, what it takes from another line for each unit it makes, the rule that releases work into it, and each station's breakdown and repair after VDI 3423. It is what a simulation of the line reads to model blocking, starving and failures. A line flow is one possible layout of a line; an alternative layout is another line-flow record.",
   "type": "object",
   "additionalProperties": false,
@@ -46,6 +46,28 @@
         },
         "quantity": {
           "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/quantity"
+        },
+        "partMix": {
+          "type": "array",
+          "minItems": 1,
+          "description": "The parts the line makes, each by reference to its part or assembly record, with its share of the line's output once the mix is known -- the same shape a cell performance requirement's partMix uses for a cell. A process timing may hold for one part of it (process-timing partRef), and a simulation run reports a part's figures as outputs scoped to the part. A part appears once; the shares sum to no more than 1.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "partRef"
+            ],
+            "properties": {
+              "partRef": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/identifier",
+                "description": "The part or assembly record, or the part family, the line makes."
+              },
+              "share": {
+                "$ref": "https://schemas.openplantfloor.org/standard/common.schema.json#/definitions/fraction",
+                "description": "Its share of the line's output, once the mix is known; absent while it is not."
+              }
+            }
+          }
         }
       }
     },

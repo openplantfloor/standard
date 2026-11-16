@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.openplantfloor.org/standard/process-timing.schema.json",
+  "timingId": "shop-1:timing:bender-01:saddle-3-bend-1in",
+  "equipmentRef": "shop-1:bender-01",
+  "partRef": "shop-1:part:saddle-3-bend-1in",
+  "process": "tube-bend",
+  "operation": "bend a 1 in three-bend saddle",
+  "output": {
+    "value": 1,
+    "uom": "H87"
+  },
+  "cycleSeconds": {
+    "low": 52,
+    "base": 65,
+    "high": 84
+  },
+  "evidence": "L0",
+  "sources": [
+    {
+      "kind": "estimate",
+      "reference": "illustrative figures"
+    }
+  ]
+}
