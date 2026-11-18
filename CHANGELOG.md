@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.1
+
+Description only; every 0.15.0 record validates unchanged.
+
+- `standard/common` 0.8.1: `label` also names identification printed directly on the work (inkjet), beside a label or sticker, printed or applied. A laser-etched mark stays `mark`.
+
 ## 0.15.0
 
 Additions only; every 0.14.0 record validates unchanged.
