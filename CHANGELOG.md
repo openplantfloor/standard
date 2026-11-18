@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.0
+
+Additions only; every 0.14.0 record validates unchanged.
+
+- `standard/common` 0.8.0 adds the process `label`: identification put on the work or its carrier with a label or sticker, printed or applied. It is not a manufacturing process; its group is `not-a-manufacturing-process`. `mark` stays a material-removing mark (laser engraving or ablation, such as an etched QR code), and `coat` a coating that protects or finishes the work. Before 0.8.0 a printed or applied label was recorded as `coat`; such a record still validates and can be re-recorded as `label`.
+
 ## 0.14.0
 
 Additions only; every 0.13.0 record validates unchanged.
