@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://schemas.openplantfloor.org/standard/common.schema.json",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "title": "Open Plant Floor common definitions",
   "description": "Definitions the Open Plant Floor schemas share: identifiers, the processes a machine performs and their DIN 8580 main group, units of measure as UN/CEFACT Recommendation 20 codes, parameters, quantities and masses, energy, how far a machine is automated, the evidence grade a figure carries, and its source.",
   "definitions": {
@@ -37,12 +37,13 @@
         "palletize",
         "kit",
         "pack",
+        "label",
         "coat",
         "supply-compressed-air",
         "supply-gas",
         "other"
       ],
-      "description": "What the operation does to the work, named by its process family. mark is a material-removing mark (laser engraving or ablation); a printed or applied mark is coat. supply-compressed-air and supply-gas are what utility equipment (a compressor, a nitrogen generator) provides to the floor; neither is a manufacturing process. handle moves, places or orients work without changing it; tend loads and unloads another machine (a saw, a machining center) and names the machine it serves; palletize builds or breaks a load of parts on a pallet or carrier. None of the three is a manufacturing process."
+      "description": "What the operation does to the work, named by its process family. mark is a material-removing mark (laser engraving or ablation, such as an etched QR code); label puts identification on the work or its carrier with a label or sticker, printed or applied, and is not a manufacturing process; coat applies a coating that protects or finishes the work. 0.8.0: label added; before it, a printed or applied label was recorded as coat. supply-compressed-air and supply-gas are what utility equipment (a compressor, a nitrogen generator) provides to the floor; neither is a manufacturing process. handle moves, places or orients work without changing it; tend loads and unloads another machine (a saw, a machining center) and names the machine it serves; palletize builds or breaks a load of parts on a pallet or carrier. None of the three is a manufacturing process, and neither is label."
     },
     "parameter": {
       "type": "object",
@@ -684,6 +685,25 @@
             "properties": {
               "process": {
                 "const": "pack"
+              }
+            },
+            "required": [
+              "process"
+            ]
+          },
+          "then": {
+            "properties": {
+              "processGroup": {
+                "const": "not-a-manufacturing-process"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "process": {
+                "const": "label"
               }
             },
             "required": [
